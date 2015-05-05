@@ -23,7 +23,7 @@
         android:id="@+id/toolbar_title" />
     </android.support.v7.widget.Toolbar>
 
-    <com.swishlabs.intrepid_android.customViews.ClearEditText
+    <com.swishlabs.prototyping.customViews.ClearEditText
         android:id="@+id/search_ed"
         android:layout_width="fill_parent"
         android:layout_height="50dip"

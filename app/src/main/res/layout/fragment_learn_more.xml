@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.swishlabs.intrepid_android.activity.LearnMoreActivity$PlaceholderFragment">
+    tools:context="com.swishlabs.prototyping.activity.LearnMoreActivity$PlaceholderFragment">
 
     <ImageView
         android:layout_width="310dp"
