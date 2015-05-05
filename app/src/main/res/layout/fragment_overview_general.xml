@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/transparent">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="400dp"
+        android:id="@+id/overview_image"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="false"
+        android:scaleType="centerCrop" />
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/content"
+        android:background="@android:color/white"
+        android:layout_below="@+id/overview_image"
+        android:padding="16dp">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/overview_content"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Location"
+                android:id="@+id/destination_subtitle"
+                android:layout_alignParentStart="false"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/section_icon"
+                android:textColor="#333f48" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text=""
+                android:id="@+id/destination_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="false"
+                android:layout_below="@+id/destination_subtitle"
+                android:layout_marginTop="10dp"
+                android:textColor="#333f48" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/section_icon"
+                android:layout_above="@+id/destination_content"
+                android:layout_alignParentEnd="false"
+                android:layout_alignTop="@+id/destination_subtitle"
+                android:src="@drawable/example_icon"
+                android:layout_marginRight="10dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/overview_content2"
+            android:layout_below="@+id/overview_content"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Climate"
+                android:id="@+id/destination_subtitle2"
+                android:layout_alignParentStart="false"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/section_icon2"
+                android:textColor="#333f48" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text=""
+                android:id="@+id/destination_content2"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="false"
+                android:layout_below="@+id/destination_subtitle2"
+                android:layout_marginTop="10dp"
+                android:textColor="#333f48" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/section_icon2"
+                android:layout_above="@+id/destination_content2"
+                android:layout_alignParentEnd="false"
+                android:layout_alignTop="@+id/destination_subtitle2"
+                android:src="@drawable/weather_icon"
+                android:layout_marginRight="10dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/overview_content3"
+            android:padding="16dp"
+            android:layout_below="@+id/overview_content2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Type of Government"
+                android:id="@+id/destination_subtitle3"
+                android:layout_alignParentStart="false"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/section_icon3"
+                android:textColor="#333f48" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text=""
+                android:id="@+id/destination_content3"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="false"
+                android:layout_below="@+id/destination_subtitle3"
+                android:layout_marginTop="10dp"
+                android:textColor="#333f48"
+                android:paddingBottom="15dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/section_icon3"
+                android:layout_above="@+id/destination_content3"
+                android:layout_alignParentEnd="false"
+                android:layout_alignTop="@+id/destination_subtitle3"
+                android:src="@drawable/government_icon"
+                android:layout_marginRight="10dp" />
+        </RelativeLayout>
+        <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/overview_content4"
+        android:padding="16dp"
+        android:layout_below="@+id/overview_content3">
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Visa Requirements"
+        android:id="@+id/destination_subtitle4"
+        android:layout_alignParentStart="false"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/section_icon4"
+        android:textColor="#333f48" />
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=""
+        android:id="@+id/destination_content4"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/destination_subtitle4"
+        android:layout_marginTop="10dp"
+        android:textColor="#333f48"
+        android:paddingBottom="15dp" />
+
+        <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/section_icon4"
+        android:layout_above="@+id/destination_content4"
+        android:layout_alignParentEnd="false"
+        android:layout_alignTop="@+id/destination_subtitle4"
+        android:src="@drawable/visa_icon"
+        android:layout_marginRight="10dp" />
+        </RelativeLayout>
+        <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/overview_content5"
+        android:padding="16dp"
+        android:layout_below="@+id/overview_content4">
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Communication Infrastructure"
+        android:id="@+id/destination_subtitle5"
+        android:layout_alignParentStart="false"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/section_icon5"
+        android:textColor="#333f48" />
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=""
+        android:id="@+id/destination_content5"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/destination_subtitle5"
+        android:layout_marginTop="10dp"
+        android:textColor="#333f48"
+        android:paddingBottom="15dp" />
+
+        <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/section_icon5"
+        android:layout_above="@+id/destination_content5"
+        android:layout_alignParentEnd="false"
+        android:layout_alignTop="@+id/destination_subtitle5"
+        android:src="@drawable/communication_icon"
+        android:layout_marginRight="10dp" />
+        </RelativeLayout>
+        <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/overview_content6"
+        android:padding="16dp"
+        android:layout_below="@+id/overview_content5">
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Electricity"
+        android:id="@+id/destination_subtitle6"
+        android:layout_alignParentStart="false"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/section_icon6"
+        android:textColor="#333f48" />
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=""
+        android:id="@+id/destination_content6"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/destination_subtitle6"
+        android:layout_marginTop="10dp"
+        android:textColor="#333f48"
+        android:paddingBottom="15dp" />
+
+        <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/section_icon6"
+        android:layout_above="@+id/destination_content6"
+        android:layout_alignParentEnd="false"
+        android:layout_alignTop="@+id/destination_subtitle6"
+        android:src="@drawable/electricity_icon"
+        android:layout_marginRight="10dp" />
+        </RelativeLayout>
+        <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/overview_content7"
+        android:padding="16dp"
+        android:layout_below="@+id/overview_content6">
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Development"
+        android:id="@+id/destination_subtitle7"
+        android:layout_alignParentStart="false"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/section_icon7"
+        android:textColor="#333f48" />
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=""
+        android:id="@+id/destination_content7"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/destination_subtitle7"
+        android:layout_marginTop="10dp"
+        android:textColor="#333f48"
+        android:paddingBottom="15dp" />
+
+        <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/section_icon7"
+        android:layout_above="@+id/destination_content7"
+        android:layout_alignParentEnd="false"
+        android:layout_alignTop="@+id/destination_subtitle7"
+        android:src="@drawable/development_icon"
+        android:layout_marginRight="10dp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
+</LinearLayout>

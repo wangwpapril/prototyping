@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/content">
+
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="300dp"
+            android:id="@+id/overview_image"
+            android:src="@drawable/overview_currency"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="false"
+            android:scaleType="centerCrop" />
+
+        <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+            android:layout_below="@+id/overview_image"
+            android:background="@android:color/white"
+            android:padding="16dp">
+
+            <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/base_currency"
+            android:orientation="horizontal"
+                android:padding="16dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/base_currency_icon"
+                android:src="@drawable/example_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical|center"
+                android:layout_marginLeft="20dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/base_currency_code"
+                android:textColor="#333f48"
+                android:textSize="23sp"
+                android:layout_toRightOf="@+id/base_currency_icon"
+                android:text="CAD"
+                android:layout_alignBottom="@+id/base_currency_icon"
+                android:gravity="center_vertical"
+                android:textStyle="normal" />
+
+
+            <EditText
+                android:id="@+id/base_currency_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:ems="10"
+                android:text="1.00"
+                android:numeric="decimal"
+                android:textStyle="bold"
+                android:textColor="#383838"
+                android:textSize="23sp"
+                android:inputType="numberDecimal"
+                android:singleLine="true"
+                android:layout_toRightOf="@+id/base_currency_code"
+                android:layout_marginLeft="40dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/overview_content1"
+            android:layout_below="@+id/base_currency"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/des_currency_icon"
+                android:src="@drawable/example_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical|center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/des_currency_code"
+                android:textColor="#333f48"
+                android:textSize="23sp"
+                android:layout_toRightOf="@+id/des_currency_icon"
+                android:layout_alignBottom="@+id/des_currency_icon"
+                android:text="USD"
+                android:gravity="center_vertical"
+                android:textStyle="normal"
+                android:layout_marginLeft="20dp" />
+
+
+            <EditText
+                android:id="@+id/des_currency_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:text="2.00"
+                android:textStyle="bold"
+                android:numeric="decimal"
+                android:textColor="#383838"
+                android:textSize="23sp"
+                android:inputType="numberDecimal"
+                android:singleLine="true"
+                android:layout_toRightOf="@+id/des_currency_code" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
+</RelativeLayout>

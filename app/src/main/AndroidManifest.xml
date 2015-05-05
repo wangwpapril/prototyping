@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.swishlabs.intrepid_android" >
+
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- For Both permission include NETWORK_PROVIDER and GPS_PROVIDER -->
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="Travel Smart"
+        android:largeHeap="true"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".activity.SplashActivity"
+            android:label="Welcome"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="Login"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.SignupActivity"
+            android:label="Signup"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DestinationsListActivity"
+            android:label="Trips"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.TripPagesActivity"
+            android:label="Trips"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.LegalActivity"
+            android:label="Legal"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.ViewDestinationActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:label="Legal"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.ViewHealthActivity"
+            android:label=""
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DetailHealthConActivity"
+            android:label="@string/title_activity_detail_health_con"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DetailHealthMedActivity"
+            android:label="@string/title_activity_detail_health_med"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.SecurityActivity"
+            android:label="" >
+        </activity>
+        <activity
+            android:name=".activity.ViewEmbassyActivity"
+            android:label="" >
+        </activity>
+        <activity
+            android:name=".activity.ViewWeatherActivity"
+            android:label="@string/title_activity_view_weather"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.ViewAlertActivity"
+            android:label="@string/title_activity_view_alert"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.AceInsuranceActivity"
+            android:label="@string/title_activity_ace_insurance"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.ViewAceActivity"
+            android:label="@string/title_activity_view_ace"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.AssistanceActivity"
+            android:label="@string/title_activity_assistance" >
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".activity.ViewVMPdfActivity"
+            android:label="@string/title_activity_view_vmpdf"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.LearnMoreActivity"
+            android:label="@string/title_activity_learn_more"
+            android:screenOrientation="portrait">
+        </activity>
+    </application>
+
+</manifest>
