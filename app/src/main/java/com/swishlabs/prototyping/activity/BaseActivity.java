@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.swishlabs.prototyping.MyApplication;
-import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.data.store.Database;
 import com.swishlabs.prototyping.data.store.DatabaseManager;
 import com.swishlabs.prototyping.util.Common;
