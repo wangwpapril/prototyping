@@ -117,6 +117,7 @@ public class LoginActivity extends BaseActivity {
 //                    }
 
                     jsonObj = new JSONObject(content);
+                    user = new User(jsonObj);
                     if(jsonObj.has("error")) {
                         JSONArray errorMessage = jsonObj.getJSONObject("error").getJSONArray("message");
                         String message = String.valueOf((Object) errorMessage.get(0));
@@ -139,8 +140,8 @@ public class LoginActivity extends BaseActivity {
                         SharedPreferenceUtil.setString(Enums.PreferenceKeys.virtualWalletPdf.toString(), virtualWalletPdf);
 
                      }else {
-                        StringUtil.showAlertDialog(getResources().getString(R.string.login_title_name), getResources().getString(R.string.login_failed), context);
-                        return;
+//                        StringUtil.showAlertDialog(getResources().getString(R.string.login_title_name), getResources().getString(R.string.login_failed), context);
+  //                      return;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -149,25 +150,26 @@ public class LoginActivity extends BaseActivity {
                 }
 
                 if(user != null) {
-                        UserTable.getInstance().saveUser(user);
+//                        UserTable.getInstance().saveUser(user);
 //                        User ww = null;
 //                        ww = UserTable.getInstance().getUser(user.id);
 
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.userId.toString(), user.id);
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.token.toString(), user.token);
+                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.sessionId.toString(), user.sessionId);
+                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.username.toString(),user.userName);
+
+/*                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.token.toString(), user.token);
                         SharedPreferenceUtil.setString(Enums.PreferenceKeys.email.toString(),user.email);
                         SharedPreferenceUtil.setString(Enums.PreferenceKeys.firstname.toString(),user.firstName);
                         SharedPreferenceUtil.setString(Enums.PreferenceKeys.lastname.toString(),user.lastName);
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.username.toString(),user.userName);
                         SharedPreferenceUtil.setString(Enums.PreferenceKeys.countryCode.toString(),user.countryCode);
                         SharedPreferenceUtil.setString(Enums.PreferenceKeys.currencyCode.toString(),user.currencyCode);
                         SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), true);
-
+*/
                         MyApplication.setLoginStatus(true);
 
-                        Intent mIntent = new Intent(LoginActivity.this, TripPagesActivity.class);
-                        startActivity(mIntent);
-                        LoginActivity.this.finish();
+//                        Intent mIntent = new Intent(LoginActivity.this, TripPagesActivity.class);
+  //                      startActivity(mIntent);
+    //                    LoginActivity.this.finish();
                     } else {
                         StringUtil.showAlertDialog(getResources().getString(
                                 R.string.login_title_name), "User is empty", context);
@@ -224,5 +226,12 @@ public class LoginActivity extends BaseActivity {
 
     }
 
+    private void getProfile(){
 
+    }
+
+
+    private void getConnection(){
+
+    }
 }

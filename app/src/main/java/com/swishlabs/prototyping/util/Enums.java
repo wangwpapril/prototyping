@@ -74,6 +74,7 @@ public class Enums {
 	public enum PreferenceKeys{
 		currentUser("current user"),
 
+		sessionId("session id"),
         currentCountryId("current country id"),
 		netStatus("network status̬"),
         firstname("first name"),

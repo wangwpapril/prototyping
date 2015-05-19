@@ -45,7 +45,7 @@ public class UserTable extends Bean {
 
     	if (user != null) {
             String sql = "insert into " + TABLE_NAME
-                    + " values(" + user.id                        + ","
+                    + " values(" + user.sessionId                        + ","
                     				                               + ")";
             db.execSql(sql);
         }
@@ -62,7 +62,7 @@ public class UserTable extends Bean {
             String dealStream = Base64.encodeToString(bao.toByteArray(), Base64.DEFAULT);
             
             String sql;
-            String userId = user.id;
+            String userId = user.sessionId;
             if (getCount() > 0) {
             	sql = "UPDATE " + TABLE_NAME + " SET " + SAVE_COMP + " = ? "  + " WHERE " + USER_ID  +" = " + userId ;
             	db.execSql(sql, dealStream);
