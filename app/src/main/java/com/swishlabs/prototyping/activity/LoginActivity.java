@@ -89,9 +89,9 @@ public class LoginActivity extends BaseActivity {
                         .getString(R.string.login_email_input_error), this);
                 return;
             } else if (!StringUtil.isEmail(email)) {
-                StringUtil.showAlertDialog(getResources().getString(R.string.login_title_name),
-                        getResources().getString(R.string.email_format_error), this);
-                return;
+//                StringUtil.showAlertDialog(getResources().getString(R.string.login_title_name),
+  //                      getResources().getString(R.string.email_format_error), this);
+    //            return;
             }
 
             if (TextUtils.isEmpty(password)) {
@@ -185,27 +185,27 @@ public class LoginActivity extends BaseActivity {
             };
 
             ControllerContentTask cct = new ControllerContentTask(
-                    Constants.BASE_URL + "users/login", icc,
+                    Constants.LOGIN_URL, icc,
                     Enums.ConnMethod.POST, false);
 
             JSONObject user = new JSONObject();
             try {
-                user.put("email", email);
-                user.put("password", password);
+                user.put("UserName", email);
+                user.put("Password", password);
             } catch (JSONException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
 
-            JSONObject login = new JSONObject();
+/*            JSONObject login = new JSONObject();
             try {
                 login.put("user", user);
             } catch (JSONException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
-            }
+            }*/
 
-            cct.execute(login.toString());
+            cct.execute(user.toString());
 
 
         } else if (v == signUp) {
