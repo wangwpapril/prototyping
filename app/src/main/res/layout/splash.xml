@@ -10,7 +10,7 @@
         android:layout_height="fill_parent"
         android:contentDescription="SplashPic"
         android:scaleType="fitXY"
-        android:src="@drawable/splashimage" >
+        android:src="@drawable/login_background" >
     </ImageView>
 
     

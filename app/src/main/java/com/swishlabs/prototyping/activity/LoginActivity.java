@@ -169,7 +169,7 @@ public class LoginActivity extends BaseActivity {
 */
                     MyApplication.setLoginStatus(true);
 
-                    getConnection();
+                    getOtherProfile();
 //                        Intent mIntent = new Intent(LoginActivity.this, TripPagesActivity.class);
   //                      startActivity(mIntent);
     //                    LoginActivity.this.finish();
@@ -347,9 +347,10 @@ public class LoginActivity extends BaseActivity {
         IControllerContentCallback icc = new IControllerContentCallback() {
 
             public void handleSuccess(String content) {
-                JSONObject profile;
+                JSONArray profile;
                 try {
-                    profile = new JSONObject(content);
+                    profile = (JSONArray) new JSONTokener(content).nextValue();
+                    int len = profile.length();
                     //                   JSONObject ra = currencyInfo.getJSONObject("rates");
                     //                 rate = currencyInfo.getJSONObject("rates").getDouble(currencyCode);
 
@@ -367,7 +368,12 @@ public class LoginActivity extends BaseActivity {
         String sessionId = SharedPreferenceUtil.getString(Enums.PreferenceKeys.sessionId.toString(), null);
 
         ControllerContentTask cct = new ControllerContentTask(
-                Constants.PROFILE_URL+sessionId+"/" + Constants.FORMAT_JSON, icc,
+                Constants.PROFILE_URL+sessionId + Constants.SEARCHDISTANCE
+                        + "?distance=" + "5.0"
+                        + "&longitude=" + "0.0"
+                        + "&latitude=" + "0.0"
+                        + "&offset=" + "1"
+                        + "&format=json", icc,
                 Enums.ConnMethod.GET,false);
 
         String ss = null;
