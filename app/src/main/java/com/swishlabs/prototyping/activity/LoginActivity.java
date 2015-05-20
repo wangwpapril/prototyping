@@ -342,4 +342,38 @@ public class LoginActivity extends BaseActivity {
         cct.execute(ss);
 
     }
+
+    public void getOtherProfile(){
+        IControllerContentCallback icc = new IControllerContentCallback() {
+
+            public void handleSuccess(String content) {
+                JSONObject profile;
+                try {
+                    profile = new JSONObject(content);
+                    //                   JSONObject ra = currencyInfo.getJSONObject("rates");
+                    //                 rate = currencyInfo.getJSONObject("rates").getDouble(currencyCode);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            public void handleError(Exception e){
+
+            }
+        };
+
+        String sessionId = SharedPreferenceUtil.getString(Enums.PreferenceKeys.sessionId.toString(), null);
+
+        ControllerContentTask cct = new ControllerContentTask(
+                Constants.PROFILE_URL+sessionId+"/" + Constants.FORMAT_JSON, icc,
+                Enums.ConnMethod.GET,false);
+
+        String ss = null;
+        cct.execute(ss);
+
+
+    }
+
 }
