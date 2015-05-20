@@ -10,11 +10,23 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public String sessionId;
 	public String userName;
+	public String password;
 
 	public String email;
 	public String firstName;
 	public String lastName;
-	public String phone;
+	public double longtitude;
+	public double latitude;
+
+	public boolean isLogin;
+
+	public boolean isAutoLogin;
+
+	public String phoneNumber;
+	public String occupation;
+	public String resume;
+
+
 	public String countryCode;
 	public String currencyCode;
 	public Company company;

@@ -15,6 +15,7 @@ import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.data.api.callback.ControllerContentTask;
 import com.swishlabs.prototyping.data.api.callback.IControllerContentCallback;
+import com.swishlabs.prototyping.data.api.model.Connection;
 import com.swishlabs.prototyping.data.api.model.Constants;
 import com.swishlabs.prototyping.data.api.model.User;
 import com.swishlabs.prototyping.data.store.beans.UserTable;
@@ -25,6 +26,7 @@ import com.swishlabs.prototyping.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 
 public class LoginActivity extends BaseActivity {
@@ -165,8 +167,9 @@ public class LoginActivity extends BaseActivity {
                         SharedPreferenceUtil.setString(Enums.PreferenceKeys.currencyCode.toString(),user.currencyCode);
                         SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), true);
 */
-                        MyApplication.setLoginStatus(true);
+                    MyApplication.setLoginStatus(true);
 
+                    getConnection();
 //                        Intent mIntent = new Intent(LoginActivity.this, TripPagesActivity.class);
   //                      startActivity(mIntent);
     //                    LoginActivity.this.finish();
@@ -227,11 +230,116 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void getProfile(){
+        IControllerContentCallback icc = new IControllerContentCallback() {
+
+            public void handleSuccess(String content) {
+                JSONObject profile;
+                try {
+                    profile = new JSONObject(content);
+ //                   JSONObject ra = currencyInfo.getJSONObject("rates");
+   //                 rate = currencyInfo.getJSONObject("rates").getDouble(currencyCode);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            public void handleError(Exception e){
+
+            }
+        };
+
+        String sessionId = SharedPreferenceUtil.getString(Enums.PreferenceKeys.sessionId.toString(), null);
+
+        ControllerContentTask cct = new ControllerContentTask(
+                Constants.PROFILE_URL+sessionId+"/" + Constants.FORMAT_JSON, icc,
+                Enums.ConnMethod.GET,false);
+
+        String ss = null;
+        cct.execute(ss);
 
     }
 
 
     private void getConnection(){
+        IControllerContentCallback icc = new IControllerContentCallback() {
+
+            public void handleSuccess(String content) {
+                JSONArray jsonArr;
+                try {
+                    jsonArr = (JSONArray) new JSONTokener(content).nextValue();
+                    int size = jsonArr.length();
+
+                    if (jsonArr != null)
+                    {
+                        for (int i=0; i < jsonArr.length(); i++)
+                        {
+                            JSONObject tmpJson = jsonArr.getJSONObject(i);
+
+                            Connection connection = new Connection();
+                            connection.fromId = tmpJson.getInt("fromid");
+                            connection.toId = tmpJson.getInt("toid");
+                            String tempDate = tmpJson.getString("dateConnRequested");
+
+                            //connection.dateConnectionRequest = new Date(tmpJson.getString("dateConnRequested"));
+                            connection.notified = tmpJson.getBoolean("notified");
+                            connection.status = tmpJson.getString("status");
+
+                            if (connection.status.equals(Connection.CONNECT))
+                            {
+/*                                ResourceManager.UserProfile.contactsId = UserTable.getInstance().getContact();
+
+                                if (connection.fromId != ResourceManager.UserProfile.id)
+                                {
+                                    if (!ResourceManager.UserProfile.contactsId.contains(connection.fromId))
+                                    {
+                                        UserTable.getInstance().addContact(connection.fromId);
+                                        ResourceManager.UserProfile.contactsId.add(connection.fromId);
+
+                                        NewContact tmpNewContact = new NewContact(connection.fromId);
+                                        ResourceManager.UserProfile.newContactsId.add(tmpNewContact);
+                                    }
+                                }
+                                else if (connection.toId != ResourceManager.UserProfile.id)
+                                {
+                                    if (!ResourceManager.UserProfile.contactsId.contains(connection.toId))
+                                    {
+                                        UserTable.getInstance().addContact(connection.toId);
+                                        ResourceManager.UserProfile.contactsId.add(connection.toId);
+
+                                        NewContact tmpNewContact = new NewContact(connection.toId);
+                                        ResourceManager.UserProfile.newContactsId.add(tmpNewContact);
+                                    }
+                                }*/
+                            }
+                            //connection.dateConnectionConfirmed = new Date(tmpJson.getString("dateConnConfirmed"));
+
+//                            mUser.connections.add(connection);
+
+                        }
+                    }
+                } catch (JSONException e) {
+//                    return false;
+                }
+
+            }
+
+            public void handleError(Exception e){
+
+            }
+        };
+
+        String sessionId = SharedPreferenceUtil.getString(Enums.PreferenceKeys.sessionId.toString(), null);
+        String url = Constants.PROFILE_URL+sessionId+"/connections" + "?offset=" +
+                "0" + "&format=json";
+
+        ControllerContentTask cct = new ControllerContentTask(
+                url, icc,
+                Enums.ConnMethod.GET,false);
+
+        String ss = null;
+        cct.execute(ss);
 
     }
 }
