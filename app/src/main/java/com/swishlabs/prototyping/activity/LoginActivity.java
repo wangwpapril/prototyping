@@ -86,32 +86,59 @@ public class LoginActivity extends BaseActivity {
             String email = emailTextField.getText().toString();
             String password = passwordTextField.getText().toString();
 
-            logIn(email,password);
-//            return;
+            logIn(email, password);
+//            logInOld(email,password);
+            return;
 
-            if (TextUtils.isEmpty(email)) {
-                StringUtil.showAlertDialog(getResources().getString(
-                        R.string.login_title_name), getResources()
-                        .getString(R.string.login_email_input_error), this);
-                return;
-            } else if (!StringUtil.isEmail(email)) {
-                StringUtil.showAlertDialog(getResources().getString(R.string.login_title_name),
-                        getResources().getString(R.string.email_format_error), this);
-                return;
-            }
+        } else if (v == signUp) {
+            Intent mIntent = new Intent(LoginActivity.this, SignupActivity.class);
+            startActivity(mIntent);
+            this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
-            if (TextUtils.isEmpty(password)) {
-                StringUtil.showAlertDialog(getResources().getString(
-                        R.string.login_title_name), getResources()
-                        .getString(R.string.login_password_null), this);
-                return;
-            }
+        } else if (v == termsOfUseBtn) {
+            Intent mIntent = new Intent(LoginActivity.this, LegalActivity.class);
+            startActivity(mIntent);
+            this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
-            IControllerContentCallback icc = new IControllerContentCallback() {
-                public void handleSuccess(String content) {
+        } else if (v == learnMore){
+            Intent mIntent = new Intent(LoginActivity.this, LearnMoreActivity.class);
+            startActivity(mIntent);
+            this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
-                    JSONObject jsonObj = null, userObj = null;
-                    User user = null;
+        }
+
+    }
+
+    @Override
+    public void onBackPressed(){
+        MyApplication.getInstance().exit();
+    }
+
+    public void logInOld(String email, String password){
+
+        if (TextUtils.isEmpty(email)) {
+            StringUtil.showAlertDialog(getResources().getString(
+                    R.string.login_title_name), getResources()
+                    .getString(R.string.login_email_input_error), this);
+            return;
+        } else if (!StringUtil.isEmail(email)) {
+            StringUtil.showAlertDialog(getResources().getString(R.string.login_title_name),
+                    getResources().getString(R.string.email_format_error), this);
+            return;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            StringUtil.showAlertDialog(getResources().getString(
+                    R.string.login_title_name), getResources()
+                    .getString(R.string.login_password_null), this);
+            return;
+        }
+
+        IControllerContentCallback icc = new IControllerContentCallback() {
+            public void handleSuccess(String content) {
+
+                JSONObject jsonObj = null, userObj = null;
+                User user = null;
 
                 try {
 //                        jsonObj = new JSONObject(content);
@@ -144,7 +171,7 @@ public class LoginActivity extends BaseActivity {
 
                         SharedPreferenceUtil.setString(Enums.PreferenceKeys.virtualWalletPdf.toString(), virtualWalletPdf);
 
-                     }else {
+                    }else {
                         StringUtil.showAlertDialog(getResources().getString(R.string.login_title_name), getResources().getString(R.string.login_failed), context);
                         return;
                     }
@@ -155,89 +182,68 @@ public class LoginActivity extends BaseActivity {
                 }
 
                 if(user != null) {
-                        UserTable.getInstance().saveUser(user);
+                    UserTable.getInstance().saveUser(user);
 //                        User ww = null;
 //                        ww = UserTable.getInstance().getUser(user.id);
 
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.userId.toString(), user.id);
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.token.toString(), user.token);
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.email.toString(),user.email);
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.firstname.toString(),user.firstName);
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.lastname.toString(),user.lastName);
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.username.toString(),user.userName);
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.countryCode.toString(),user.countryCode);
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.currencyCode.toString(),user.currencyCode);
-                        SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), true);
-                        SharedPreferenceUtil.setApList(getApplicationContext(), user.getCompany().getApList());
+                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.userId.toString(), user.id);
+                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.token.toString(), user.token);
+                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.email.toString(),user.email);
+                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.firstname.toString(),user.firstName);
+                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.lastname.toString(),user.lastName);
+                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.username.toString(),user.userName);
+                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.countryCode.toString(),user.countryCode);
+                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.currencyCode.toString(),user.currencyCode);
+                    SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), true);
+                    SharedPreferenceUtil.setApList(getApplicationContext(), user.getCompany().getApList());
 
-                        MyApplication.setLoginStatus(true);
+                    MyApplication.setLoginStatus(true);
 
 
-                        Intent mIntent = new Intent(LoginActivity.this, TripPagesActivity.class);
-                        startActivity(mIntent);
-                        LoginActivity.this.finish();
-                    } else {
-                        StringUtil.showAlertDialog(getResources().getString(
-                                R.string.login_title_name), "User is empty", context);
-                        return;
-                    }
-
-                }
-
-                public void handleError(Exception e) {
+                    Intent mIntent = new Intent(LoginActivity.this, TripPagesActivity.class);
+                    startActivity(mIntent);
+                    LoginActivity.this.finish();
+                } else {
                     StringUtil.showAlertDialog(getResources().getString(
-                            R.string.login_title_name), getResources().getString(R.string.login_failed), context);
+                            R.string.login_title_name), "User is empty", context);
                     return;
-
                 }
-            };
 
-            ControllerContentTask cct = new ControllerContentTask(
-                    Constants.BASE_URL + "users/login", icc,
-                    Enums.ConnMethod.POST, false);
-
-            JSONObject user = new JSONObject();
-            try {
-                user.put("email", email);
-                user.put("password", password);
-            } catch (JSONException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
             }
 
-            JSONObject login = new JSONObject();
-            try {
-                login.put("user", user);
-            } catch (JSONException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+            public void handleError(Exception e) {
+                StringUtil.showAlertDialog(getResources().getString(
+                        R.string.login_title_name), getResources().getString(R.string.login_failed), context);
+                return;
+
             }
+        };
 
-            cct.execute(login.toString());
+        ControllerContentTask cct = new ControllerContentTask(
+                Constants.BASE_URL + "users/login", icc,
+                Enums.ConnMethod.POST, false);
 
-
-        } else if (v == signUp) {
-            Intent mIntent = new Intent(LoginActivity.this, SignupActivity.class);
-            startActivity(mIntent);
-            this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-
-        } else if (v == termsOfUseBtn) {
-            Intent mIntent = new Intent(LoginActivity.this, LegalActivity.class);
-            startActivity(mIntent);
-            this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-
-        } else if (v == learnMore){
-            Intent mIntent = new Intent(LoginActivity.this, LearnMoreActivity.class);
-            startActivity(mIntent);
-            this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-
+        JSONObject user = new JSONObject();
+        try {
+            user.put("email", email);
+            user.put("password", password);
+        } catch (JSONException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
         }
 
-    }
+        JSONObject login = new JSONObject();
+        try {
+            login.put("user", user);
+        } catch (JSONException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
 
-    @Override
-    public void onBackPressed(){
-        MyApplication.getInstance().exit();
+        cct.execute(login.toString());
+
+
+
     }
 
     public void logIn(String email, String password){
