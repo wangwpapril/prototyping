@@ -2,8 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
 
-    tools:context="com.swishlabs.prototyping.activity.ViewDestinationActivity">
+    tools:context="com.swishlabs.intrepid_android.activity.ViewHealthActivity">
 
 
 
@@ -27,7 +29,7 @@
         android:id="@+id/toolbar_title" />
     </android.support.v7.widget.Toolbar>
 
-    <com.swishlabs.prototyping.customViews.CustomTabContainer
+    <com.swishlabs.intrepid_android.customViews.CustomTabContainer
         android:layout_width="fill_parent"
         android:id="@+id/tabContainer"
         android:layout_below="@id/toolbar"
@@ -46,9 +48,9 @@
             android:background="#fff"
             android:layout_marginTop="-3dp"
             android:layout_height="1dp"/>
-    </com.swishlabs.prototyping.customViews.CustomTabContainer>
+    </com.swishlabs.intrepid_android.customViews.CustomTabContainer>
 
-    <com.swishlabs.prototyping.customViews.ClearEditText
+    <com.swishlabs.intrepid_android.customViews.ClearEditText
         android:id="@+id/search_ed"
         android:layout_width="fill_parent"
         android:layout_height="50dip"
@@ -56,15 +58,16 @@
         android:layout_centerHorizontal="true"
         android:background="#e1e1e1"
         android:cursorVisible="true"
-        android:drawableLeft="@drawable/search_title"
+        android:drawableLeft="@drawable/search_icon_blue"
         android:drawablePadding="10dip"
-        android:drawableRight="@drawable/close"
+        android:drawableRight="@drawable/exit"
         android:paddingRight="20dip"
         android:hint="Tap to Search"
         android:paddingLeft="30dip"
         android:textColor="#333f48"
         android:textColorHint="#333f48"
         android:textCursorDrawable="@null"
+        android:visibility="gone"
         android:maxLines="1" />
 
 

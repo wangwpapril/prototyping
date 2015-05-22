@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 22
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.swishlabs.prototyping"
+        applicationId "com.intrepid.intrepid_android"
         minSdkVersion 19
         targetSdkVersion 22
-        versionCode 1
+        versionCode 4
         versionName "1.0"
     }
     buildTypes {

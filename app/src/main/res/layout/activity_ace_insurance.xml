@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.swishlabs.prototyping.activity.AceInsuranceActivity">
+    android:background="@color/white"
+    tools:context="com.swishlabs.intrepid_android.activity.AceInsuranceActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -29,13 +30,9 @@
     <ImageView
         android:id="@+id/logo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_below="@+id/toolbar"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
-        android:paddingTop="10dip"
-        android:paddingBottom="10dip"
-        android:src="@drawable/ace_logo"
+        android:src="@drawable/ace_logo_dark"
         android:layout_alignParentStart="true"
         android:layout_marginTop="40dip"
         android:layout_marginBottom="20dp" />
@@ -45,14 +42,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/logo"
-        android:paddingTop="0dip"
+        android:paddingTop="20dp"
         android:gravity="center_horizontal"
         android:text="Which service would you like to view?"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/buttonsection2"
+        android:layout_below="@+id/travel_smart"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content">
 
     <Button
         android:id="@+id/butAceView"
@@ -67,9 +69,8 @@
         android:longClickable="false"
         android:clickable="true"
         android:textColor="@color/white"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_below="@+id/travel_smart"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:textAlignment="center" />
@@ -87,13 +88,13 @@
         android:longClickable="false"
         android:clickable="true"
         android:textColor="@color/white"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_below="@+id/butAceView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:textAlignment="center" />
-
+</RelativeLayout>
     <include
         android:layout_width="match_parent"
         android:layout_height="25dp"

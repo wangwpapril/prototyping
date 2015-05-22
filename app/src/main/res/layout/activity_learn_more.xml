@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context="com.swishlabs.prototyping.activity.LearnMoreActivity"
+    tools:context="com.swishlabs.intrepid_android.activity.LearnMoreActivity"
     tools:ignore="MergeRootFrame"
     android:background="@drawable/login_background"
     >
@@ -50,7 +50,7 @@
         android:id="@+id/pager">
         </android.support.v4.view.ViewPager>
 
-    <com.swishlabs.prototyping.customViews.IndicatorLinearLayout
+    <com.swishlabs.intrepid_android.customViews.IndicatorLinearLayout
         android:layout_width="match_parent"
         android:layout_height="15dp"
         android:id="@+id/indicator"
@@ -59,7 +59,7 @@
         android:layout_marginBottom="15dp"
         >
 
-        </com.swishlabs.prototyping.customViews.IndicatorLinearLayout>
+        </com.swishlabs.intrepid_android.customViews.IndicatorLinearLayout>
 
 </FrameLayout>
 

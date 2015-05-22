@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <com.swishlabs.prototyping.customViews.IntrepidMenu
+    <com.swishlabs.intrepid_android.customViews.IntrepidMenu
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="25dp"
     android:layout_width="fill_parent"
@@ -25,6 +25,14 @@
         android:baselineAlignBottom="true"
         android:background="@android:color/transparent"
         android:scaleType="fitXY" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/arrow_up"
+        android:id="@+id/intrepidMenuArrow"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp" />
 
     <ImageButton
         android:layout_width="fill_parent"
@@ -360,4 +368,4 @@
     </RelativeLayout>
 
 </RelativeLayout>
- </com.swishlabs.prototyping.customViews.IntrepidMenu>
+ </com.swishlabs.intrepid_android.customViews.IntrepidMenu>
