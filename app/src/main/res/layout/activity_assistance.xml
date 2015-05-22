@@ -8,7 +8,7 @@
                 android:paddingRight="0dp"
                 android:paddingTop="0dp"
                 android:paddingBottom="0dp"
-                tools:context="com.swishlabs.intrepid_android.activity.AssistanceActivity">
+                tools:context="com.swishlabs.prototyping.activity.AssistanceActivity">
 
 
     <android.support.v7.widget.Toolbar
@@ -42,7 +42,7 @@
               android:layout_width="match_parent"
               android:layout_height="300dp"
               android:id="@+id/map"
-              tools:context="com.swishlabs.intrepid_android.activity.AssistanceActivity"
+              tools:context="com.swishlabs.prototyping.activity.AssistanceActivity"
               android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
 

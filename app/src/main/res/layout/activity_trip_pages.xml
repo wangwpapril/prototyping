@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.swishlabs.intrepid_android.activity.TripPagesActivity"
+    tools:context="com.swishlabs.prototyping.activity.TripPagesActivity"
     android:background="@drawable/bg_login" >
 
     <RelativeLayout
@@ -21,7 +21,7 @@
 
     </RelativeLayout>
 
-    <com.swishlabs.intrepid_android.customViews.IndicatorLinearLayout
+    <com.swishlabs.prototyping.customViews.IndicatorLinearLayout
         android:layout_width="match_parent"
         android:layout_height="15dp"
         android:id="@+id/indicator"
@@ -30,7 +30,7 @@
         android:layout_marginBottom="15dp"
         >
 
-    </com.swishlabs.intrepid_android.customViews.IndicatorLinearLayout>
+    </com.swishlabs.prototyping.customViews.IndicatorLinearLayout>
 
 
 </FrameLayout>

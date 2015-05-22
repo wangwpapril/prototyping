@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <com.swishlabs.intrepid_android.customViews.IntrepidMenu
+    <com.swishlabs.prototyping.customViews.IntrepidMenu
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="25dp"
     android:layout_width="fill_parent"
@@ -368,4 +368,4 @@
     </RelativeLayout>
 
 </RelativeLayout>
- </com.swishlabs.intrepid_android.customViews.IntrepidMenu>
+ </com.swishlabs.prototyping.customViews.IntrepidMenu>

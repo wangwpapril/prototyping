@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.swishlabs.intrepid_android" >
+    package="com.swishlabs.prototyping" >
 
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.SET_DEBUG_APP" />
@@ -35,13 +35,13 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/ic_launcher"
         android:label="Travel Smart"
         android:largeHeap="true"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".activity.SplashActivity"
-            android:label="Travel Smart"
+            android:label="Grab"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

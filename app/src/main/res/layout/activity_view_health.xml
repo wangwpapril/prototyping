@@ -5,7 +5,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
 
-    tools:context="com.swishlabs.intrepid_android.activity.ViewHealthActivity">
+    tools:context="com.swishlabs.prototyping.activity.ViewHealthActivity">
 
 
 
@@ -29,7 +29,7 @@
         android:id="@+id/toolbar_title" />
     </android.support.v7.widget.Toolbar>
 
-    <com.swishlabs.intrepid_android.customViews.CustomTabContainer
+    <com.swishlabs.prototyping.customViews.CustomTabContainer
         android:layout_width="fill_parent"
         android:id="@+id/tabContainer"
         android:layout_below="@id/toolbar"
@@ -48,9 +48,9 @@
             android:background="#fff"
             android:layout_marginTop="-3dp"
             android:layout_height="1dp"/>
-    </com.swishlabs.intrepid_android.customViews.CustomTabContainer>
+    </com.swishlabs.prototyping.customViews.CustomTabContainer>
 
-    <com.swishlabs.intrepid_android.customViews.ClearEditText
+    <com.swishlabs.prototyping.customViews.ClearEditText
         android:id="@+id/search_ed"
         android:layout_width="fill_parent"
         android:layout_height="50dip"
