@@ -9,7 +9,7 @@ public abstract class Bean {
         createTable();
     }
     public String getDatabaseName() {
-        return "ingle_an";
+        return "Intrepid.db";
     }
     public Database getDatabase() {
         return db;

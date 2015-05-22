@@ -155,7 +155,7 @@ public class MyApplication extends Application implements UncaughtExceptionHandl
 		activityList = new ArrayList<Activity>();
 		
 		Thread.setDefaultUncaughtExceptionHandler(this);
-	    loadDatabase();
+//	    loadDatabase();
 	}
 
     public void loadDatabase(){

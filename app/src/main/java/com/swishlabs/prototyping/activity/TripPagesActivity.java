@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.customViews.IndicatorLinearLayout;
+import com.swishlabs.prototyping.data.ServiceManager;
 import com.swishlabs.prototyping.data.api.model.Trip;
 import com.swishlabs.prototyping.data.store.Database;
 import com.swishlabs.prototyping.data.store.DatabaseManager;
@@ -69,8 +70,10 @@ public class TripPagesActivity extends ActionBarActivity implements TripFragment
         startLocationService();
         this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         mTripPagesActivity = this;
-        loadDatabase();
-        mTripList = DatabaseManager.getTripArray(mDatabase, SharedPreferenceUtil.getString(Enums.PreferenceKeys.userId.toString(), null));
+//        loadDatabase();
+//        mTripList = DatabaseManager.getTripArray(mDatabase, SharedPreferenceUtil.getString(Enums.PreferenceKeys.userId.toString(), null));
+        mDatabase = ServiceManager.getDatabase();
+        mTripList = ServiceManager.getDatabaseManager().getTripArray(mDatabase, SharedPreferenceUtil.getString(Enums.PreferenceKeys.userId.toString(), null));
         mTripCount = mTripList.size();
 
 

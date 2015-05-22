@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.swishlabs.prototyping.MyApplication;
+import com.swishlabs.prototyping.data.ServiceManager;
 import com.swishlabs.prototyping.data.store.Database;
 import com.swishlabs.prototyping.data.store.DatabaseManager;
 import com.swishlabs.prototyping.util.Common;
@@ -39,8 +40,10 @@ public abstract class BaseActivity extends Activity implements OnClickListener{
 	}
 
     public void loadDatabase(){
-        mDatabaseManager = new DatabaseManager(this.getBaseContext());
-        mDatabase = mDatabaseManager.openDatabase("Intrepid.db");
+//		mDatabaseManager = new DatabaseManager(this.getBaseContext());
+//		mDatabase = mDatabaseManager.openDatabase("Intrepid.db");
+		mDatabaseManager = ServiceManager.getDatabaseManager();
+		mDatabase = ServiceManager.getDatabase();
     }
 
 	protected void initTitleView() {
