@@ -44,4 +44,8 @@
     <string name="callIntrepidAssistance">Call Intrepid Assistance</string>
     <string name="title_activity_learn_more">LearnMoreActivity</string>
 
+    <string name="undo">Undo</string>
+    <string name="undoall">Undo All</string>
+
+
 </resources>
