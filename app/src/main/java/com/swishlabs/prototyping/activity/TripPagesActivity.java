@@ -67,7 +67,7 @@ public class TripPagesActivity extends ActionBarActivity implements TripFragment
         instance=this;
         setContentView(R.layout.activity_trip_pages);
 
-        startLocationService();
+//        startLocationService();
         this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         mTripPagesActivity = this;
 //        loadDatabase();
