@@ -9,6 +9,7 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	public String id;
+	public String sessionId;
 	public String userName;
 	public String email;
 	public String firstName;
@@ -41,26 +42,26 @@ public class User implements Serializable {
             company = new Company(null);
             return;
         }
-		id = obj.getString("id");
-		userName = obj.getString("username");
-		email = obj.getString("email");
-		firstName = obj.getString("first_name");
-		lastName = obj.getString("last_name");
-		phone = obj.getString("phone");
-		countryCode = obj.getString("country_code");
-		currencyCode = obj.getString("currency_code");
-		ipAddress = obj.getString("ip_address");
-		lastIpAddress = obj.getString("last_ip_address");
-		languageCode = obj.getString("language_code");
-		role = obj.getString("role");
-		activated = obj.getString("activated");
-		activationCode = obj.getString("activation_code");
-		lastLoginAt = obj.getString("last_login_at");
-		activatedAt = obj.getString("activated_at");
-		createdAt = obj.getString("created_at");
-		updatedAt = obj.getString("updated_at");
-		token = obj.getString("token");
-		forgotPasswordToken = obj.getString("forgot_password_token");
+		id = obj.optString("id");
+		userName = obj.optString("username");
+		email = obj.optString("email");
+		firstName = obj.optString("first_name");
+		lastName = obj.optString("last_name");
+		phone = obj.optString("phone");
+		countryCode = obj.optString("country_code");
+		currencyCode = obj.optString("currency_code");
+		ipAddress = obj.optString("ip_address");
+		lastIpAddress = obj.optString("last_ip_address");
+		languageCode = obj.optString("language_code");
+		role = obj.optString("role");
+		activated = obj.optString("activated");
+		activationCode = obj.optString("activation_code");
+		lastLoginAt = obj.optString("last_login_at");
+		activatedAt = obj.optString("activated_at");
+		createdAt = obj.optString("created_at");
+		updatedAt = obj.optString("updated_at");
+		token = obj.optString("token");
+		forgotPasswordToken = obj.optString("forgot_password_token");
 		
 		if (obj.has("company")) {
 
@@ -72,7 +73,9 @@ public class User implements Serializable {
                 company = new Company(null);
             }
 		}
-		
+
+		sessionId = obj.optString("SessionId");
+		userName = obj.optString("UserName");
 	}
 
 }
