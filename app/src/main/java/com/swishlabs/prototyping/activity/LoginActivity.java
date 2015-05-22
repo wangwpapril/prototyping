@@ -17,6 +17,7 @@ import com.swishlabs.prototyping.data.api.callback.ControllerContentTask;
 import com.swishlabs.prototyping.data.api.callback.IControllerContentCallback;
 import com.swishlabs.prototyping.data.api.model.Connection;
 import com.swishlabs.prototyping.data.api.model.Constants;
+import com.swishlabs.prototyping.data.api.model.Profile;
 import com.swishlabs.prototyping.data.api.model.User;
 import com.swishlabs.prototyping.data.store.beans.UserTable;
 import com.swishlabs.prototyping.util.Enums;
@@ -356,11 +357,24 @@ public class LoginActivity extends BaseActivity {
         IControllerContentCallback icc = new IControllerContentCallback() {
 
             public void handleSuccess(String content) {
-                JSONObject profile;
+                JSONObject jsonObject;
+                Profile profile = new Profile();
                 try {
-                    profile = new JSONObject(content);
-                    //                   JSONObject ra = currencyInfo.getJSONObject("rates");
-                    //                 rate = currencyInfo.getJSONObject("rates").getDouble(currencyCode);
+                    jsonObject = new JSONObject(content);
+                    profile.setId(jsonObject.optString("id"));
+                    profile.setAvatarUrl(jsonObject.optString("profile_pic"));
+                    profile.setBackGroundUrl(jsonObject.optString("background_pic"));
+                    profile.setEmail(jsonObject.optString("Email"));
+                    profile.setFirstName(jsonObject.optString("FirstName"));
+                    profile.setLastName(jsonObject.optString("LastName"));
+                    profile.setUserName(jsonObject.optString("UserName"));
+                    profile.setOccupation(jsonObject.optString("occupation"));
+                    profile.setPhone(jsonObject.optString("phone"));
+                    profile.setLatitude(jsonObject.optDouble("latitude"));
+                    profile.setLongitude(jsonObject.optDouble("longitude"));
+
+                    getConnection();
+                    getOtherProfile();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -376,7 +390,7 @@ public class LoginActivity extends BaseActivity {
         String sessionId = SharedPreferenceUtil.getString(Enums.PreferenceKeys.sessionId.toString(), null);
 
         ControllerContentTask cct = new ControllerContentTask(
-                Constants.PROFILE_URL+"7"+"/" + Constants.FORMAT_JSON, icc,
+                Constants.PROFILE_URL+sessionId+"/" + Constants.FORMAT_JSON, icc,
                 Enums.ConnMethod.GET,false);
 
         String ss = null;
