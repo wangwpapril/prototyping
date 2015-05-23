@@ -1,6 +1,6 @@
 package com.swishlabs.prototyping.customViews.app;
 
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.swishlabs.prototyping.customViews.app.SlidingMenu;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

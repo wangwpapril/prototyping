@@ -13,7 +13,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.CanvasTransformer;
+import com.swishlabs.prototyping.R;
+
 
 public class CustomViewBehind extends ViewGroup {
 
@@ -28,7 +29,7 @@ public class CustomViewBehind extends ViewGroup {
 	private View mSecondaryContent;
 	private int mMarginThreshold;
 	private int mWidthOffset;
-	private CanvasTransformer mTransformer;
+	private SlidingMenu.CanvasTransformer mTransformer;
 	private boolean mChildrenEnabled;
 
 	public CustomViewBehind(Context context) {
@@ -45,7 +46,7 @@ public class CustomViewBehind extends ViewGroup {
 		mViewAbove = customViewAbove;
 	}
 
-	public void setCanvasTransformer(CanvasTransformer t) {
+	public void setCanvasTransformer(SlidingMenu.CanvasTransformer t) {
 		mTransformer = t;
 	}
 
