@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -115,6 +116,66 @@ public class ViewDestinationActivity extends ActionBarActivity {
         }
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if(mIntrepidMenu.mState==1) {
+            if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+//                View v = getCurrentFocus();
+                View v=findViewById(R.id.intrepidMenu);
+
+                if (isShouldHideInput(v, ev)) {
+
+                    mIntrepidMenu.snapToBottom();
+/*                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    }*/
+                }
+                return super.dispatchTouchEvent(ev);
+            }
+        }
+
+        if (getWindow().superDispatchTouchEvent(ev)) {
+            return true;
+        }
+        return onTouchEvent(ev);
+    }
+
+    public  boolean isShouldHideInput(View v, MotionEvent event) {
+//        if (v != null && (v instanceof EditText)) {
+        int[] leftTop = { 0, 0 };
+
+        v.getLocationInWindow(leftTop);
+        int left = leftTop[0];
+        int top = leftTop[1];
+        int bottom = top + v.getHeight();
+        int right = left + v.getWidth();
+        if (event.getX() > left && event.getX() < right
+                && event.getY() > top && event.getY() < bottom) {
+
+            return false;
+        } else {
+            return true;
+        }
+//        }
+/*        if (v != null && (v instanceof EditText)) {
+            int[] leftTop = { 0, 0 };
+
+            v.getLocationInWindow(leftTop);
+            int left = leftTop[0];
+            int top = leftTop[1];
+            int bottom = top + v.getHeight();
+            int right = left + v.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+
+                return false;
+            } else {
+                return true;
+            }
+        }*/
+//        return false;
+    }
 
 
     public void loadDatabase(){
