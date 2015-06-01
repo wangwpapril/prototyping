@@ -49,6 +49,9 @@ import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 
 
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
+import com.nineoldandroids.animation.ValueAnimator;
 import com.swishlabs.prototyping.R;
 
 import java.util.ArrayList;
@@ -57,9 +60,6 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.animation.ValueAnimator;
 
 import static com.nineoldandroids.view.ViewHelper.setAlpha;
 import static com.nineoldandroids.view.ViewHelper.setTranslationX;
