@@ -181,4 +181,13 @@
         android:layout_marginTop="20dip"
         android:textAlignment="center" />
 
+    <com.swishlabs.prototyping.customViews.SwitchButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/switchButton"
+        android:layout_below="@+id/sign_up"
+        android:layout_centerHorizontal="true"
+
+        />
+
 </RelativeLayout>
