@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="slide_menu_list">
+        <item>"My Profile"</item>
+        <item>"Default Setting"</item>
+        <item>"My Contacts"</item>
+        <item>"Sign Out"</item>
+        <item>"Help"</item>
+        <item>"How it Works"</item> 
+        <item>"About GrabOp"</item>
+        <item>"Terms of Use"</item>
+    </string-array>
+    
+    <string-array name="profile_moreinfo_list">
+        <item>"Trade Opportunities"</item>
+        <item>"Services"</item>
+    </string-array>
+        
+    <string-array name="profile_offer_want">
+        <item>"Offer"</item>
+        <item>"Want"</item>
+    </string-array>
+        
+    <integer-array name="pay_time_value_list">
+        <item>72</item>
+        <item>24</item>
+        <item>1</item>     
+    </integer-array>
+    
+    <integer-array name="slide_menu_id_list">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </integer-array>
+<!--      
+    <string-array name="attention_tabs">
+        <item>@string/my_favorite</item>
+        <item>@string/my_attention</item>
+    </string-array>
+    
+    <string-array name="star_anchor_home_tabs">
+        <item>@string/video</item>
+        <item>@string/tab_bless</item>
+        <item>@string/draft_my</item> 
+        <item>@string/favorite</item> 
+    </string-array>
+    
+    <string-array name="custom_tabs">
+        <item>@string/my_order</item>
+        <item>@string/my_accept_order</item>               
+    </string-array>
+    
+    <string-array name="home_tabs">
+        <item>@string/video</item>
+        <item>@string/my_custom_video</item> 
+        <item>@string/draft_my</item> 
+        <item>@string/favorite</item> 
+    </string-array>
+    
+    <string-array name="search_tabs">
+        <item>@string/video</item>
+        <item>@string/user</item>
+    </string-array>
+    
+    <string-array name="order_state_dsc">                       
+        <item>@string/order_state_verify</item>
+        <item>@string/order_state_release</item>
+        <item>@string/order_state_accept</item>
+        <item>@string/order_state_make</item>
+        <item>@string/order_state_confirm</item>
+        <item>@string/order_state_complete</item>
+        <item>@string/order_state_close</item>
+        <item>@string/order_state_rerecord</item>
+        <item>@string/order_state_refund</item>
+        <item>@string/order_state_comment</item>
+        <item>@string/order_not_pay</item>
+        <item>@string/order_pay_exception</item>
+    </string-array>
+    
+    <integer-array name="order_state">                       
+        <item>0</item>
+        <item>1</item>
+        <item>3</item>
+        <item>4</item>
+		<item>5</item>        
+    </integer-array>
+    
+    <integer-array name="order_assign_state">                       
+        <item>0</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+		<item>5</item>        
+    </integer-array>
+    
+    <string-array name="sex">
+        <item>@string/female</item>                       
+        <item>@string/male</item>        
+    </string-array>
+
+    <string-array name="video_mood">                       
+        <item>@string/mood_funny</item>
+        <item>@string/mood_humor</item>
+        <item>@string/mood_joyfull</item>
+    </string-array>
+    
+    <string-array name="video_type">
+        <item>@string/video_type_sing</item>                       
+        <item>@string/video_type_dance</item>        
+    </string-array>
+    -->
+</resources>
