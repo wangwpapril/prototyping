@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+import com.swishlabs.prototyping.activity.MainActivity;
 import com.swishlabs.prototyping.activity.SplashActivity;
 import com.swishlabs.prototyping.data.ServiceManager;
 import com.swishlabs.prototyping.data.store.Database;
@@ -14,11 +15,15 @@ import com.swishlabs.prototyping.util.AndroidLocationServices;
 import com.swishlabs.prototyping.util.DeviceInfoHelper;
 import com.swishlabs.prototyping.util.Enums;
 import com.swishlabs.prototyping.util.Logger;
+import com.swishlabs.prototyping.util.NotifyDispatcher;
 import com.swishlabs.prototyping.util.SharedPreferenceUtil;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class MyApplication extends Application implements UncaughtExceptionHandler{
@@ -39,6 +44,23 @@ public class MyApplication extends Application implements UncaughtExceptionHandl
     public Database mDatabase;
 
 	private static MyApplication instance;
+
+	//////////////////////////////
+	private boolean isInitOk = false;
+
+	private ExecutorService mExecutor = Executors.newCachedThreadPool();
+
+//	private UserInfo mOnlineUser;
+
+//	private FinalDb mFinalDb;
+
+	private List<Activity> mCacheTaskActivity = new ArrayList<Activity>();
+
+
+
+	private NotifyDispatcher<DataType> mNotifydispatcher = new NotifyDispatcher<DataType>();
+
+////////////////////////////
 	
 	public static MyApplication getInstance(){
 		return instance;
@@ -112,10 +134,10 @@ public class MyApplication extends Application implements UncaughtExceptionHandl
 	public static void setLoginStatus(boolean loginStatus) {
 		MyApplication.loginStatus = loginStatus;
 	}
-	
-	public void addActivity(Activity activity){
+
+/*	public void addActivity(Activity activity){
 		activityList.add(activity);
-	}
+	}*/
 	
 	public ArrayList<Activity> getActivities(){
 		refreshActivities();
@@ -179,4 +201,144 @@ public class MyApplication extends Application implements UncaughtExceptionHandl
         System.exit(1);	
 		
 	}
+
+	/////////////////////////////////////
+	/**
+	 * Execute a asynchronize task.
+	 *
+	 * @param task
+	 */
+	public void execute(Runnable task) {
+		mExecutor.execute(task);
+	}
+
+	public void addActivity(Activity item) {
+		mCacheTaskActivity.add(item);
+	}
+
+	public void removeActivity(Activity item) {
+		mCacheTaskActivity.remove(item);
+	}
+
+/*	public void removeMoreActivity(){
+		for (Activity item : mCacheTaskActivity) {
+			if(item instanceof MoreActivity){
+				item.finish();
+				break;
+			}
+		}
+	}*/
+
+	public void removeAllExceptMain(){
+		for (Activity item : mCacheTaskActivity) {
+			if(item instanceof MainActivity){
+
+			}else{
+				item.finish();
+			}
+		}
+	}
+
+	public List<Activity> getActivityList(){
+		return mCacheTaskActivity;
+	}
+
+/*	public void exit() {
+		for (Activity item : mCacheTaskActivity) {
+			item.finish();
+		}
+	}*/
+
+
+	public void registerDataListener(DataType type, NotifyDispatcher.IDataSourceListener<DataType> listener) {
+		mNotifydispatcher.registerDataListener(type, listener);
+	}
+
+	public void unRegisterDataListener(NotifyDispatcher.IDataSourceListener<DataType> listener) {
+		mNotifydispatcher.unRegisterDataListener(listener);
+	}
+
+	/**
+	 * Notify a data source changed for each registered listener by speical
+	 * type.
+	 *
+	 * @param type
+	 */
+	public void notifyDataChanged(DataType type) {
+//		LogUtil.d(TAG, " try to notify " + type.toString());
+		mNotifydispatcher.notifyDataChanged(type);
+	}
+
+
+
+	/**
+	 * Define some state to mark which type data has changed.
+	 *
+	 */
+	public enum  DataType{
+		/**
+		 * online user info changed
+		 */
+		userinfo,
+		/**
+		 * custom order data changed
+		 */
+		order,
+
+		/**
+		 * accept order data changed
+		 */
+		accpet_order,
+		/**
+		 * attention relationship changed.
+		 */
+		attention,
+		/**
+		 * push a message.
+		 */
+		notify_msg,
+		/**
+		 * push a order info
+		 */
+		notify_order,
+
+		/**
+		 * switch order tab page.
+		 */
+		switch_order_tab,
+
+		/**
+		 * switch square tab page.
+		 */
+		switch_square_tab,
+
+		/**
+		 * switch myself tab page.
+		 */
+		switch_myself_publish_tab,
+		/**
+		 * Draft data changed.
+		 */
+		notify_draft,
+
+		/**
+		 * A normal video posted successfully
+		 */
+		video_posted,
+		/**
+		 * A custom video posted successfully
+		 */
+		video_custom_posted,
+		/**
+		 * A bless video posted successfully
+		 */
+		video_bless_posted,
+
+		/**
+		 * A bless video posted successfully
+		 */
+		anchor_apply_passed
+
+	};
+//////////////////////////////////////
 }
