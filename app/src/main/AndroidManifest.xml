@@ -162,6 +162,11 @@
             android:name=".activity.BaseFragmentActivity"
             android:label="@string/title_activity_base_fragment" >
         </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
