@@ -52,8 +52,6 @@
     <string name="network_error">Network Error!</string>
     <string name="invalid_data_format">Invalid Data Format</string>
 
-    <string name="title_activity_main">MainActivity</string>
-
 
 
 </resources>
