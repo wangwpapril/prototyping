@@ -20,6 +20,8 @@ import com.swishlabs.prototyping.data.api.model.Constants;
 import com.swishlabs.prototyping.data.api.model.Profile;
 import com.swishlabs.prototyping.data.api.model.User;
 import com.swishlabs.prototyping.data.store.beans.UserTable;
+import com.swishlabs.prototyping.net.IResponse;
+import com.swishlabs.prototyping.net.WebApi;
 import com.swishlabs.prototyping.util.Enums;
 import com.swishlabs.prototyping.util.SharedPreferenceUtil;
 import com.swishlabs.prototyping.util.StringUtil;
@@ -38,14 +40,18 @@ public class LoginActivity extends BaseActivity {
 	private EditText emailTextField, passwordTextField;
 	private TextView signUp,learnMore,termsOfUseBtn;
 
+    protected WebApi mWebApi;
+
+
 
     @Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.login_layout);
 		MyApplication.getInstance().addActivity(this);
+        mWebApi = WebApi.getInstance(this);
 
-		initView();
+        initView();
 	}
 
 	private void initView(){
@@ -87,8 +93,9 @@ public class LoginActivity extends BaseActivity {
             String email = emailTextField.getText().toString();
             String password = passwordTextField.getText().toString();
 
-            logIn(email, password);
+//            logIn(email, password);
 //            logInOld(email,password);
+            doLogin(email, password);
             return;
 
         } else if (v == signUp) {
@@ -520,6 +527,78 @@ public class LoginActivity extends BaseActivity {
     }
 
 
+    private void doLogin(String phoneNum, String psw) {
+//        showProgressDlg(R.string.login_ing);
+        mWebApi.login(phoneNum, psw, new IResponse<String>() {
+
+            @Override
+            public void onSuccessed(final String tokenInfo) {
+                return;
+/*                if (!TextUtils.isEmpty(tokenInfo)) {
+//                    mWebApi.setToken(tokenInfo);
+//                    PreferenceUtils.writeStrConfig(Constant.PreferKeys.KEY_TOKEN, tokenInfo, getBaseContext());
+  //                  String cid = PreferenceUtils.readStrConfig(Constant.PreferKeys.KEY_GETUI_CLIENTID, getBaseContext(),"0");
+                    mWebApi.postClientID(cid, null);
+                    mWebApi.getUserInfo(-1, new IResponse<UserInfo>() {
+
+                        @Override
+                        public void onSuccessed(UserInfo result) {
+
+                            PreferenceUtils.writeIntConfig(Constant.PreferKeys.KEY_LOGIN_WAY, 0, getBaseContext());
+                            PreferenceUtils.writeBoolConfig(Constant.PreferKeys.KEY_BACK_TO_SQUARE, true, getBaseContext());
+
+                            ToastUtil.showToast(getBaseContext(), getString(R.string.login_success));
+                            mApp.setOnlineUser(result);
+                            setResult(RESULT_OK);
+                            finish();
+
+//							Intent intent = new Intent(getBaseContext(), MainActivity.class);
+//							intent.putExtra(EXTRA, mLoginType);
+//							intent.putExtra(FLAG_LOGIN, true);
+//							startActivity(intent);
+                        }
+
+                        @Override
+                        public void onFailed(String code, String errMsg) {
+                            dismissProgressDlg();
+                            mWebApi.setToken("");
+                            ToastUtil.showToast(mApp, errMsg);
+                        }
+
+                        @Override
+                        public UserInfo asObject(String rspStr) {
+                            UserInfo info= GsonUtil.jsonToObject(UserInfo.class, rspStr);
+                            return info;
+                        }
+                    });
+
+                } else {
+                    ToastUtil.showToast(getBaseContext(), getString(R.string.login_failed));
+                    dismissProgressDlg();
+                }*/
+            }
+
+            @Override
+            public void onFailed(String code, String errMsg) {
+//                dismissProgressDlg();
+//                ToastUtil.showToast(getBaseContext(), errMsg);
+            }
+
+            @Override
+            public String asObject(String rspStr) {
+                try {
+                    JSONObject json = new JSONObject(rspStr);
+  //                  return json.getString("token");
+                    return "test";
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                return "";
+            }
+        });
+    }
 
 
 }

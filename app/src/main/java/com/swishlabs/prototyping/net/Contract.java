@@ -198,8 +198,8 @@ public class Contract {
 	}
 
 	interface AccountKeys {
-		public static final String PHONE = "phone";
-		public static final String PASSWORD = "password";
+		public static final String USERNAME = "UserName";
+		public static final String PASSWORD = "Password";
 		public static final String VERIFYCODE = "verifycode";
 		public static final String OPENDID = "openid";
 	}

@@ -127,15 +127,15 @@ class WebApiImpl extends WebApi {
 
 				JSONObject json = new JSONObject(rawStr);
 				Log.w("PAL_HTTP", "body : " + json.toString());
-				int code = json.getInt("result");
+/*				int code = json.getInt("result");
 				String msg = json.getString("msg");
 				if (code != 0) {
 					onError(requestId, code, msg.getBytes(HTTP.UTF_8), http);
 					return;
 				}
-
-				String content = json.optString("content");
-				object = rsp.asObject(content);
+*/
+//				String content = json.optString("content");
+				object = rsp.asObject(json.toString());
 			} catch (final Exception e) {
 				e.printStackTrace();
 				try {
@@ -318,18 +318,20 @@ class WebApiImpl extends WebApi {
 		params.put(ChangePwdKey.NEWPWD, newpwd);
 		params.put(ChangePwdKey.OLDPWD, oldpwd);
 		post(FuncUrls.CHANGE_PASSSWORD, buildHeader(), params, listener);
-	}
+	}*/
 
 	@Override
-	public <T> void login(String phoneNum, String password,
+	public <T> void login(String userName, String passWord,
 			IResponse<T> listener) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put(AccountKeys.PASSWORD, password);
-		params.put(AccountKeys.PHONE, phoneNum);
-		post(FuncUrls.LOGIN, buildHeader(), params, listener);
+		params.put(Contract.AccountKeys.PASSWORD, passWord);
+		params.put(Contract.AccountKeys.USERNAME, userName);
+//		post(FuncUrls.LOGIN, buildHeader(), params, listener);
+
+		post("http://grabopws.azurewebsites.net/auth?format=json", buildHeader(), params, listener);
 	}
 
-	@Override
+/*	@Override
 	public <T> void sendCode(String phoneNum, IResponse<T> listener) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(AccountKeys.PHONE, phoneNum);
