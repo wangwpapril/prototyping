@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/topView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <RelativeLayout 
+        android:id="@+id/viewLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white">
+        <ImageView
+	        android:id="@+id/drawerImage"
+	        android:layout_width="43dp"
+	        android:layout_height="43dp"
+	        android:layout_marginLeft="10dp"
+	        android:src="@drawable/ic_drawer" />
+	
+	    <ImageView
+	        android:id="@+id/grabopLogoHeader"
+	        android:layout_width="168dp"
+	        android:layout_height="53dp"
+	        android:layout_centerHorizontal="true"
+	        android:src="@drawable/grabop_logo" />
+	
+	    <RelativeLayout
+	        android:id="@+id/messageImageLayout"
+	        android:layout_width="50dp"
+	        android:layout_height="50dp"
+	        android:layout_alignParentRight="true"
+	        android:layout_centerVertical="true"
+	        android:layout_marginRight="10dp"
+	        android:background="@drawable/ic_notification" >
+	        
+        </RelativeLayout>
+	    
+    </RelativeLayout>
+    
+
+</RelativeLayout>
