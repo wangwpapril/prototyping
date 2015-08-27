@@ -54,8 +54,8 @@ public abstract class WebApi {
 	public abstract <T> void forgetPsw(String phoneNum, String password, String code, IResponse<T> listener);
 	
 	public abstract <T> void changePsw(String oldPsw, String newPsw, IResponse<T> listener);
-
-	public abstract <T> void login(String phoneNum, String password, IResponse<T> listener);
+*/
+	public abstract <T> void login(String userName, String passWord, IResponse<T> listener);
 	
 	/**
 	 * Login for third authroized.
