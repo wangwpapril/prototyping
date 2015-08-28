@@ -290,18 +290,17 @@ class WebApiImpl extends WebApi {
 		return header;
 	}
 
-/*	@Override
-	public <T> void register(int type, String phoneNum, String password,
-			String code, IResponse<T> listener) {
+	@Override
+	public <T> void register(String userName, String email, String password,
+			 IResponse<T> listener) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put(AccountKeys.PASSWORD, password);
-		params.put(AccountKeys.PHONE, phoneNum);
-		params.put(AccountKeys.VERIFYCODE, code);
-		params.put(CommonKeys.TYPE, String.valueOf(type));
-		post(FuncUrls.REGISTER, buildHeader(), params, listener);
+		params.put(Contract.AccountKeys.PASSWORD, password);
+		params.put(Contract.AccountKeys.USERNAME, userName);
+		params.put(Contract.UserInfoKeys.EMAIL, email);
+		post(Contract.FuncUrls.REGISTER + Contract.FORMAT_JSON, buildHeader(), params, listener);
 	}
 
-	@Override
+/*	@Override
 	public <T> void forgetPsw(String phoneNum, String password, String code,
 			IResponse<T> listener) {
 		Map<String, String> params = new HashMap<String, String>();
@@ -326,9 +325,9 @@ class WebApiImpl extends WebApi {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(Contract.AccountKeys.PASSWORD, passWord);
 		params.put(Contract.AccountKeys.USERNAME, userName);
-//		post(FuncUrls.LOGIN, buildHeader(), params, listener);
+		post(Contract.FuncUrls.LOGIN + Contract.FORMAT_JSON , buildHeader(), params, listener);
 
-		post("http://grabopws.azurewebsites.net/auth?format=json", buildHeader(), params, listener);
+//		post("http://grabopws.azurewebsites.net/auth?format=json", buildHeader(), params, listener);
 	}
 
 /*	@Override

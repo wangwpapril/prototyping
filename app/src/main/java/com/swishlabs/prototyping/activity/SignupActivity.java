@@ -1,12 +1,5 @@
 package com.swishlabs.prototyping.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,8 +22,17 @@ import com.swishlabs.prototyping.data.api.callback.ControllerContentTask;
 import com.swishlabs.prototyping.data.api.callback.IControllerContentCallback;
 import com.swishlabs.prototyping.data.api.model.Country;
 import com.swishlabs.prototyping.data.api.model.User;
+import com.swishlabs.prototyping.net.IResponse;
+import com.swishlabs.prototyping.net.WebApi;
 import com.swishlabs.prototyping.util.Enums;
 import com.swishlabs.prototyping.util.StringUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SignupActivity extends BaseActivity {
@@ -62,6 +64,8 @@ public class SignupActivity extends BaseActivity {
     private String token = null;
 	private List<String> countryNames = null, countryCodes = null;
 
+	private WebApi mWebApi;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +73,10 @@ public class SignupActivity extends BaseActivity {
 		fetchCountries();
 		this.setContentView(R.layout.signup_layout);
 		initView();
+
+		mWebApi = WebApi.getInstance(this);
+
+		doSignup();
 	}
 	
 	private void fetchCountries() {
@@ -349,7 +357,7 @@ public class SignupActivity extends BaseActivity {
 		}
 		
 		cct.execute(signUp.toString());
-        Log.d("signUp data",signUp.toString());
+        Log.d("signUp data", signUp.toString());
 
 	}
 	
@@ -442,4 +450,78 @@ public class SignupActivity extends BaseActivity {
 		cct.execute(send.toString());
         Log.d("email send.json", send.toString());
 	}
+
+	private void doSignup() {
+//        showProgressDlg(R.string.login_ing);
+		mWebApi.register("newapptest", "newapptest@hotmail.com", "1234", new IResponse<String>() {
+
+			@Override
+			public void onSuccessed(final String tokenInfo) {
+				return;
+/*                if (!TextUtils.isEmpty(tokenInfo)) {
+//                    mWebApi.setToken(tokenInfo);
+//                    PreferenceUtils.writeStrConfig(Constant.PreferKeys.KEY_TOKEN, tokenInfo, getBaseContext());
+  //                  String cid = PreferenceUtils.readStrConfig(Constant.PreferKeys.KEY_GETUI_CLIENTID, getBaseContext(),"0");
+                    mWebApi.postClientID(cid, null);
+                    mWebApi.getUserInfo(-1, new IResponse<UserInfo>() {
+
+                        @Override
+                        public void onSuccessed(UserInfo result) {
+
+                            PreferenceUtils.writeIntConfig(Constant.PreferKeys.KEY_LOGIN_WAY, 0, getBaseContext());
+                            PreferenceUtils.writeBoolConfig(Constant.PreferKeys.KEY_BACK_TO_SQUARE, true, getBaseContext());
+
+                            ToastUtil.showToast(getBaseContext(), getString(R.string.login_success));
+                            mApp.setOnlineUser(result);
+                            setResult(RESULT_OK);
+                            finish();
+
+//							Intent intent = new Intent(getBaseContext(), MainActivity.class);
+//							intent.putExtra(EXTRA, mLoginType);
+//							intent.putExtra(FLAG_LOGIN, true);
+//							startActivity(intent);
+                        }
+
+                        @Override
+                        public void onFailed(String code, String errMsg) {
+                            dismissProgressDlg();
+                            mWebApi.setToken("");
+                            ToastUtil.showToast(mApp, errMsg);
+                        }
+
+                        @Override
+                        public UserInfo asObject(String rspStr) {
+                            UserInfo info= GsonUtil.jsonToObject(UserInfo.class, rspStr);
+                            return info;
+                        }
+                    });
+
+                } else {
+                    ToastUtil.showToast(getBaseContext(), getString(R.string.login_failed));
+                    dismissProgressDlg();
+                }*/
+			}
+
+			@Override
+			public void onFailed(String code, String errMsg) {
+//                dismissProgressDlg();
+//                ToastUtil.showToast(getBaseContext(), errMsg);
+			}
+
+			@Override
+			public String asObject(String rspStr) {
+				try {
+					JSONObject json = new JSONObject(rspStr);
+					//                  return json.getString("token");
+					return "test";
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				return "";
+			}
+		});
+	}
+
 }

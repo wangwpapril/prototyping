@@ -49,8 +49,8 @@ public abstract class WebApi {
 	 * @param code
 	 * @param listener
 	 */
-/*	public abstract <T> void register(int type,String phoneNum, String password, String code, IResponse<T> listener);
-
+	public abstract <T> void register(String userName, String email, String password, IResponse<T> listener);
+/*
 	public abstract <T> void forgetPsw(String phoneNum, String password, String code, IResponse<T> listener);
 	
 	public abstract <T> void changePsw(String oldPsw, String newPsw, IResponse<T> listener);
