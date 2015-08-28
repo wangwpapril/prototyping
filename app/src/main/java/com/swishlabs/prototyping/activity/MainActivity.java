@@ -1,21 +1,40 @@
 package com.swishlabs.prototyping.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
+import com.swishlabs.prototyping.fragment.BaseFragment;
 
 public class MainActivity extends BaseFragmentActivity {
 
 
+    private BaseFragment mFragmentPreHome;
+    private BaseFragment mCurrFragment;
+    private MyApplication mApp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        mFragmentPreHome = BaseFragment.newInstance(null,null);
+        switchFragment(mFragmentPreHome);
     }
+
+    void switchFragment(BaseFragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.container, fragment, fragment.getClass().getSimpleName());
+        ft.commitAllowingStateLoss();
+        mCurrFragment = fragment;
+    }
+
 
 
     @Override

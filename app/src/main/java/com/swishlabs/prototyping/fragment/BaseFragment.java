@@ -1,15 +1,18 @@
 package com.swishlabs.prototyping.fragment;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
+import com.swishlabs.prototyping.net.WebApi;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +33,11 @@ public class BaseFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private MyApplication mApp;
+    private WebApi mWebApi;
+    private Activity mActivity;
+    protected Handler mHandler = new Handler();
 
     /**
      * Use this factory method to create a new instance of
@@ -60,6 +68,11 @@ public class BaseFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        mActivity = getActivity();
+        mApp = (MyApplication)mActivity.getApplication();
+        mWebApi = WebApi.getInstance(mActivity);
+
     }
 
     @Override

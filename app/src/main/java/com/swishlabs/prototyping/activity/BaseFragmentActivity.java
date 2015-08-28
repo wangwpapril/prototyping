@@ -1,5 +1,6 @@
 package com.swishlabs.prototyping.activity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,8 +16,9 @@ import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.adapter.SlideMenuAdapter;
 import com.swishlabs.prototyping.customViews.app.SlidingFragmentActivity;
 import com.swishlabs.prototyping.customViews.app.SlidingMenu;
+import com.swishlabs.prototyping.fragment.BaseFragment;
 
-public class BaseFragmentActivity extends SlidingFragmentActivity {
+public class BaseFragmentActivity extends SlidingFragmentActivity implements BaseFragment.OnFragmentInteractionListener {
 
     private SlideMenuAdapter mSlideMenuAdapter;
     private RelativeLayout mBehindMenu;
@@ -198,4 +200,8 @@ public class BaseFragmentActivity extends SlidingFragmentActivity {
         mSlidingMenuIds = getResources().getIntArray(R.array.slide_menu_id_list);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
