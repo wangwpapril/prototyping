@@ -94,6 +94,14 @@ public class Contract {
 		public static final String NEWPWD = "newpwd";
 	}
 
+	interface ConnectionKey {
+		public static final String FROMID = "fromid";
+		public static final String TOID = "toid";
+		public static final String REQUESTDATE = "dateConnRequested";
+		public static final String CONFIRMEDDATE = "dateConnConfirmed";
+		public static final String STATUS = "status";
+		public static final String NOTIFIED = "notified";
+	}
 	
 	interface UserInfoKeys {
 		public static final String ID = "id";

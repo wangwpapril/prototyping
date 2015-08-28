@@ -28,7 +28,7 @@ import java.util.concurrent.Executors;
 
 public class MyApplication extends Application implements UncaughtExceptionHandler{
     
-	public static String TAG="Travel Smart Application";
+	public static String TAG="MyApplication";
 //	public User currentUserInfo = null;
 //	private UserService userService = null;
 	private static DeviceInfoHelper deviceInfoHelper =null;

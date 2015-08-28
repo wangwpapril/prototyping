@@ -1,4 +1,4 @@
-package com.swishlabs.prototyping.data.api.model;
+package com.swishlabs.prototyping.entity;
 
 /**
  * Created by wwang on 15-05-22.
@@ -16,6 +16,7 @@ public class Profile {
     public String phone;
     public double longitude;
     public double latitude;
+    public String skillSet;
 
     public String getId() { return id; }
 
@@ -54,6 +55,8 @@ public class Profile {
     public String getOccupation() {
         return occupation;
     }
+
+    public String getSkillSet() { return skillSet; }
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
@@ -97,5 +100,9 @@ public class Profile {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public void setSkillSet(String skillSet) {
+        this.skillSet = skillSet;
     }
 }

@@ -17,7 +17,7 @@ import com.swishlabs.prototyping.data.api.callback.ControllerContentTask;
 import com.swishlabs.prototyping.data.api.callback.IControllerContentCallback;
 import com.swishlabs.prototyping.data.api.model.Connection;
 import com.swishlabs.prototyping.data.api.model.Constants;
-import com.swishlabs.prototyping.data.api.model.Profile;
+import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.data.api.model.User;
 import com.swishlabs.prototyping.data.store.beans.UserTable;
 import com.swishlabs.prototyping.net.IResponse;
@@ -475,8 +475,9 @@ public class LoginActivity extends BaseActivity {
         };
 
         String sessionId = SharedPreferenceUtil.getString(Enums.PreferenceKeys.sessionId.toString(), null);
-        String url = Constants.PROFILE_URL+sessionId+"/connections" + "?offset=" +
-                "0" + "&format=json";
+//        String url = Constants.PROFILE_URL+sessionId+"/connections" + "?offset=" +
+  //              "0" + "&format=json";
+        String url = Constants.PROFILE_URL + "me";
 
         ControllerContentTask cct = new ControllerContentTask(
                 url, icc,
@@ -533,6 +534,8 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onSuccessed(final String tokenInfo) {
+                getConnection();
+                getOtherProfile();
                 return;
 /*                if (!TextUtils.isEmpty(tokenInfo)) {
 //                    mWebApi.setToken(tokenInfo);
@@ -588,7 +591,10 @@ public class LoginActivity extends BaseActivity {
             public String asObject(String rspStr) {
                 try {
                     JSONObject json = new JSONObject(rspStr);
-  //                  return json.getString("token");
+                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.sessionId.toString(), json.getString("SessionId"));
+
+
+                    //                  return json.getString("token");
                     return "test";
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
