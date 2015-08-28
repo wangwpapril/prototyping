@@ -8,22 +8,22 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 /**
- * 这个类定义了Header和Footer的共通行为
+ * define common functions for Header and Footer
  * 
- * @author Li Hong
- * @since 2013-8-16
+ * @author
+ * @since
  */
 public abstract class LoadingLayout extends FrameLayout implements ILoadingLayout {
 
-	/** 容器布局 */
+	/**  */
 	private View mContainer;
-	/** 当前的状态 */
+	/** current state */
 	private State mCurState = State.NONE;
-	/** 前一个状态 */
+	/** previous state */
 	private State mPreState = State.NONE;
 
 	/**
-	 * 构造方法
+	 * construct
 	 * 
 	 * @param context
 	 *            context
@@ -33,7 +33,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 	}
 
 	/**
-	 * 构造方法
+	 * construct
 	 * 
 	 * @param context
 	 *            context
@@ -45,7 +45,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 	}
 
 	/**
-	 * 构造方法
+	 * construct
 	 * 
 	 * @param context
 	 *            context
@@ -61,7 +61,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 	}
 
 	/**
-	 * 初始化
+	 * initialization
 	 * 
 	 * @param context
 	 *            context
@@ -77,7 +77,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 	}
 
 	/**
-	 * 显示或隐藏这个布局
+	 * show/hide this layout
 	 * 
 	 * @param show
 	 *            flag
@@ -102,50 +102,50 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 	}
 
 	/**
-	 * 设置最后更新的时间文本
+	 * set last updated text
 	 * 
 	 * @param label
-	 *            文本
+	 *
 	 */
 	public void setLastUpdatedLabel(CharSequence label) {
 
 	}
 
 	/**
-	 * 设置加载中的图片
+	 * set loading immage
 	 * 
 	 * @param drawable
-	 *            图片
+	 *
 	 */
 	public void setLoadingDrawable(Drawable drawable) {
 
 	}
 
 	/**
-	 * 设置拉动的文本，典型的是“下拉可以刷新”
+	 * set pull prompt text”
 	 * 
 	 * @param pullLabel
-	 *            拉动的文本
+	 *
 	 */
 	public void setPullLabel(CharSequence pullLabel) {
 
 	}
 
 	/**
-	 * 设置正在刷新的文本，典型的是“正在刷新”
+	 * set " refreshing"
 	 * 
 	 * @param refreshingLabel
-	 *            刷新文本
+	 *
 	 */
 	public void setRefreshingLabel(CharSequence refreshingLabel) {
 
 	}
 
 	/**
-	 * 设置释放的文本，典型的是“松开可以刷新”
+	 * set "release to refresh"
 	 * 
 	 * @param releaseLabel
-	 *            释放文本
+	 *
 	 */
 	public void setReleaseLabel(CharSequence releaseLabel) {
 
@@ -171,21 +171,21 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 	}
 
 	/**
-	 * 得到前一个状态
+	 *
 	 * 
-	 * @return 状态
+	 * @return
 	 */
 	protected State getPreState() {
 		return mPreState;
 	}
 
 	/**
-	 * 当状态改变时调用
+	 *
 	 * 
 	 * @param curState
-	 *            当前状态
+	 *
 	 * @param oldState
-	 *            老的状态
+	 *
 	 */
 	protected void onStateChanged(State curState, State oldState) {
 		switch (curState) {
@@ -213,35 +213,35 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 	}
 
 	/**
-	 * 当状态设置为{@link State#RESET}时调用
+	 * {@link State#RESET}
 	 */
 	protected void onReset() {
 
 	}
 
 	/**
-	 * 当状态设置为{@link State#PULL_TO_REFRESH}时调用
+	 * {@link State#PULL_TO_REFRESH}
 	 */
 	protected void onPullToRefresh() {
 
 	}
 
 	/**
-	 * 当状态设置为{@link State#RELEASE_TO_REFRESH}时调用
+	 * {@link State#RELEASE_TO_REFRESH}
 	 */
 	protected void onReleaseToRefresh() {
 
 	}
 
 	/**
-	 * 当状态设置为{@link State#REFRESHING}时调用
+	 * {@link State#REFRESHING}
 	 */
 	protected void onRefreshing() {
 
 	}
 
 	/**
-	 * 当状态设置为{@link State#NO_MORE_DATA}时调用
+	 * {@link State#NO_MORE_DATA}
 	 */
 	protected void onNoMoreData() {
 
@@ -252,20 +252,20 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 	}
 
 	/**
-	 * 得到当前Layout的内容大小，它将作为一个刷新的临界点
+	 * get the height of the current layout
 	 * 
-	 * @return 高度
+	 * @return height
 	 */
 	public abstract int getContentSize();
 
 	/**
-	 * 创建Loading的View
+	 * create Loading view
 	 * 
 	 * @param context
 	 *            context
 	 * @param attrs
 	 *            attrs
-	 * @return Loading的View
+	 * @return Loading View
 	 */
 	protected abstract View createLoadingView(Context context, AttributeSet attrs);
 }

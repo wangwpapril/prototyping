@@ -15,30 +15,30 @@ import com.swishlabs.prototyping.R;
 
 
 /**
- * 这个类封装了下拉刷新的布局
+ * This class is for pull up refresh layout
  */
 public class HeaderLoadingLayout extends LoadingLayout {
-    /** 旋转动画时间 */
+    /**  */
     private static final int ROTATE_ANIM_DURATION = 150;
-    /**Header的容器*/
+    /**Header Container*/
     private View mHeaderContainer;
-    /**箭头图片*/
+    /***/
     private ImageView mArrowImageView;
-    /**进度条*/
+    /**Progress bar*/
     private ProgressBar mProgressBar;
-    /**状态提示TextView*/
+    /**Status hint TextView*/
     private TextView mHintTextView;
-    /**最后更新时间的TextView*/
+    /***/
     private TextView mHeaderTimeView;
-    /**最后更新时间的标题*/
+    /***/
     private TextView mHeaderTimeViewTitle;
-    /**向上的动画*/
+    /**up animation*/
     private Animation mRotateUpAnim;
-    /**向下的动画*/
+    /**down animation*/
     private Animation mRotateDownAnim;
     
     /**
-     * 构造方法
+     * Construct
      * 
      * @param context context
      */
@@ -48,7 +48,7 @@ public class HeaderLoadingLayout extends LoadingLayout {
     }
 
     /**
-     * 构造方法
+     * Construct
      * 
      * @param context context
      * @param attrs attrs
@@ -59,7 +59,7 @@ public class HeaderLoadingLayout extends LoadingLayout {
     }
 
     /**
-     * 初始化
+     * Initialize
      * 
      * @param context context
      */
@@ -73,7 +73,7 @@ public class HeaderLoadingLayout extends LoadingLayout {
         
         float pivotValue = 0.5f;    // SUPPRESS CHECKSTYLE
         float toDegree = 180f;     // SUPPRESS CHECKSTYLE
-        // 初始化旋转动画
+        // initialize rotation animation
         mRotateUpAnim = new RotateAnimation(0.0f, toDegree, Animation.RELATIVE_TO_SELF, pivotValue,
                 Animation.RELATIVE_TO_SELF, pivotValue);
         mRotateUpAnim.setDuration(ROTATE_ANIM_DURATION);
@@ -86,7 +86,7 @@ public class HeaderLoadingLayout extends LoadingLayout {
 
     @Override
     public void setLastUpdatedLabel(CharSequence label) {
-        // 如果最后更新的时间的文本是空的话，隐藏前面的标题
+        // if the text of the last updated time is empty, hide the title
 		if (TextUtils.isEmpty(label)) {
 			mHeaderTimeViewTitle.setVisibility(View.GONE);
 			mHeaderTimeView.setVisibility(View.GONE);

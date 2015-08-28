@@ -19,23 +19,23 @@ import com.swishlabs.prototyping.R;
 
 
 /**
- * 这个类封装了下拉刷新的布局
+ * This class is for pull up refresh layout
  * 
  */
 public class FooterLoadingLayout extends LoadingLayout {
-    /**旋转动画的时间*/
+    /**duration of the rotating animation*/
     static final int ROTATION_ANIMATION_DURATION = 800;
-    /**动画插值*/
+    /**Interpolator for animation*/
     static final Interpolator ANIMATION_INTERPOLATOR = new LinearInterpolator();
-    /**Header的容器*/
+    /**Header container*/
     private View mHeaderContainer;
-    /**箭头图片*/
+    /**Arrow image*/
     private ImageView mArrowImageView;
-    /**状态提示TextView*/
+    /**Status hint TextView*/
     private TextView mHintTextView;
-    /**最后更新时间的TextView*/
+    /**last update time TextView*/
     private TextView mHeaderTimeView;
-    /**最后更新时间的标题*/
+    /**last time Header*/
     private TextView mHeaderTimeViewTitle;
     
     private TextView mNomoreDataContent;
@@ -55,7 +55,7 @@ public class FooterLoadingLayout extends LoadingLayout {
     boolean isHasMoreData = true;
     
     /**
-     * 构造方法
+     * Construct
      * 
      * @param context context
      */
@@ -65,7 +65,7 @@ public class FooterLoadingLayout extends LoadingLayout {
     }
 
     /**
-     * 构造方法
+     * Construct
      * 
      * @param context context
      * @param attrs attrs
@@ -76,7 +76,7 @@ public class FooterLoadingLayout extends LoadingLayout {
     }
 
     /**
-     * 初始化
+     * initial
      * 
      * @param context context
      */
@@ -105,7 +105,7 @@ public class FooterLoadingLayout extends LoadingLayout {
 
     @Override
     public void setLastUpdatedLabel(CharSequence label) {
-        // 如果最后更新的时间的文本是空的话，隐藏前面的标题
+        // if the text of the last updated time is empty, hide the title
     	mHeaderTimeViewTitle.setVisibility(View.INVISIBLE);
 //        mHeaderTimeViewTitle.setVisibility(TextUtils.isEmpty(label) ? View.INVISIBLE : View.VISIBLE);
         mHeaderTimeView.setText(label);
@@ -185,7 +185,7 @@ public class FooterLoadingLayout extends LoadingLayout {
     }
     
     /**
-     * 重置动画
+     * reset animation
      */
     private void resetRotation() {
     	Log.i("load", "resetRotation");

@@ -1,14 +1,14 @@
 package com.swishlabs.prototyping.customViews.pullrefresh;
 
 /**
- * 下拉刷新和上拉加载更多的界面接口
+ * UI interface
  * 
- * @author Li Hong
- * @since 2013-7-29
+ * @author
+ * @since
  */
 public interface ILoadingLayout {
 	/**
-	 * 当前的状态
+	 * current state
 	 */
 	public enum State {
 
@@ -55,32 +55,32 @@ public interface ILoadingLayout {
 	}
 
 	/**
-	 * 设置当前状态，派生类应该根据这个状态的变化来改变View的变化
+	 * current state, sub-Class should change the view accordingly
 	 * 
 	 * @param state
-	 *            状态
+	 *
 	 */
 	public void setState(State state);
 
 	/**
-	 * 得到当前的状态
+	 *
 	 * 
-	 * @return 状态
+	 * @return State
 	 */
 	public State getState();
 
 	/**
-	 * 得到当前Layout的内容大小，它将作为一个刷新的临界点
+	 * Get the current layout height, which is the threshold for the refresh
 	 * 
-	 * @return 高度
+	 * @return height
 	 */
 	public int getContentSize();
 
 	/**
-	 * 在拉动时调用
+	 * Called when pulling
 	 * 
 	 * @param scale
-	 *            拉动的比例
+	 *
 	 */
 	public void onPull(float scale);
 }

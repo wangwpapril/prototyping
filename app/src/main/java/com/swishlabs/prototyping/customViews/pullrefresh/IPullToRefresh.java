@@ -4,104 +4,102 @@ package com.swishlabs.prototyping.customViews.pullrefresh;
 
 
 
-import android.content.Context;
-import android.util.AttributeSet;
 import android.view.View;
 
 
 /**
- * 定义了拉动刷新的接口
+ * Interface for refresh
  * 
- * @author Li Hong
- * @since 2013-8-22
+ * @author
+ * @since
  * @param <T>
  */
 public interface IPullToRefresh<T extends View> {
     
     /**
-     * 设置当前下拉刷新是否可用
+     * enable the down refresh
      * 
-     * @param pullRefreshEnabled true表示可用，false表示不可用
+     * @param pullRefreshEnabled
      */
     public void setPullRefreshEnabled(boolean pullRefreshEnabled);
     
     /**
-     * 设置当前上拉加载更多是否可用
+     * enable the up fresh
      * 
-     * @param pullLoadEnabled true表示可用，false表示不可用
+     * @param pullLoadEnabled
      */
     public void setPullLoadEnabled(boolean pullLoadEnabled);
     
     /**
-     * 滑动到底部是否自动加载更多数据
+     * whether loading more data automatically when scroll to the bottome
      * 
-     * @param scrollLoadEnabled 如果这个值为true的话，那么上拉加载更多的功能将会禁用
+     * @param scrollLoadEnabled if ture, the up fresh will be disabled
      */
     public void setScrollLoadEnabled(boolean scrollLoadEnabled);
     
     /**
-     * 判断当前下拉刷新是否可用
+     *
      * 
-     * @return true如果可用，false不可用
+     * @return
      */
     public boolean isPullRefreshEnabled();
     
     /**
-     * 判断上拉加载是否可用
+     *
      * 
-     * @return true可用，false不可用
+     * @return
      */
     public boolean isPullLoadEnabled();
     
     /**
-     * 滑动到底部加载是否可用
+     *
      * 
-     * @return true可用，否则不可用
+     * @return true
      */
     public boolean isScrollLoadEnabled();
     
     /**
-     * 设置刷新的监听器
+     * set refresh listener
      * 
-     * @param refreshListener 监听器对象
+     * @param refreshListener
      */
     public void setOnRefreshListener(PullToRefreshBase.OnRefreshListener<T> refreshListener);
     
     /**
-     * 结束下拉刷新
+     * down refresh complete
      */
     public void onPullDownRefreshComplete();
     
     /**
-     * 结束上拉加载更多
+     * up refresh complete
      */
     public void onPullUpRefreshComplete();
     
     /**
-     * 得到可刷新的View对象
+     * get the refreshable view
      * 
-     * @return 返回调用{@link #createRefreshableView(Context, AttributeSet)} 方法返回的对象
+     * @return {@link #createRefreshableView(Context, AttributeSet)}
      */
     public T getRefreshableView();
     
     /**
-     * 得到Header布局对象
+     * get Header layout
      * 
-     * @return Header布局对象
+     * @return Header
      */
     public LoadingLayout getHeaderLoadingLayout();
     
     /**
-     * 得到Footer布局对象
+     * get Footer layout
      * 
-     * @return Footer布局对象
+     * @return Footer
      */
     public LoadingLayout getFooterLoadingLayout();
     
     /**
-     * 设置最后更新的时间文本
+     * set the text of the last updated time
      * 
-     * @param label 文本
+     * @param label
      */
     public void setLastUpdatedLabel(CharSequence label);
 }

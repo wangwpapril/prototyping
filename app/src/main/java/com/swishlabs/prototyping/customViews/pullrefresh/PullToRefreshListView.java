@@ -14,22 +14,22 @@ import com.swishlabs.prototyping.customViews.pullrefresh.ILoadingLayout.State;
 
 
 /**
- * 这个类实现了ListView下拉刷新，上加载更多和滑到底部自动加载
+ * for ListView
  * 
- * @author Li Hong
- * @since 2013-8-15
+ * @author
+ * @since
  */
 public class PullToRefreshListView extends PullToRefreshBase<ListView> implements OnScrollListener {
 
 	/** ListView */
 	private ListView mListView;
-	/** 用于滑到底部自动加载的Footer */
+	/** Footer */
 	private LoadingLayout mLoadMoreFooterLayout;
-	/** 滚动的监听器 */
+	/**  */
 	private OnScrollListener mScrollListener;
 
 	/**
-	 * 构造方法
+	 *
 	 * 
 	 * @param context
 	 *            context
@@ -39,7 +39,7 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
 	}
 
 	/**
-	 * 构造方法
+	 *
 	 * 
 	 * @param context
 	 *            context
@@ -52,7 +52,7 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
 	}
 
 	/**
-	 * 构造方法
+	 *
 	 * 
 	 * @param context
 	 *            context
@@ -78,10 +78,10 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
 	}
 
 	/**
-	 * 设置是否有更多数据的标志
+	 *
 	 * 
 	 * @param hasMoreData
-	 *            true表示还有更多的数据，false表示没有更多数据了
+	 *
 	 */
 	public void setHasMoreData(boolean hasMoreData) {
 		super.setHasMoreData(hasMoreData);
@@ -91,10 +91,10 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
 	}
 
 	/**
-	 * 设置滑动的监听器
+	 *
 	 * 
 	 * @param l
-	 *            监听器
+	 *
 	 */
 	public void setOnScrollListener(OnScrollListener l) {
 		mScrollListener = l;
@@ -136,7 +136,7 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
 		super.setScrollLoadEnabled(scrollLoadEnabled);
 
 		if (scrollLoadEnabled) {
-			// 设置Footer
+			// set Footer
 			if (null == mLoadMoreFooterLayout) {
 				mLoadMoreFooterLayout = new FooterLoadingLayout(getContext());
 				mListView.addFooterView(mLoadMoreFooterLayout, null, false);
@@ -187,9 +187,9 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
 //	}
 
 	/**
-	 * 表示是否还有更多数据
+	 *
 	 * 
-	 * @return true表示还有更多数据
+	 * @return
 	 */
 	@Override
 	protected boolean hasMoreData() {
@@ -200,9 +200,9 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
 	}
 
 	/**
-	 * 判断第一个child是否完全显示出来
+	 *
 	 * 
-	 * @return true完全显示出来，否则false
+	 * @return
 	 */
 	private boolean isFirstItemVisible() {
 		final Adapter adapter = mListView.getAdapter();
@@ -220,9 +220,9 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
 	}
 
 	/**
-	 * 判断最后一个child是否完全显示出来
+	 *
 	 * 
-	 * @return true完全显示出来，否则false
+	 * @return
 	 */
 	private boolean isLastItemVisible() {
 		final Adapter adapter = mListView.getAdapter();
