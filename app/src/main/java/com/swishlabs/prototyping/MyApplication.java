@@ -11,12 +11,15 @@ import com.swishlabs.prototyping.activity.SplashActivity;
 import com.swishlabs.prototyping.data.ServiceManager;
 import com.swishlabs.prototyping.data.store.Database;
 import com.swishlabs.prototyping.data.store.DatabaseManager;
+import com.swishlabs.prototyping.entity.FinalDbUpdateListener;
 import com.swishlabs.prototyping.util.AndroidLocationServices;
 import com.swishlabs.prototyping.util.DeviceInfoHelper;
 import com.swishlabs.prototyping.util.Enums;
 import com.swishlabs.prototyping.util.Logger;
 import com.swishlabs.prototyping.util.NotifyDispatcher;
 import com.swishlabs.prototyping.util.SharedPreferenceUtil;
+
+import net.tsz.afinal.FinalDb;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
@@ -44,6 +47,13 @@ public class MyApplication extends Application implements UncaughtExceptionHandl
     public Database mDatabase;
 
 	private static MyApplication instance;
+
+	private FinalDb mFinalDb;
+
+	private final String DBName = "afinal.db";
+
+	public static final int DB_VERSION = 1;
+
 
 	//////////////////////////////
 	private boolean isInitOk = false;
@@ -175,7 +185,10 @@ public class MyApplication extends Application implements UncaughtExceptionHandl
 		intentHashMap=new HashMap<String, Object>();
 		loginStatus = SharedPreferenceUtil.getBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), false);
 		activityList = new ArrayList<Activity>();
-		
+
+		mFinalDb = FinalDb.create(this, DBName, false, DB_VERSION, new FinalDbUpdateListener());
+
+
 		Thread.setDefaultUncaughtExceptionHandler(this);
 //	    loadDatabase();
 	}
