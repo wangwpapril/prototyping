@@ -18,15 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.swishlabs.prototyping.R;
-import com.swishlabs.prototyping.activity.AceInsuranceActivity;
 import com.swishlabs.prototyping.activity.AssistanceActivity;
-import com.swishlabs.prototyping.activity.SecurityActivity;
 import com.swishlabs.prototyping.activity.SettingsActivity;
-import com.swishlabs.prototyping.activity.TripPagesActivity;
-import com.swishlabs.prototyping.activity.ViewAlertActivity;
-import com.swishlabs.prototyping.activity.ViewDestinationActivity;
-import com.swishlabs.prototyping.activity.ViewHealthActivity;
-import com.swishlabs.prototyping.activity.ViewWeatherActivity;
 
 /**
  * Created by ryanracioppo on 2015-04-09.
@@ -232,28 +225,7 @@ public class IntrepidMenu extends ScrollView {
     public void setupMenu(final Context context, final Activity activity, boolean finish) {
         mFinishActivity = finish;
         final FrameLayout overviewButton = (FrameLayout) activity.findViewById(R.id.overview_menu_btn);
-        overviewButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                animateButton(overviewButton, context, ViewDestinationActivity.class, activity);
-            }
-        });
-
-        if(context instanceof ViewDestinationActivity){
-            overviewButton.setAlpha(0.65f);
-        }
-
         final FrameLayout securityButton = (FrameLayout) activity.findViewById(R.id.security_menu_btn);
-        securityButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                animateButton(securityButton, context, SecurityActivity.class, activity);
-            }
-        });
-
-        if(context instanceof SecurityActivity){
-            securityButton.setAlpha(0.65f);
-        }
 
         final FrameLayout settingsButton = (FrameLayout) activity.findViewById(R.id.settings_menu_btn);
         settingsButton.setOnClickListener(new OnClickListener() {
@@ -267,49 +239,6 @@ public class IntrepidMenu extends ScrollView {
             settingsButton.setAlpha(0.65f);
         }
 
-        final FrameLayout tripsButton = (FrameLayout) activity.findViewById(R.id.trips_menu_btn);
-        tripsButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                animateButton(tripsButton, context, TripPagesActivity.class, activity);
-            }
-        });
-        final FrameLayout healthButton = (FrameLayout) activity.findViewById(R.id.health_menu_btn);
-        healthButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                animateButton(healthButton, context, ViewHealthActivity.class, activity);
-            }
-        });
-
-        if(context instanceof ViewHealthActivity){
-            healthButton.setAlpha(0.65f);
-        }
-
-        final FrameLayout weatherButton = (FrameLayout) activity.findViewById(R.id.weather_menu_btn);
-        weatherButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                animateButton(weatherButton, context, ViewWeatherActivity.class, activity);
-            }
-        });
-
-        if(context instanceof ViewWeatherActivity){
-            weatherButton.setAlpha(0.65f);
-        }
-
-        final FrameLayout alertButton = (FrameLayout) activity.findViewById(R.id.alerts_menu_btn);
-        alertButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                animateButton(alertButton, context, ViewAlertActivity.class, activity);
-            }
-        });
-
-        if(context instanceof ViewAlertActivity){
-            alertButton.setAlpha(0.65f);
-        }
-
         final FrameLayout assistanceButton = (FrameLayout) activity.findViewById(R.id.assistance_menu_btn);
         assistanceButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -320,18 +249,6 @@ public class IntrepidMenu extends ScrollView {
 
         if(context instanceof AssistanceActivity){
             assistanceButton.setAlpha(0.65f);
-        }
-
-        final FrameLayout aceButton = (FrameLayout) activity.findViewById(R.id.insurance_menu_btn);
-        aceButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                animateButton(aceButton, context, AceInsuranceActivity.class, activity);
-            }
-        });
-
-        if(context instanceof AceInsuranceActivity){
-            aceButton.setAlpha(0.65f);
         }
 
         ImageButton expandMenu = (ImageButton) activity.findViewById(R.id.expand_menu);

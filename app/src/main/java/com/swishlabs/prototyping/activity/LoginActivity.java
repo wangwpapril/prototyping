@@ -208,9 +208,9 @@ public class LoginActivity extends BaseActivity {
                     MyApplication.setLoginStatus(true);
 
 
-                    Intent mIntent = new Intent(LoginActivity.this, TripPagesActivity.class);
-                    startActivity(mIntent);
-                    LoginActivity.this.finish();
+//                    Intent mIntent = new Intent(LoginActivity.this, TripPagesActivity.class);
+//                    startActivity(mIntent);
+  //                  LoginActivity.this.finish();
                 } else {
                     StringUtil.showAlertDialog(getResources().getString(
                             R.string.login_title_name), "User is empty", context);

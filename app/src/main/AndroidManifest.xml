@@ -60,73 +60,13 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.DestinationsListActivity"
-            android:label="Trips"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".activity.TripPagesActivity"
-            android:label="Trips"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name=".activity.LegalActivity"
             android:label="Legal"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.ViewDestinationActivity"
-            android:label=""
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
-        <activity
             android:name=".activity.SettingsActivity"
             android:label="Legal"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".activity.ViewHealthActivity"
-            android:label=""
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
-        <activity
-            android:name=".activity.DetailHealthConActivity"
-            android:label="@string/title_activity_detail_health_con"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".activity.DetailHealthMedActivity"
-            android:label="@string/title_activity_detail_health_med"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".activity.SecurityActivity"
-            android:label="" >
-        </activity>
-        <activity
-            android:name=".activity.ViewEmbassyActivity"
-            android:label="" >
-        </activity>
-        <activity
-            android:name=".activity.ViewWeatherActivity"
-            android:label="@string/title_activity_view_weather"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".activity.ViewAlertActivity"
-            android:label="@string/title_activity_view_alert"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".activity.AceInsuranceActivity"
-            android:label="@string/title_activity_ace_insurance"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".activity.ViewAceActivity"
-            android:label="@string/title_activity_view_ace"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -141,11 +81,6 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".activity.ViewVMPdfActivity"
-            android:label="@string/title_activity_view_vmpdf"
-            android:screenOrientation="portrait" >
-        </activity>
         <activity
             android:name=".activity.LearnMoreActivity"
             android:label="@string/title_activity_learn_more"
