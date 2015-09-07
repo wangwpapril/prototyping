@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
+    android:orientation="vertical"
      >
 
     <FrameLayout
         android:id="@+id/profile_top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:paddingTop="10dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingBottom="10dp"
+        android:layout_weight="3"
         >
 
         <RelativeLayout
             android:id="@+id/number_and_opp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true">
 
@@ -27,15 +31,20 @@
                 android:id="@+id/opportunity_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:text="23"
+                android:textStyle="bold"
                 android:textColor="@android:color/holo_orange_light"
-                android:textSize="25sp"/>
+                android:textSize="35sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/opportunity_number"
+                android:layout_centerHorizontal="true"
                 android:text="OPP."
+                android:textSize="14sp"
+                android:textStyle="bold"
                 android:textColor="@android:color/holo_orange_light"/>
 
         </RelativeLayout>
@@ -80,6 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
             >
 
             <ImageView
@@ -107,12 +117,13 @@
     <RelativeLayout
         android:id="@+id/profile_middle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/profile_top"
         android:gravity="center_vertical|center_horizontal"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:background="@android:color/darker_gray">
+        android:background="@android:color/darker_gray"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/profile_user_name"
@@ -141,7 +152,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_middle"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:layout_weight="4">
 
         <RelativeLayout
             android:id="@+id/profile_wishes"
@@ -182,7 +194,7 @@
                 android:layout_marginLeft="22dp"
                 android:text="Event Consultant"
                 android:textColor="@color/deep_gray"
-                android:textSize="20sp"
+                android:textSize="17sp"
                  />
 
             <TextView
@@ -193,7 +205,7 @@
                 android:layout_marginLeft="22dp"
                 android:text="SEO Web"
                 android:textColor="@color/deep_gray"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 />
 
         </RelativeLayout>
@@ -203,7 +215,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/profile_wishes"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="17dp">
 
             <LinearLayout
                 android:id="@+id/profile_offering"
@@ -238,7 +250,7 @@
                 android:layout_marginLeft="22dp"
                 android:text="Business Consulting"
                 android:textColor="@color/deep_gray"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 />
 
             <TextView
@@ -249,7 +261,7 @@
                 android:layout_marginLeft="22dp"
                 android:text="Yoga Instructor"
                 android:textColor="@color/deep_gray"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 />
 
         </RelativeLayout>
@@ -309,4 +321,4 @@
         </LinearLayout>
 
     </RelativeLayout>
-</RelativeLayout>
+</LinearLayout>
