@@ -102,4 +102,9 @@
         <attr name="pstsTextAllCaps" format="boolean" />
     </declare-styleable>
 
+    <style name="rotateLineStyle">
+        <item name="android:background">@drawable/rotate_line</item>
+    </style>
+
+
 </resources>

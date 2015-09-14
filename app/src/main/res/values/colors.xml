@@ -11,6 +11,8 @@
     <color name="deep_black_bg">#2E2E2E</color>
     <color name="gray">#C0C0C0</color>
     <color name="blue">#005473</color>
+
+    <color name="orange">#FF8000</color>
     <color name="white">#ffffff</color>
     <color name="milky">#f7f7f7</color>
     <color name="orginal_price_bg">#c30e24</color>
