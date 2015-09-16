@@ -58,6 +58,8 @@ public abstract class WebApi {
 	public abstract <T> void login(String userName, String passWord, IResponse<T> listener);
 
 	public abstract <T> void getProfile(String id, IResponse<T> listener);
+
+	public abstract <T> void getConnections(String id, IResponse<T> listener);
 	
 	/**
 	 * Login for third authroized.

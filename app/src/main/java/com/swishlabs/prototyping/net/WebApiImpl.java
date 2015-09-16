@@ -13,7 +13,6 @@ import com.swishlabs.prototyping.http.HttpRequest;
 import com.swishlabs.prototyping.pal.IHttp;
 
 import org.apache.http.protocol.HTTP;
-import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -125,17 +124,18 @@ class WebApiImpl extends WebApi {
 					rawStr = rawStr.substring(1);
 				}
 
-				JSONObject json = new JSONObject(rawStr);
+/*				JSONObject json = new JSONObject(rawStr);
 				Log.w("PAL_HTTP", "body : " + json.toString());
-/*				int code = json.getInt("result");
+				int code = json.getInt("result");
 				String msg = json.getString("msg");
 				if (code != 0) {
 					onError(requestId, code, msg.getBytes(HTTP.UTF_8), http);
 					return;
 				}
-*/
+
 //				String content = json.optString("content");
-				object = rsp.asObject(json.toString());
+				object = rsp.asObject(json.toString());*/
+				object = rsp.asObject(rawStr);
 			} catch (final Exception e) {
 				e.printStackTrace();
 				try {
@@ -333,6 +333,11 @@ class WebApiImpl extends WebApi {
 	@Override
 	public <T> void getProfile(String id, IResponse<T> listener) {
 		get(Contract.PROFILE_URL + id, buildHeader(), null, listener);
+	}
+
+	@Override
+	public <T> void getConnections(String id, IResponse<T> listener) {
+		get(Contract.PROFILE_URL + id +"/connections", buildHeader(), null, listener);
 	}
 
 

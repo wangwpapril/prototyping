@@ -11,18 +11,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.reflect.TypeToken;
 import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.data.api.callback.ControllerContentTask;
 import com.swishlabs.prototyping.data.api.callback.IControllerContentCallback;
 import com.swishlabs.prototyping.data.api.model.Connection;
 import com.swishlabs.prototyping.data.api.model.Constants;
-import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.data.api.model.User;
 import com.swishlabs.prototyping.data.store.beans.UserTable;
+import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.net.IResponse;
 import com.swishlabs.prototyping.net.WebApi;
 import com.swishlabs.prototyping.util.Enums;
+import com.swishlabs.prototyping.util.GsonUtil;
 import com.swishlabs.prototyping.util.SharedPreferenceUtil;
 import com.swishlabs.prototyping.util.StringUtil;
 
@@ -30,6 +32,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class LoginActivity extends BaseActivity {
@@ -594,6 +599,8 @@ public class LoginActivity extends BaseActivity {
                     SharedPreferenceUtil.setString(Enums.PreferenceKeys.sessionId.toString(), json.getString("SessionId"));
 
                     getProfile(json.getString("SessionId"));
+                    getConnections(json.getString("SessionId"));
+//                    getOtherProfile();
 
                     //                  return json.getString("token");
                     return "test";
@@ -626,9 +633,11 @@ public class LoginActivity extends BaseActivity {
             public Profile asObject(String rspStr) {
                 try {
                     JSONObject json = new JSONObject(rspStr);
-                    Profile profile = new Profile();
+//                    Profile profile = new Profile();
 
-                    profile.setId(json.optString("id"));
+                    Profile profile = GsonUtil.jsonToObject(Profile.class, rspStr);
+
+/*                    profile.setId(json.optString("id"));
                     profile.setUserName(json.optString("username"));
                     profile.setEmail(json.optString("email"));
                     profile.setFirstName(json.optString("firstname"));
@@ -639,7 +648,7 @@ public class LoginActivity extends BaseActivity {
                     profile.setPhone(json.optString("phone"));
                     profile.setLongitude(json.optDouble("longitude"));
                     profile.setLatitude(json.optDouble("latitude"));
-                    profile.setSkillSet(json.optString("skillset"));
+                    profile.setSkillSet(json.optString("skillset")); */
 
                     return profile;
                 } catch (JSONException e) {
@@ -649,6 +658,35 @@ public class LoginActivity extends BaseActivity {
 
                 return null;
             }
+        });
+    }
+
+    private void getConnections(String id) {
+
+        mWebApi.getConnections(id, new IResponse<List<Profile>>() {
+
+            @Override
+            public void onSuccessed(List<Profile> result) {
+
+            }
+
+            @Override
+            public void onFailed(String code, String errMsg) {
+//                dismissProgressDlg();
+//                ToastUtil.showToast(getBaseContext(), errMsg);
+            }
+
+            @Override
+            public List<Profile> asObject(String rspStr) throws JSONException {
+
+                if(!TextUtils.isEmpty(rspStr)){
+                    TypeToken<List<Profile>> type = new TypeToken<List<Profile>>() {
+                    };
+                    return GsonUtil.jsonToList(type.getType(), rspStr);
+                }
+                return new ArrayList<Profile>();
+
+           }
         });
     }
 

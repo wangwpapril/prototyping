@@ -1,5 +1,8 @@
 package com.swishlabs.prototyping.entity;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -7,19 +10,62 @@ import java.io.Serializable;
  */
 
 public class Profile implements Serializable {
-    public String id;
-    public String userName;
-    public String email;
-    public String firstName;
-    public String lastName;
-    public String avatarUrl;
-    public String backGroundUrl;
-    public String displayName;
-    public String occupation;
-    public String phone;
-    public double longitude;
-    public double latitude;
-    public String skillSet;
+
+    @Expose
+    @SerializedName("id")
+    private String id;
+
+    @Expose
+    @SerializedName("username")
+    private String userName;
+
+    @Expose
+    @SerializedName("email")
+    private String email;
+
+    @Expose
+    @SerializedName("firstname")
+    private String firstName;
+
+    @Expose
+    @SerializedName("lastname")
+    private String lastName;
+
+    @Expose
+    @SerializedName("profile_pic")
+    private String avatarUrl;
+
+    @Expose
+    @SerializedName("background")
+    private String backGroundUrl;
+
+    @Expose
+    @SerializedName("displayname")
+    private String displayName;
+
+    @Expose
+    @SerializedName("occupation")
+    private String occupation;
+
+    @Expose
+    @SerializedName("phone")
+    private String phone;
+
+    @Expose
+    @SerializedName("longitude")
+    private double longitude;
+
+    @Expose
+    @SerializedName("latitude")
+    private double latitude;
+
+    @Expose
+    @SerializedName("skillset")
+    private String skillSet;
+
+    @Expose
+    @SerializedName("trusted")
+    private boolean trusted;
 
     public String getId() { return id; }
 
@@ -62,6 +108,8 @@ public class Profile implements Serializable {
     }
 
     public String getSkillSet() { return skillSet; }
+
+    public boolean getTrusted() { return trusted; }
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
@@ -112,4 +160,6 @@ public class Profile implements Serializable {
     public void setSkillSet(String skillSet) {
         this.skillSet = skillSet;
     }
+
+    public void setTrusted(boolean trusted ) { this.trusted = trusted; }
 }
