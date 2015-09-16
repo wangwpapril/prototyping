@@ -28,13 +28,13 @@ public class SplashActivity extends Activity {
 		
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		setContentView(R.layout.profileview_layout);
+		setContentView(R.layout.splash);
 		MyApplication.getInstance().addActivity(this);
 		
 //		String ss = SharedPreferenceUtil.getString(PreferenceKeys.userId.toString(), "");
 		this.initialize();
 		Handler h = new Handler();
-/*		h.postDelayed(new Runnable() {
+		h.postDelayed(new Runnable() {
 			@Override
 			public void run(){
 				Intent mIntent = null;
@@ -47,7 +47,7 @@ public class SplashActivity extends Activity {
 				SplashActivity.this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 				SplashActivity.this.finish();
 			}
-		},2000);	*/
+		},2000);
   
 	}
 	private void initialize(){

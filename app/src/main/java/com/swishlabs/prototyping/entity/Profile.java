@@ -1,10 +1,12 @@
 package com.swishlabs.prototyping.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by wwang on 15-05-22.
  */
 
-public class Profile {
+public class Profile implements Serializable {
     public String id;
     public String userName;
     public String email;
@@ -12,6 +14,7 @@ public class Profile {
     public String lastName;
     public String avatarUrl;
     public String backGroundUrl;
+    public String displayName;
     public String occupation;
     public String phone;
     public double longitude;
@@ -31,6 +34,8 @@ public class Profile {
     public String getLastName() {
         return lastName;
     }
+
+    public String getDisplayName() { return displayName; }
 
     public String getPhone() {
         return phone;
@@ -81,6 +86,8 @@ public class Profile {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public void setDisplayName(String displayName) { this.displayName = displayName; }
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;

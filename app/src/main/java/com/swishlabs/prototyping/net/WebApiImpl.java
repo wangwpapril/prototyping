@@ -330,345 +330,351 @@ class WebApiImpl extends WebApi {
 //		post("http://grabopws.azurewebsites.net/auth?format=json", buildHeader(), params, listener);
 	}
 
-/*	@Override
-	public <T> void sendCode(String phoneNum, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(AccountKeys.PHONE, phoneNum);
-		post(FuncUrls.SEND_CODE, buildHeader(), params, listener);
-	}
-
 	@Override
-	public void setToken(String token) {
-		mToken = token;
-
+	public <T> void getProfile(String id, IResponse<T> listener) {
+		get(Contract.PROFILE_URL + id, buildHeader(), null, listener);
 	}
 
-	@Override
-	public boolean isLogined() {
-		return !TextUtils.isEmpty(mToken);
-	}
 
-	@Override
-	public <T> void getUserInfo(int userId, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		if (userId > 0) {
-			params.put(CommonKeys.USER_ID, String.valueOf(userId));
-		}
-		get(FuncUrls.USER_INFO, buildHeader(), params, listener);
+	/*	@Override
+        public <T> void sendCode(String phoneNum, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(AccountKeys.PHONE, phoneNum);
+            post(FuncUrls.SEND_CODE, buildHeader(), params, listener);
+        }
 
-	}
+        @Override
+        public void setToken(String token) {
+            mToken = token;
 
-	@Override
-	public <T> void getVideoList(int type, int pageIndex, int pageCount,
-			IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.TYPE, String.valueOf(type));
-		params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
-		params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
-		get(FuncUrls.VIDEOS, buildHeader(), params, listener);
-	}
+        }
 
-	@Override
-	public <T> void getFocusImageList(int pageIndex, int pageCount,
-			IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
-		params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
-		get(FuncUrls.FOCUS_IMAGES, buildHeader(), params, listener);
+        @Override
+        public boolean isLogined() {
+            return !TextUtils.isEmpty(mToken);
+        }
 
-	}
+        @Override
+        public <T> void getUserInfo(int userId, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            if (userId > 0) {
+                params.put(CommonKeys.USER_ID, String.valueOf(userId));
+            }
+            get(FuncUrls.USER_INFO, buildHeader(), params, listener);
 
-	@Override
-	public <T> void getAttetionUsers(int type, int pageIndex, int pageCount,
-			IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.TYPE, String.valueOf(type));
-		params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
-		params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
-		get(FuncUrls.ATTENTION_USERS, buildHeader(), params, listener);
-	}
+        }
 
-	@Override
-	public <T> void getFavoriteVideos(int pageIndex, int pageCount,
-			IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
-		params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
-		get(FuncUrls.VIDEOS_FAVORITE, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void getVideoList(int type, int pageIndex, int pageCount,
+                IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.TYPE, String.valueOf(type));
+            params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
+            params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
+            get(FuncUrls.VIDEOS, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void getCustomVideos(int pageIndex, int pageCount,
-			IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
-		params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
-		get(FuncUrls.VIDEOS_CUSTOM, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void getFocusImageList(int pageIndex, int pageCount,
+                IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
+            params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
+            get(FuncUrls.FOCUS_IMAGES, buildHeader(), params, listener);
 
-	@Override
-	public <T> void postCustomOrder(CustomOrderPost order,
-			Map<String, Object> file, IResponse<T> listener) {
-		post(FuncUrls.VIDEOS_CUSTOM_MAKE, buildHeader(),
-				GsonUtil.objectToJson(order), file, listener, null);
-	}
+        }
 
-	@Override
-	public <T> void postUserInfo(UserInfo info, IResponse<T> listener) {
-		post(FuncUrls.USER_INFO_MODIFY, buildHeader(),
-				GsonUtil.objectToJson(info), listener);
-	}
+        @Override
+        public <T> void getAttetionUsers(int type, int pageIndex, int pageCount,
+                IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.TYPE, String.valueOf(type));
+            params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
+            params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
+            get(FuncUrls.ATTENTION_USERS, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void getCustomOrders(int type, int pageIndex, int pageCount,
-			IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
-		params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
-		params.put(CommonKeys.TYPE, String.valueOf(type));
-		get(FuncUrls.CUSTOM_ORDERS_ACCEPT, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void getFavoriteVideos(int pageIndex, int pageCount,
+                IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
+            params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
+            get(FuncUrls.VIDEOS_FAVORITE, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void postGetOrder(int orderId, boolean isAccept,
-			IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.ORDER_ID, String.valueOf(orderId));
-		params.put(CommonKeys.ACCEPT_STATE, String.valueOf(isAccept ? 1 : 0));
-		post(FuncUrls.GET_ORDER, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void getCustomVideos(int pageIndex, int pageCount,
+                IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
+            params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
+            get(FuncUrls.VIDEOS_CUSTOM, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void getCityList(IResponse<T> listener) {
-		get(FuncUrls.GET_CITY_LIST, buildHeader(), null, listener);
-	}
+        @Override
+        public <T> void postCustomOrder(CustomOrderPost order,
+                Map<String, Object> file, IResponse<T> listener) {
+            post(FuncUrls.VIDEOS_CUSTOM_MAKE, buildHeader(),
+                    GsonUtil.objectToJson(order), file, listener, null);
+        }
 
-	@Override
-	public <T> void login(String openId, int type, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.TYPE, String.valueOf(type));
-		params.put(AccountKeys.OPENDID, openId);
-		post(FuncUrls.OAUTH, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void postUserInfo(UserInfo info, IResponse<T> listener) {
+            post(FuncUrls.USER_INFO_MODIFY, buildHeader(),
+                    GsonUtil.objectToJson(info), listener);
+        }
 
-	@Override
-	public <T> void search(int type, String content, int pageIndex,
-			int pageCount, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.TYPE, String.valueOf(type));
-		params.put(CommonKeys.CONTENT, content);
-		params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
-		params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
-		post(FuncUrls.SEARCH, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void getCustomOrders(int type, int pageIndex, int pageCount,
+                IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
+            params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
+            params.put(CommonKeys.TYPE, String.valueOf(type));
+            get(FuncUrls.CUSTOM_ORDERS_ACCEPT, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void postAtUser(int userId, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.USER_ID, String.valueOf(userId));
-		post(FuncUrls.ATTENTION, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void postGetOrder(int orderId, boolean isAccept,
+                IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.ORDER_ID, String.valueOf(orderId));
+            params.put(CommonKeys.ACCEPT_STATE, String.valueOf(isAccept ? 1 : 0));
+            post(FuncUrls.GET_ORDER, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void postCancelAtUser(int userId, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.USER_ID, String.valueOf(userId));
-		post(FuncUrls.ATTENTION_CANCEL, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void getCityList(IResponse<T> listener) {
+            get(FuncUrls.GET_CITY_LIST, buildHeader(), null, listener);
+        }
 
-	@Override
-	public <T> void getUserVideos(int userId, int pageIndex, int pageCount,
-			IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		if (userId > 0) {
-			params.put(CommonKeys.USER_ID, String.valueOf(userId));
-			params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
-			params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
-		}
-		get(FuncUrls.USER_VIDEOS, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void login(String openId, int type, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.TYPE, String.valueOf(type));
+            params.put(AccountKeys.OPENDID, openId);
+            post(FuncUrls.OAUTH, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void postApplyAnchor(AnchorApplyInfo info, IResponse<T> listener) {
-		post(FuncUrls.ANCHOR_APPLY, buildHeader(), GsonUtil.objectToJson(info),
-				listener);
-	}
+        @Override
+        public <T> void search(int type, String content, int pageIndex,
+                int pageCount, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.TYPE, String.valueOf(type));
+            params.put(CommonKeys.CONTENT, content);
+            params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
+            params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
+            post(FuncUrls.SEARCH, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void postOrderAssign(int userId, int orderId,
-			IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.USER_ID, String.valueOf(userId));
-		params.put(CommonKeys.ORDER_ID, String.valueOf(orderId));
-		post(FuncUrls.ORDER_ASSIGN, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void postAtUser(int userId, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.USER_ID, String.valueOf(userId));
+            post(FuncUrls.ATTENTION, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void postVideoInfo(VideoInfoPost info, Map<String, Object> file,
-			IResponse<T> listener, OnPostProgressListener progressListener) {
-		post(FuncUrls.VIDEO_RECORD, buildHeader(), GsonUtil.objectToJson(info),
-				file, listener, progressListener);
-	}
+        @Override
+        public <T> void postCancelAtUser(int userId, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.USER_ID, String.valueOf(userId));
+            post(FuncUrls.ATTENTION_CANCEL, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void favoriteVideo(int videoId, int type, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.VIDEO_ID, String.valueOf(videoId));
-		params.put(CommonKeys.TYPE, String.valueOf(type));
-		post(FuncUrls.FAVORITE_VIDEO, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void getUserVideos(int userId, int pageIndex, int pageCount,
+                IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            if (userId > 0) {
+                params.put(CommonKeys.USER_ID, String.valueOf(userId));
+                params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
+                params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
+            }
+            get(FuncUrls.USER_VIDEOS, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void praiseVideo(int videoId, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.VIDEO_ID, String.valueOf(videoId));
-		post(FuncUrls.PRAISE_VIDEO, buildHeader(), params, listener);
+        @Override
+        public <T> void postApplyAnchor(AnchorApplyInfo info, IResponse<T> listener) {
+            post(FuncUrls.ANCHOR_APPLY, buildHeader(), GsonUtil.objectToJson(info),
+                    listener);
+        }
 
-	}
+        @Override
+        public <T> void postOrderAssign(int userId, int orderId,
+                IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.USER_ID, String.valueOf(userId));
+            params.put(CommonKeys.ORDER_ID, String.valueOf(orderId));
+            post(FuncUrls.ORDER_ASSIGN, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void shareVideo(int videoId, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.VIDEO_ID, String.valueOf(videoId));
-		post(FuncUrls.SHARE_VIDEO, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void postVideoInfo(VideoInfoPost info, Map<String, Object> file,
+                IResponse<T> listener, OnPostProgressListener progressListener) {
+            post(FuncUrls.VIDEO_RECORD, buildHeader(), GsonUtil.objectToJson(info),
+                    file, listener, progressListener);
+        }
 
-	@Override
-	public <T> void playVideo(int videoId, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.VIDEO_ID, String.valueOf(videoId));
-		post(FuncUrls.PLAY_VIDEO, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void favoriteVideo(int videoId, int type, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.VIDEO_ID, String.valueOf(videoId));
+            params.put(CommonKeys.TYPE, String.valueOf(type));
+            post(FuncUrls.FAVORITE_VIDEO, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void informVideo(int orderId, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.VIDEO_ID, String.valueOf(orderId));
-		post(FuncUrls.INFORM_VIDEO, buildHeader(), params, listener);
+        @Override
+        public <T> void praiseVideo(int videoId, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.VIDEO_ID, String.valueOf(videoId));
+            post(FuncUrls.PRAISE_VIDEO, buildHeader(), params, listener);
 
-	}
+        }
 
-	@Override
-	public <T> void getTags(IResponse<T> listener) {
-		get(FuncUrls.TAG_LIST, buildHeader(), listener);
-	}
+        @Override
+        public <T> void shareVideo(int videoId, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.VIDEO_ID, String.valueOf(videoId));
+            post(FuncUrls.SHARE_VIDEO, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void confirmOder(int orderId, int starCount, String comment,
-			IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.ORDER_ID, String.valueOf(orderId));
-		params.put(CommonKeys.USERT_EVALULATE, String.valueOf(starCount));
-		params.put(CommonKeys.USER_COMMENT, comment);
-		post(FuncUrls.ORDER_CONFIRM, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void playVideo(int videoId, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.VIDEO_ID, String.valueOf(videoId));
+            post(FuncUrls.PLAY_VIDEO, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void refuseOrder(int orderId, int reasonType,
-			IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.ORDER_ID, String.valueOf(orderId));
-		params.put(CommonKeys.REASON_TYPE, String.valueOf(reasonType));
-		post(FuncUrls.ORDER_REFUSE, buildHeader(), params, listener);
+        @Override
+        public <T> void informVideo(int orderId, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.VIDEO_ID, String.valueOf(orderId));
+            post(FuncUrls.INFORM_VIDEO, buildHeader(), params, listener);
 
-	}
+        }
 
-	@Override
-	public <T> void commentOrder(int orderId, int starCount, String comment,
-			IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.ORDER_ID, String.valueOf(orderId));
-		params.put(CommonKeys.USERT_EVALULATE, String.valueOf(starCount));
-		params.put(CommonKeys.USER_COMMENT, comment);
-		post(FuncUrls.ORDER_COMMENT, buildHeader(), params, listener);
+        @Override
+        public <T> void getTags(IResponse<T> listener) {
+            get(FuncUrls.TAG_LIST, buildHeader(), listener);
+        }
 
-	}
+        @Override
+        public <T> void confirmOder(int orderId, int starCount, String comment,
+                IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.ORDER_ID, String.valueOf(orderId));
+            params.put(CommonKeys.USERT_EVALULATE, String.valueOf(starCount));
+            params.put(CommonKeys.USER_COMMENT, comment);
+            post(FuncUrls.ORDER_CONFIRM, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void feedback(String content, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.CONTENT, content);
-		post(FuncUrls.FEEDBACK, buildHeader(), params, listener);
+        @Override
+        public <T> void refuseOrder(int orderId, int reasonType,
+                IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.ORDER_ID, String.valueOf(orderId));
+            params.put(CommonKeys.REASON_TYPE, String.valueOf(reasonType));
+            post(FuncUrls.ORDER_REFUSE, buildHeader(), params, listener);
 
-	}
+        }
 
-	@Override
-	public <T> void getFriendsVideos(int pageIndex, int pageCount,
-			IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
-		params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
-		get(FuncUrls.ATTENTION_VIDEOS, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void commentOrder(int orderId, int starCount, String comment,
+                IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.ORDER_ID, String.valueOf(orderId));
+            params.put(CommonKeys.USERT_EVALULATE, String.valueOf(starCount));
+            params.put(CommonKeys.USER_COMMENT, comment);
+            post(FuncUrls.ORDER_COMMENT, buildHeader(), params, listener);
 
-	@Override
-	public <T> void deleteVideo(int videoid, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.VIDEO_ID, String.valueOf(videoid));
-		post(FuncUrls.DELETE_VIDEO, buildHeader(), params, listener);
-	}
+        }
 
-	@Override
-	public <T> void getAnchorBanlace(IResponse<T> listener) {
-		get(FuncUrls.ANCHOR_BANLANCE, buildHeader(), listener);
-	}
+        @Override
+        public <T> void feedback(String content, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.CONTENT, content);
+            post(FuncUrls.FEEDBACK, buildHeader(), params, listener);
 
-	@Override
-	public <T> void getNotifycationList(int pageIndex, int pageCount,
-			IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
-		params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
-		get(FuncUrls.GET_NOTIFYCATION, buildHeader(), params, listener);
-	}
+        }
 
-	@Override
-	public <T> void postClientID(String clientID, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.CLIENT_ID, clientID);
-		post(FuncUrls.POST_CLIENT_ID, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void getFriendsVideos(int pageIndex, int pageCount,
+                IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
+            params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
+            get(FuncUrls.ATTENTION_VIDEOS, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void getUpdateInfo(IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("os", "android");
-		params.put("osversion", PhoneStateUtils.getOsVersion());
-		params.put("version", String.valueOf(CommonUtils.getVersionCode(mContext)));
-		get(FuncUrls.GET_UPDATE, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void deleteVideo(int videoid, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.VIDEO_ID, String.valueOf(videoid));
+            post(FuncUrls.DELETE_VIDEO, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void sendAnchorInvite(int userId, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.USER_ID, String.valueOf(userId));
-		get(FuncUrls.ANCHOR_APPLY_INVITE, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void getAnchorBanlace(IResponse<T> listener) {
+            get(FuncUrls.ANCHOR_BANLANCE, buildHeader(), listener);
+        }
 
-	@Override
-	public <T> void postAnchorInfo(AnchorBalanceInfo info, IResponse<T> listener) {
-		post(FuncUrls.ANCHOR_APPLY_MODIFY, buildHeader(),
-				GsonUtil.objectToJson(info), listener);
-	}
+        @Override
+        public <T> void getNotifycationList(int pageIndex, int pageCount,
+                IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
+            params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
+            get(FuncUrls.GET_NOTIFYCATION, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void getBlessVideoList(int userId, int pageIndex, int pageCount,
-			IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.USER_ID, String.valueOf(userId));
-		params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
-		params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
-		get(FuncUrls.STAR_ANCHOR_BLESS_LIST, buildHeader(), params, listener);
-	}
+        @Override
+        public <T> void postClientID(String clientID, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.CLIENT_ID, clientID);
+            post(FuncUrls.POST_CLIENT_ID, buildHeader(), params, listener);
+        }
 
-	@Override
-	public <T> void postBless(int userId, int videoId, IResponse<T> listener) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(CommonKeys.USER_ID, String.valueOf(userId));
-		params.put(CommonKeys.VIDEO_ID, String.valueOf(videoId));
-		post(FuncUrls.STAR_ANCHOR_BLESS, buildHeader(), params, listener);
-	}
-*/
+        @Override
+        public <T> void getUpdateInfo(IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("os", "android");
+            params.put("osversion", PhoneStateUtils.getOsVersion());
+            params.put("version", String.valueOf(CommonUtils.getVersionCode(mContext)));
+            get(FuncUrls.GET_UPDATE, buildHeader(), params, listener);
+        }
+
+        @Override
+        public <T> void sendAnchorInvite(int userId, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.USER_ID, String.valueOf(userId));
+            get(FuncUrls.ANCHOR_APPLY_INVITE, buildHeader(), params, listener);
+        }
+
+        @Override
+        public <T> void postAnchorInfo(AnchorBalanceInfo info, IResponse<T> listener) {
+            post(FuncUrls.ANCHOR_APPLY_MODIFY, buildHeader(),
+                    GsonUtil.objectToJson(info), listener);
+        }
+
+        @Override
+        public <T> void getBlessVideoList(int userId, int pageIndex, int pageCount,
+                IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.USER_ID, String.valueOf(userId));
+            params.put(CommonKeys.PAGE_COUNT, String.valueOf(pageCount));
+            params.put(CommonKeys.PAGE_INDEX, String.valueOf(pageIndex));
+            get(FuncUrls.STAR_ANCHOR_BLESS_LIST, buildHeader(), params, listener);
+        }
+
+        @Override
+        public <T> void postBless(int userId, int videoId, IResponse<T> listener) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put(CommonKeys.USER_ID, String.valueOf(userId));
+            params.put(CommonKeys.VIDEO_ID, String.valueOf(videoId));
+            post(FuncUrls.STAR_ANCHOR_BLESS, buildHeader(), params, listener);
+        }
+    */
 	private void errorOperation(int reqId, int errCode, String errMsg){
 		if(errCode == Constant.ResponseCode.RES_ERROR_RELOGIN){
 			Intent intent = new Intent(Constant.BroadConstant.BROAD_RE_LOGIN);

@@ -73,7 +73,7 @@ public class LoginActivity extends BaseActivity {
 
         loginBtn.setOnClickListener(this);
         passwordTextField.setTransformationMethod(PasswordTransformationMethod
-				.getInstance());
+                .getInstance());
 	}
 
 	@Override
@@ -534,8 +534,8 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onSuccessed(final String tokenInfo) {
-                getConnection();
-                getOtherProfile();
+//                getConnection();
+//                getOtherProfile();
                 return;
 /*                if (!TextUtils.isEmpty(tokenInfo)) {
 //                    mWebApi.setToken(tokenInfo);
@@ -593,6 +593,7 @@ public class LoginActivity extends BaseActivity {
                     JSONObject json = new JSONObject(rspStr);
                     SharedPreferenceUtil.setString(Enums.PreferenceKeys.sessionId.toString(), json.getString("SessionId"));
 
+                    getProfile(json.getString("SessionId"));
 
                     //                  return json.getString("token");
                     return "test";
@@ -606,5 +607,49 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    private void getProfile(String id) {
+
+        mWebApi.getProfile(id, new IResponse<Profile>() {
+
+            @Override
+            public void onSuccessed(Profile result) {
+
+            }
+
+            @Override
+            public void onFailed(String code, String errMsg) {
+//                dismissProgressDlg();
+//                ToastUtil.showToast(getBaseContext(), errMsg);
+            }
+
+            @Override
+            public Profile asObject(String rspStr) {
+                try {
+                    JSONObject json = new JSONObject(rspStr);
+                    Profile profile = new Profile();
+
+                    profile.setId(json.optString("id"));
+                    profile.setUserName(json.optString("username"));
+                    profile.setEmail(json.optString("email"));
+                    profile.setFirstName(json.optString("firstname"));
+                    profile.setLastName(json.optString("lastname"));
+                    profile.setAvatarUrl(json.optString("profile_pic"));
+                    profile.setOccupation(json.optString("occupation"));
+                    profile.setDisplayName(json.optString("displayname"));
+                    profile.setPhone(json.optString("phone"));
+                    profile.setLongitude(json.optDouble("longitude"));
+                    profile.setLatitude(json.optDouble("latitude"));
+                    profile.setSkillSet(json.optString("skillset"));
+
+                    return profile;
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+        });
+    }
 
 }
