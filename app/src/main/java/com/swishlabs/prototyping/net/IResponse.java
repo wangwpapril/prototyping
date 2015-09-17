@@ -15,7 +15,7 @@ public interface IResponse<T> {
 	 * Operation success.
 	 * @param data
 	 */
-	void onSuccessed(T result);
+	void onSucceed(T result);
 
 	void onFailed(String code, String errMsg);
 	

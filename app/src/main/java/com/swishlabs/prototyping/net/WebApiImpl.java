@@ -148,14 +148,14 @@ class WebApiImpl extends WebApi {
 				return;
 			}
 			if (isTestModel) {
-				rsp.onSuccessed(object);
+				rsp.onSucceed(object);
 			} else {
 				final T target = object;
 				mUIHandler.post(new Runnable() {
 
 					@Override
 					public void run() {
-						rsp.onSuccessed(target);
+						rsp.onSucceed(target);
 					}
 				});
 			}
@@ -338,6 +338,11 @@ class WebApiImpl extends WebApi {
 	@Override
 	public <T> void getConnections(String id, IResponse<T> listener) {
 		get(Contract.PROFILE_URL + id +"/connections", buildHeader(), null, listener);
+	}
+
+	@Override
+	public <T> void getService(String id, IResponse<T> listener) {
+		get(Contract.PROFILE_URL + id +"/services?offset=0", buildHeader(), null, listener);
 	}
 
 

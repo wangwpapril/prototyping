@@ -21,6 +21,7 @@ import com.swishlabs.prototyping.data.api.model.Constants;
 import com.swishlabs.prototyping.data.api.model.User;
 import com.swishlabs.prototyping.data.store.beans.UserTable;
 import com.swishlabs.prototyping.entity.Profile;
+import com.swishlabs.prototyping.entity.Service;
 import com.swishlabs.prototyping.net.IResponse;
 import com.swishlabs.prototyping.net.WebApi;
 import com.swishlabs.prototyping.util.Enums;
@@ -373,7 +374,7 @@ public class LoginActivity extends BaseActivity {
                 Profile profile = new Profile();
                 try {
                     jsonObject = new JSONObject(content);
-                    profile.setId(jsonObject.optString("id"));
+                    profile.setSessionId(jsonObject.optString("id"));
                     profile.setAvatarUrl(jsonObject.optString("profile_pic"));
                     profile.setBackGroundUrl(jsonObject.optString("background_pic"));
                     profile.setEmail(jsonObject.optString("Email"));
@@ -538,7 +539,7 @@ public class LoginActivity extends BaseActivity {
         mWebApi.login(phoneNum, psw, new IResponse<String>() {
 
             @Override
-            public void onSuccessed(final String tokenInfo) {
+            public void onSucceed(final String tokenInfo) {
 //                getConnection();
 //                getOtherProfile();
                 return;
@@ -601,6 +602,7 @@ public class LoginActivity extends BaseActivity {
                     getProfile(json.getString("SessionId"));
                     getConnections(json.getString("SessionId"));
 //                    getOtherProfile();
+                    getService(json.getString("SessionId"));
 
                     //                  return json.getString("token");
                     return "test";
@@ -619,8 +621,9 @@ public class LoginActivity extends BaseActivity {
         mWebApi.getProfile(id, new IResponse<Profile>() {
 
             @Override
-            public void onSuccessed(Profile result) {
+            public void onSucceed(Profile result) {
 
+//                mFinalDb.deleteAll(Profile.class);
                 mFinalDb.save(result);
 
                 List<Profile> profile = mFinalDb.findAll(Profile.class);
@@ -669,7 +672,11 @@ public class LoginActivity extends BaseActivity {
         mWebApi.getConnections(id, new IResponse<List<Profile>>() {
 
             @Override
-            public void onSuccessed(List<Profile> result) {
+            public void onSucceed(List<Profile> result) {
+                mFinalDb.save(result, Profile.class);
+
+                List<Profile> profileList = mFinalDb.findAll(Profile.class);
+                List<Profile> profile = mFinalDb.findAllByWhere(Profile.class, "id = 117");
 
             }
 
@@ -682,14 +689,52 @@ public class LoginActivity extends BaseActivity {
             @Override
             public List<Profile> asObject(String rspStr) throws JSONException {
 
-                if(!TextUtils.isEmpty(rspStr)){
+                if (!TextUtils.isEmpty(rspStr)) {
                     TypeToken<List<Profile>> type = new TypeToken<List<Profile>>() {
                     };
                     return GsonUtil.jsonToList(type.getType(), rspStr);
                 }
                 return new ArrayList<Profile>();
 
-           }
+            }
+        });
+    }
+
+    private void getService(String id) {
+
+        mWebApi.getService(id, new IResponse<List<Service>>() {
+
+/*            @Override
+            public void onSuccessed(List<Profile> result) {
+                mFinalDb.save(result, Profile.class);
+
+                List<Profile> profileList = mFinalDb.findAll(Profile.class);
+                List<Profile> profile = mFinalDb.findAllByWhere(Profile.class, "id = 117");
+
+            }*/
+
+            @Override
+            public void onSucceed(List<Service> result) {
+
+            }
+
+            @Override
+            public void onFailed(String code, String errMsg) {
+//                dismissProgressDlg();
+//                ToastUtil.showToast(getBaseContext(), errMsg);
+            }
+
+            @Override
+            public List<Service> asObject(String rspStr) throws JSONException {
+
+                if (!TextUtils.isEmpty(rspStr)) {
+                    TypeToken<List<Service>> type = new TypeToken<List<Service>>() {
+                    };
+                    return GsonUtil.jsonToList(type.getType(), rspStr);
+                }
+                return new ArrayList<Service>();
+
+            }
         });
     }
 

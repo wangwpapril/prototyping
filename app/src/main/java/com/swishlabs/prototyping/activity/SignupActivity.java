@@ -456,7 +456,7 @@ public class SignupActivity extends BaseActivity {
 		mWebApi.register("newapptest", "newapptest@hotmail.com", "1234", new IResponse<String>() {
 
 			@Override
-			public void onSuccessed(final String tokenInfo) {
+			public void onSucceed(final String tokenInfo) {
 				return;
 /*                if (!TextUtils.isEmpty(tokenInfo)) {
 //                    mWebApi.setToken(tokenInfo);

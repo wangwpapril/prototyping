@@ -11,9 +11,11 @@ import java.io.Serializable;
 
 public class Profile implements Serializable {
 
+    private int id;
+
     @Expose
     @SerializedName("id")
-    private String id;
+    private String sessionId;
 
     @Expose
     @SerializedName("username")
@@ -66,8 +68,6 @@ public class Profile implements Serializable {
     @Expose
     @SerializedName("trusted")
     private boolean trusted;
-
-    public String getId() { return id; }
 
     public String getUserName() { return userName; }
 
@@ -127,10 +127,6 @@ public class Profile implements Serializable {
         this.firstName = firstName;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -162,4 +158,20 @@ public class Profile implements Serializable {
     }
 
     public void setTrusted(boolean trusted ) { this.trusted = trusted; }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
