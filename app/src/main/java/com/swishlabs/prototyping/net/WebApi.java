@@ -59,6 +59,8 @@ public abstract class WebApi {
 
 	public abstract <T> void getProfile(String id, IResponse<T> listener);
 
+	public abstract <T> void getProfiles(String id, IResponse<T> listener);
+
 	public abstract <T> void getConnections(String id, IResponse<T> listener);
 
 	public abstract <T> void getService(String id, IResponse<T> listener);

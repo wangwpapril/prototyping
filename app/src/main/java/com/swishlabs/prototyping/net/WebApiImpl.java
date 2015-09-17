@@ -336,6 +336,12 @@ class WebApiImpl extends WebApi {
 	}
 
 	@Override
+	public <T> void getProfiles(String id, IResponse<T> listener) {
+		get(Contract.PROFILE_URL + id + "/profileswithinratio?distance=5.0&longitude=0.0&latitude=0.0&offset=2&format=json",
+				buildHeader(), null, listener);
+	}
+
+	@Override
 	public <T> void getConnections(String id, IResponse<T> listener) {
 		get(Contract.PROFILE_URL + id +"/connections", buildHeader(), null, listener);
 	}
