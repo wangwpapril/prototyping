@@ -621,6 +621,9 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onSuccessed(Profile result) {
 
+                mFinalDb.save(result);
+
+                List<Profile> profile = mFinalDb.findAll(Profile.class);
             }
 
             @Override

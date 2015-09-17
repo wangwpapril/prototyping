@@ -15,6 +15,8 @@ import com.swishlabs.prototyping.data.store.Database;
 import com.swishlabs.prototyping.data.store.DatabaseManager;
 import com.swishlabs.prototyping.util.Common;
 
+import net.tsz.afinal.FinalDb;
+
 
 public abstract class BaseActivity extends Activity implements OnClickListener{
 
@@ -22,6 +24,8 @@ public abstract class BaseActivity extends Activity implements OnClickListener{
 	protected TextView tvTitleName;
 	protected ImageView ivTitleBack;
 	protected ImageView ivTitleRight;
+
+	protected FinalDb mFinalDb;
 
     public DatabaseManager mDatabaseManager;
     public Database mDatabase;
@@ -36,6 +40,9 @@ public abstract class BaseActivity extends Activity implements OnClickListener{
 		MyApplication.getInstance().addActivity(this);
 		context = this;
 		Common.context = this;
+
+		mFinalDb = FinalDb.create(this);
+
         loadDatabase();
 	}
 
