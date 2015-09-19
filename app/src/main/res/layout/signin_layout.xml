@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:background="@drawable/background">
+    
+
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_marginTop="230dp"
+	        android:orientation="vertical" >
+	        
+				    
+				    <EditText
+				        android:id="@+id/signinEmailEditText"
+				        android:layout_width="match_parent"
+				        android:layout_height="wrap_content"
+				        android:background="@drawable/rounded_edittext"
+				        android:padding="15dp"
+				        android:ems="10"
+				        android:hint="EMAIL"
+				        android:textSize="20sp"
+				        android:textColor="@color/black"
+				        android:textColorHint="@color/black"
+				        android:inputType="textEmailAddress" >
+
+				    </EditText>
+				    
+				    <EditText
+				        android:id="@+id/signinPasswordEditText"
+				        android:layout_width="match_parent"
+				        android:layout_height="wrap_content"
+				        android:layout_marginTop="20dp"
+				        android:layout_below="@+id/signinEmailEditText"
+				        android:background="@drawable/rounded_edittext"
+				        android:padding="15dp"
+				        android:ems="10"
+				        android:hint="PASSWORD"
+				        android:textSize="20sp"
+				        android:textColor="@color/black"
+				        android:textColorHint="@color/black"
+				        android:inputType="textPassword" >
+
+				    </EditText>
+		
+
+			    </RelativeLayout>
+			    
+	    				<Button 
+			    android:id="@+id/butSignIn"
+			    android:layout_marginBottom="45dp"
+			    android:layout_centerHorizontal="true"
+			    android:layout_alignParentBottom="true"
+			    android:background="@drawable/button_login"
+			    android:text="SIGN IN"
+			    android:textSize="23sp"
+			    android:textColor="@color/white"
+			    android:layout_width="150dp"
+			    android:layout_height="50dp"/>
+		   		
+	    
+
+</RelativeLayout>

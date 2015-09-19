@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity {
     @Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.login_layout);
+		this.setContentView(R.layout.signin_layout);
 		MyApplication.getInstance().addActivity(this);
         mWebApi = WebApi.getInstance(this);
 
@@ -66,7 +66,8 @@ public class LoginActivity extends BaseActivity {
         loginBtn = (Button) findViewById(R.id.butSignIn);
         emailTextField = (EditText) findViewById(R.id.signinEmailEditText);
         passwordTextField = (EditText) findViewById(R.id.signinPasswordEditText);
-		signUp = (TextView) findViewById(R.id.sign_up);
+
+/*		signUp = (TextView) findViewById(R.id.sign_up);
         signUp.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         signUp.setOnClickListener(this);
 
@@ -76,7 +77,7 @@ public class LoginActivity extends BaseActivity {
 
         termsOfUseBtn = (TextView) findViewById(R.id.termsofuse);
         termsOfUseBtn.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-        termsOfUseBtn.setOnClickListener(this);
+        termsOfUseBtn.setOnClickListener(this);*/
 
         loginBtn.setOnClickListener(this);
         passwordTextField.setTransformationMethod(PasswordTransformationMethod
@@ -87,12 +88,6 @@ public class LoginActivity extends BaseActivity {
 	protected void initTitle(){
 	}
 
-    protected void getAssistanceProvider(Object obj){
-//        JSONObject jsonData = (JSONObject)obj;
-//        String test = "";
-    }
-	
-
 	@Override
 	public void onClick(View v) {
         if (v == loginBtn) {
@@ -100,8 +95,6 @@ public class LoginActivity extends BaseActivity {
             String email = emailTextField.getText().toString();
             String password = passwordTextField.getText().toString();
 
-//            logIn(email, password);
-//            logInOld(email,password);
             doLogin(email, password);
             return;
 
@@ -177,7 +170,7 @@ public class LoginActivity extends BaseActivity {
                         String virtualWalletPdf = null;
                         if(userObj.has("company")){
                             Object temp = userObj.getJSONObject("company").get("content");
-                            getAssistanceProvider(temp);
+//                            getAssistanceProvider(temp);
                             if(temp instanceof JSONObject){
                                 virtualWalletPdf = ((JSONObject) temp).optString("virtual_wallet_pdf");
 
@@ -261,288 +254,30 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    public void logIn(String email, String password){
-
-        IControllerContentCallback icc = new IControllerContentCallback() {
-            public void handleSuccess(String content) {
-
-                JSONObject jsonObj = null, userObj = null;
-                User user = null;
-
-                try {
-                    jsonObj = new JSONObject(content);
-                    user = new User(jsonObj);
-                    if(jsonObj.has("error")) {
-                        JSONArray errorMessage = jsonObj.getJSONObject("error").getJSONArray("message");
-                        String message = String.valueOf((Object) errorMessage.get(0));
-                        StringUtil.showAlertDialog(getResources().getString(R.string.login_title_name), message, context);
-                        return;
-
-                    }else if(jsonObj.has("user")) {
-                        userObj = jsonObj.getJSONObject("user");
-                        user = new User(userObj);
-                        String virtualWalletPdf = null;
-                        if(userObj.has("company")){
-                            Object temp = userObj.getJSONObject("company").get("content");
-                            getAssistanceProvider(temp);
-                            if(temp instanceof JSONObject){
-                                virtualWalletPdf = ((JSONObject) temp).optString("virtual_wallet_pdf");
-
-                            }
-                        }
-
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.virtualWalletPdf.toString(), virtualWalletPdf);
-
-                     }else {
-//                        StringUtil.showAlertDialog(getResources().getString(R.string.login_title_name), getResources().getString(R.string.login_failed), context);
-  //                      return;
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    StringUtil.showAlertDialog(getResources().getString(R.string.login_title_name), getResources().getString(R.string.login_failed), context);
-                    return;
-                }
-
-                if(user != null) {
-//                        UserTable.getInstance().saveUser(user);
-//                        User ww = null;
-//                        ww = UserTable.getInstance().getUser(user.id);
-
-                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.sessionId.toString(), user.sessionId);
-                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.username.toString(),user.userName);
-
-/*                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.token.toString(), user.token);
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.email.toString(),user.email);
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.firstname.toString(),user.firstName);
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.lastname.toString(),user.lastName);
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.countryCode.toString(),user.countryCode);
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.currencyCode.toString(),user.currencyCode);
-                        SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), true);
-*/
-//                    MyApplication.setLoginStatus(true);
-
-                    getProfile();
-//                        Intent mIntent = new Intent(LoginActivity.this, TripPagesActivity.class);
-  //                      startActivity(mIntent);
-    //                    LoginActivity.this.finish();
-                    } else {
-                        StringUtil.showAlertDialog(getResources().getString(
-                                R.string.login_title_name), "User is empty", context);
-                        return;
-                    }
-
-                }
-
-                public void handleError(Exception e) {
-                    StringUtil.showAlertDialog(getResources().getString(
-                            R.string.login_title_name), getResources().getString(R.string.login_failed), context);
-                    return;
-
-                }
-            };
-
-            ControllerContentTask cct = new ControllerContentTask(
-                    Constants.LOGIN_URL, icc,
-                    Enums.ConnMethod.POST, false);
-
-            JSONObject user = new JSONObject();
-            try {
-                user.put("UserName", email);
-                user.put("Password", password);
-            } catch (JSONException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-
-/*            JSONObject login = new JSONObject();
-            try {
-                login.put("user", user);
-            } catch (JSONException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }*/
-
-            cct.execute(user.toString());
-
-
-    }
-
-    private void getProfile(){
-        IControllerContentCallback icc = new IControllerContentCallback() {
-
-            public void handleSuccess(String content) {
-                JSONObject jsonObject;
-                Profile profile = new Profile();
-                try {
-                    jsonObject = new JSONObject(content);
-                    profile.setSessionId(jsonObject.optString("id"));
-                    profile.setAvatarUrl(jsonObject.optString("profile_pic"));
-                    profile.setBackGroundUrl(jsonObject.optString("background_pic"));
-                    profile.setEmail(jsonObject.optString("Email"));
-                    profile.setFirstName(jsonObject.optString("FirstName"));
-                    profile.setLastName(jsonObject.optString("LastName"));
-                    profile.setUserName(jsonObject.optString("UserName"));
-                    profile.setOccupation(jsonObject.optString("occupation"));
-                    profile.setPhone(jsonObject.optString("phone"));
-                    profile.setLatitude(jsonObject.optDouble("latitude"));
-                    profile.setLongitude(jsonObject.optDouble("longitude"));
-
-                    getConnection();
-                    getOtherProfile();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            public void handleError(Exception e){
-
-            }
-        };
-
-        String sessionId = SharedPreferenceUtil.getString(Enums.PreferenceKeys.sessionId.toString(), null);
-
-        ControllerContentTask cct = new ControllerContentTask(
-                Constants.PROFILE_URL+sessionId+"/" + Constants.FORMAT_JSON, icc,
-                Enums.ConnMethod.GET,false);
-
-        String ss = null;
-        cct.execute(ss);
-
-    }
-
-
-    private void getConnection(){
-        IControllerContentCallback icc = new IControllerContentCallback() {
-
-            public void handleSuccess(String content) {
-                JSONArray jsonArr;
-                try {
-                    jsonArr = (JSONArray) new JSONTokener(content).nextValue();
-                    int size = jsonArr.length();
-
-                    if (jsonArr != null)
-                    {
-                        for (int i=0; i < jsonArr.length(); i++)
-                        {
-                            JSONObject tmpJson = jsonArr.getJSONObject(i);
-
-                            Connection connection = new Connection();
-                            connection.fromId = tmpJson.getInt("fromid");
-                            connection.toId = tmpJson.getInt("toid");
-                            String tempDate = tmpJson.getString("dateConnRequested");
-
-                            //connection.dateConnectionRequest = new Date(tmpJson.getString("dateConnRequested"));
-                            connection.notified = tmpJson.getBoolean("notified");
-                            connection.status = tmpJson.getString("status");
-
-                            if (connection.status.equals(Connection.CONNECT))
-                            {
-/*                                ResourceManager.UserProfile.contactsId = UserTable.getInstance().getContact();
-
-                                if (connection.fromId != ResourceManager.UserProfile.id)
-                                {
-                                    if (!ResourceManager.UserProfile.contactsId.contains(connection.fromId))
-                                    {
-                                        UserTable.getInstance().addContact(connection.fromId);
-                                        ResourceManager.UserProfile.contactsId.add(connection.fromId);
-
-                                        NewContact tmpNewContact = new NewContact(connection.fromId);
-                                        ResourceManager.UserProfile.newContactsId.add(tmpNewContact);
-                                    }
-                                }
-                                else if (connection.toId != ResourceManager.UserProfile.id)
-                                {
-                                    if (!ResourceManager.UserProfile.contactsId.contains(connection.toId))
-                                    {
-                                        UserTable.getInstance().addContact(connection.toId);
-                                        ResourceManager.UserProfile.contactsId.add(connection.toId);
-
-                                        NewContact tmpNewContact = new NewContact(connection.toId);
-                                        ResourceManager.UserProfile.newContactsId.add(tmpNewContact);
-                                    }
-                                }*/
-                            }
-                            //connection.dateConnectionConfirmed = new Date(tmpJson.getString("dateConnConfirmed"));
-
-//                            mUser.connections.add(connection);
-
-                        }
-                    }
-                } catch (JSONException e) {
-//                    return false;
-                }
-
-            }
-
-            public void handleError(Exception e){
-
-            }
-        };
-
-        String sessionId = SharedPreferenceUtil.getString(Enums.PreferenceKeys.sessionId.toString(), null);
-//        String url = Constants.PROFILE_URL+sessionId+"/connections" + "?offset=" +
-  //              "0" + "&format=json";
-        String url = Constants.PROFILE_URL + "me";
-
-        ControllerContentTask cct = new ControllerContentTask(
-                url, icc,
-                Enums.ConnMethod.GET,false);
-
-        String ss = null;
-        cct.execute(ss);
-
-    }
-
-    public void getOtherProfile(){
-        IControllerContentCallback icc = new IControllerContentCallback() {
-
-            public void handleSuccess(String content) {
-                JSONArray profile;
-                try {
-                    profile = (JSONArray) new JSONTokener(content).nextValue();
-                    int len = profile.length();
-                    //                   JSONObject ra = currencyInfo.getJSONObject("rates");
-                    //                 rate = currencyInfo.getJSONObject("rates").getDouble(currencyCode);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            public void handleError(Exception e){
-
-            }
-        };
-
-        String sessionId = SharedPreferenceUtil.getString(Enums.PreferenceKeys.sessionId.toString(), null);
-
-        ControllerContentTask cct = new ControllerContentTask(
-                Constants.PROFILE_URL+sessionId + Constants.SEARCHDISTANCE
-                        + "?distance=" + "5.0"
-                        + "&longitude=" + "0.0"
-                        + "&latitude=" + "0.0"
-                        + "&offset=" + "1"
-                        + "&format=json", icc,
-                Enums.ConnMethod.GET,false);
-
-        String ss = null;
-        cct.execute(ss);
-
-
-    }
-
-
     private void doLogin(String phoneNum, String psw) {
+
+ /*       if (TextUtils.isEmpty(phoneNum)) {
+            StringUtil.showAlertDialog(getResources().getString(
+                    R.string.login_title_name), getResources()
+                    .getString(R.string.login_email_input_error), this);
+            return;
+        } else if (!StringUtil.isEmail(email)) {
+            StringUtil.showAlertDialog(getResources().getString(R.string.login_title_name),
+                    getResources().getString(R.string.email_format_error), this);
+            return;
+        }*/
+
+        if (TextUtils.isEmpty(psw)) {
+            StringUtil.showAlertDialog(getResources().getString(
+                    R.string.login_title_name), getResources()
+                    .getString(R.string.login_password_null), this);
+            return;
+        }
 //        showProgressDlg(R.string.login_ing);
         mWebApi.login(phoneNum, psw, new IResponse<String>() {
 
             @Override
             public void onSucceed(final String tokenInfo) {
-//                getConnection();
-//                getOtherProfile();
                 return;
 /*                if (!TextUtils.isEmpty(tokenInfo)) {
 //                    mWebApi.setToken(tokenInfo);
@@ -599,10 +334,10 @@ public class LoginActivity extends BaseActivity {
                 try {
                     JSONObject json = new JSONObject(rspStr);
                     SharedPreferenceUtil.setString(Enums.PreferenceKeys.sessionId.toString(), json.getString("SessionId"));
+                    SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), true);
 
                     getProfile(json.getString("SessionId"));
                     getConnections(json.getString("SessionId"));
-//                    getOtherProfile();
                     getService(json.getString("SessionId"));
                     getProfiles(json.getString("SessionId"));
 
@@ -626,9 +361,9 @@ public class LoginActivity extends BaseActivity {
             public void onSucceed(Profile result) {
 
 //                mFinalDb.deleteAll(Profile.class);
-                mFinalDb.save(result);
+//                mFinalDb.save(result);
 
-                List<Profile> profile = mFinalDb.findAll(Profile.class);
+//                List<Profile> profile = mFinalDb.findAll(Profile.class);
             }
 
             @Override
@@ -644,19 +379,6 @@ public class LoginActivity extends BaseActivity {
 //                    Profile profile = new Profile();
 
                     Profile profile = GsonUtil.jsonToObject(Profile.class, rspStr);
-
-/*                    profile.setId(json.optString("id"));
-                    profile.setUserName(json.optString("username"));
-                    profile.setEmail(json.optString("email"));
-                    profile.setFirstName(json.optString("firstname"));
-                    profile.setLastName(json.optString("lastname"));
-                    profile.setAvatarUrl(json.optString("profile_pic"));
-                    profile.setOccupation(json.optString("occupation"));
-                    profile.setDisplayName(json.optString("displayname"));
-                    profile.setPhone(json.optString("phone"));
-                    profile.setLongitude(json.optDouble("longitude"));
-                    profile.setLatitude(json.optDouble("latitude"));
-                    profile.setSkillSet(json.optString("skillset")); */
 
                     return profile;
                 } catch (JSONException e) {
@@ -675,10 +397,10 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onSucceed(List<Profile> result) {
-                mFinalDb.save(result, Profile.class);
+//                mFinalDb.save(result, Profile.class);
 
-                List<Profile> profileList = mFinalDb.findAll(Profile.class);
-                List<Profile> profile = mFinalDb.findAllByWhere(Profile.class, "id = 117");
+//                List<Profile> profileList = mFinalDb.findAll(Profile.class);
+  //              List<Profile> profile = mFinalDb.findAllByWhere(Profile.class, "id = 117");
 
             }
 
