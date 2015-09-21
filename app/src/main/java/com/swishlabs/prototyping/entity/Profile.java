@@ -3,12 +3,15 @@ package com.swishlabs.prototyping.entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import net.tsz.afinal.annotation.sqlite.Table;
+
 import java.io.Serializable;
 
 /**
  * Created by wwang on 15-05-22.
  */
 
+@Table(name = "Profile")
 public class Profile implements Serializable {
 
     private int id;

@@ -16,7 +16,6 @@ import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.data.api.callback.ControllerContentTask;
 import com.swishlabs.prototyping.data.api.callback.IControllerContentCallback;
-import com.swishlabs.prototyping.data.api.model.Connection;
 import com.swishlabs.prototyping.data.api.model.Constants;
 import com.swishlabs.prototyping.data.api.model.User;
 import com.swishlabs.prototyping.data.store.beans.UserTable;
@@ -33,7 +32,6 @@ import com.swishlabs.prototyping.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -277,7 +275,16 @@ public class LoginActivity extends BaseActivity {
         mWebApi.login(phoneNum, psw, new IResponse<String>() {
 
             @Override
-            public void onSucceed(final String tokenInfo) {
+            public void onSucceed(final String sessionId) {
+
+                SharedPreferenceUtil.setString(Enums.PreferenceKeys.sessionId.toString(), sessionId);
+//                SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), true);
+
+                getProfile(sessionId);
+                getConnections(sessionId);
+                getService(sessionId);
+                getProfiles(sessionId);
+
                 return;
 /*                if (!TextUtils.isEmpty(tokenInfo)) {
 //                    mWebApi.setToken(tokenInfo);
@@ -331,21 +338,15 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public String asObject(String rspStr) {
-                try {
-                    JSONObject json = new JSONObject(rspStr);
-                    SharedPreferenceUtil.setString(Enums.PreferenceKeys.sessionId.toString(), json.getString("SessionId"));
-                    SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), true);
+                if(!TextUtils.isEmpty(rspStr)) {
+                    try {
+                        JSONObject json = new JSONObject(rspStr);
+                        return json.optString("SessionId");
 
-                    getProfile(json.getString("SessionId"));
-                    getConnections(json.getString("SessionId"));
-                    getService(json.getString("SessionId"));
-                    getProfiles(json.getString("SessionId"));
-
-                    //                  return json.getString("token");
-                    return "test";
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
 
                 return "";
@@ -361,9 +362,9 @@ public class LoginActivity extends BaseActivity {
             public void onSucceed(Profile result) {
 
 //                mFinalDb.deleteAll(Profile.class);
-//                mFinalDb.save(result);
+                mFinalDb.save(result);
 
-//                List<Profile> profile = mFinalDb.findAll(Profile.class);
+                List<Profile> profile = mFinalDb.findAll(Profile.class);
             }
 
             @Override
@@ -376,7 +377,6 @@ public class LoginActivity extends BaseActivity {
             public Profile asObject(String rspStr) {
                 try {
                     JSONObject json = new JSONObject(rspStr);
-//                    Profile profile = new Profile();
 
                     Profile profile = GsonUtil.jsonToObject(Profile.class, rspStr);
 
@@ -397,10 +397,11 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onSucceed(List<Profile> result) {
-//                mFinalDb.save(result, Profile.class);
+//                mFinalDb.deleteAll(Profile.class);
+                mFinalDb.save(result, Profile.class);
 
-//                List<Profile> profileList = mFinalDb.findAll(Profile.class);
-  //              List<Profile> profile = mFinalDb.findAllByWhere(Profile.class, "id = 117");
+                List<Profile> profileList = mFinalDb.findAll(Profile.class);
+                List<Profile> profile = mFinalDb.findAllByWhere(Profile.class, "sessionId = 117");
 
             }
 
@@ -477,6 +478,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onSucceed(List<ProfileAround> result) {
+                mFinalDb.save(result);
 
             }
 
