@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity {
     @Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.signin_layout);
+		this.setContentView(R.layout.login_layout);
 		MyApplication.getInstance().addActivity(this);
         mWebApi = WebApi.getInstance(this);
 
@@ -67,11 +67,11 @@ public class LoginActivity extends BaseActivity {
         emailTextField = (EditText) findViewById(R.id.signinEmailEditText);
         passwordTextField = (EditText) findViewById(R.id.signinPasswordEditText);
 
-/*		signUp = (TextView) findViewById(R.id.sign_up);
+		signUp = (TextView) findViewById(R.id.sign_up);
         signUp.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         signUp.setOnClickListener(this);
 
-        learnMore = (TextView) findViewById(R.id.learnMore);
+/*        learnMore = (TextView) findViewById(R.id.learnMore);
         learnMore.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         learnMore.setOnClickListener(this);
 
