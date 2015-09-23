@@ -3,16 +3,22 @@ package com.swishlabs.prototyping.entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import net.tsz.afinal.annotation.sqlite.Table;
+
 import java.io.Serializable;
 
 /**
  * Created by wwang on 15-09-17.
  */
+
+@Table(name = "User")
 public class User implements Serializable{
+
+    private int id;
 
     @Expose
     @SerializedName("id")
-    private int id;
+    private int userId;
 
     @Expose
     @SerializedName("username")
@@ -116,5 +122,13 @@ public class User implements Serializable{
 
     public void setAlliance(Alliance alliance) {
         this.alliance = alliance;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

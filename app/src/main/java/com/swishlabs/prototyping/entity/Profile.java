@@ -18,7 +18,7 @@ public class Profile implements Serializable {
 
     @Expose
     @SerializedName("id")
-    private String sessionId;
+    private int sessionId;
 
     @Expose
     @SerializedName("username")
@@ -162,11 +162,11 @@ public class Profile implements Serializable {
 
     public void setTrusted(boolean trusted ) { this.trusted = trusted; }
 
-    public String getSessionId() {
+    public int getSessionId() {
         return sessionId;
     }
 
-    public void setSessionId(String sessionId) {
+    public void setSessionId(int sessionId) {
         this.sessionId = sessionId;
     }
 

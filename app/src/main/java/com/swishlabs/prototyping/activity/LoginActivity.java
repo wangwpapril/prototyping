@@ -401,6 +401,7 @@ public class LoginActivity extends BaseActivity {
                 mFinalDb.save(result, Profile.class);
 
                 List<Profile> profileList = mFinalDb.findAll(Profile.class);
+//                List<Profile> profile = mFinalDb.findAllByWhere(Profile.class, "sessionId == \"117\"");
                 List<Profile> profile = mFinalDb.findAllByWhere(Profile.class, "sessionId = 117");
 
             }
@@ -431,6 +432,9 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onSucceed(List<Service> result) {
+
+                List<Service> services1 = mFinalDb.findAll(Service.class);
+
                 mFinalDb.save(result, Service.class);
 
                 List<Service> services = mFinalDb.findAll(Service.class);
@@ -472,9 +476,9 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onSucceed(List<ProfileAround> result) {
-                mFinalDb.save(result);
+//                mFinalDb.save(result);
 
-                List<ProfileAround> profileList = mFinalDb.findAll(ProfileAround.class);
+  //              List<ProfileAround> profileList = mFinalDb.findAll(ProfileAround.class);
 
             }
 

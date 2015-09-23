@@ -14,9 +14,11 @@ import java.io.Serializable;
 @Table(name = "Alliance")
 public class Alliance implements Serializable {
 
+    private int id;
+
     @Expose
     @SerializedName("id")
-    private int id;
+    private int allianceId;
 
     @Expose
     @SerializedName("displaymembers")
@@ -72,5 +74,13 @@ public class Alliance implements Serializable {
 
     public void setCreatedat(String createdat) {
         this.createdat = createdat;
+    }
+
+    public int getAllianceId() {
+        return allianceId;
+    }
+
+    public void setAllianceId(int allianceId) {
+        this.allianceId = allianceId;
     }
 }
