@@ -429,17 +429,11 @@ public class LoginActivity extends BaseActivity {
 
         mWebApi.getService(id, new IResponse<List<Service>>() {
 
-/*            @Override
-            public void onSuccessed(List<Profile> result) {
-                mFinalDb.save(result, Profile.class);
-
-                List<Profile> profileList = mFinalDb.findAll(Profile.class);
-                List<Profile> profile = mFinalDb.findAllByWhere(Profile.class, "id = 117");
-
-            }*/
-
             @Override
             public void onSucceed(List<Service> result) {
+                mFinalDb.save(result, Service.class);
+
+                List<Service> services = mFinalDb.findAll(Service.class);
 
             }
 
@@ -479,6 +473,8 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onSucceed(List<ProfileAround> result) {
                 mFinalDb.save(result);
+
+                List<ProfileAround> profileList = mFinalDb.findAll(ProfileAround.class);
 
             }
 
