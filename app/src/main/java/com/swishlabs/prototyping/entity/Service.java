@@ -2,9 +2,12 @@ package com.swishlabs.prototyping.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.swishlabs.prototyping.data.api.model.Parent;
 
 import net.tsz.afinal.annotation.sqlite.Id;
+import net.tsz.afinal.annotation.sqlite.OneToMany;
 import net.tsz.afinal.annotation.sqlite.Table;
+import net.tsz.afinal.db.sqlite.OneToManyLazyLoader;
 
 import java.io.Serializable;
 
@@ -17,7 +20,7 @@ public class Service implements Serializable {
 
     private static final long serialVersionUID = -1634404573461075056L;
 
-    @Id
+    @Id(column="id")
     private int id;
 
     @Expose
@@ -90,6 +93,9 @@ public class Service implements Serializable {
     @Expose
     @SerializedName("alliance")
     private Alliance alliance;
+
+    @OneToMany(manyColumn = "serviceId")
+    private OneToManyLazyLoader<Service,User> children;
 
     public String getSummary() {
         return summary;
@@ -241,5 +247,13 @@ public class Service implements Serializable {
 
     public void setServiceId(int serviceId) {
         this.serviceId = serviceId;
+    }
+
+    public OneToManyLazyLoader<Service, User> getChildren() {
+        return children;
+    }
+
+    public void setChildren(OneToManyLazyLoader<Service, User> children) {
+        this.children = children;
     }
 }

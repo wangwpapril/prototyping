@@ -2,7 +2,10 @@ package com.swishlabs.prototyping.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.swishlabs.prototyping.data.api.model.Parent;
 
+import net.tsz.afinal.annotation.sqlite.Id;
+import net.tsz.afinal.annotation.sqlite.ManyToOne;
 import net.tsz.afinal.annotation.sqlite.Table;
 
 import java.io.Serializable;
@@ -14,6 +17,7 @@ import java.io.Serializable;
 @Table(name = "User")
 public class User implements Serializable{
 
+    @Id(column="id")
     private int id;
 
     @Expose
@@ -51,6 +55,9 @@ public class User implements Serializable{
     @Expose
     @SerializedName("alliance")
     private Alliance alliance;
+
+    @ManyToOne(column = "serviceId")
+    private Service service;
 
     public int getId() {
         return id;
@@ -130,5 +137,13 @@ public class User implements Serializable{
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
     }
 }

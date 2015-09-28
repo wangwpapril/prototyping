@@ -439,6 +439,8 @@ public class LoginActivity extends BaseActivity {
 
                 List<Service> services = mFinalDb.findAll(Service.class);
 
+                services.get(0).getUser();
+
             }
 
             @Override
@@ -476,9 +478,9 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onSucceed(List<ProfileAround> result) {
-//                mFinalDb.save(result);
+                mFinalDb.save(result, ProfileAround.class);
 
-  //              List<ProfileAround> profileList = mFinalDb.findAll(ProfileAround.class);
+                List<ProfileAround> profileList = mFinalDb.findAll(ProfileAround.class);
 
             }
 

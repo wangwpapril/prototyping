@@ -3,6 +3,7 @@ package com.swishlabs.prototyping.entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import net.tsz.afinal.annotation.sqlite.Id;
 import net.tsz.afinal.annotation.sqlite.Table;
 
 import java.io.Serializable;
@@ -14,7 +15,7 @@ import java.io.Serializable;
 @Table(name = "ProfileAround")
 public class ProfileAround implements Serializable{
 
-
+    @Id(column="id")
     private int id;
 
     @Expose
