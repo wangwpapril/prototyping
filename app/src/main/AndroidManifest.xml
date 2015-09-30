@@ -100,7 +100,11 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_main"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.MainHomeActivity"
+            android:label="@string/title_activity_main_home" >
         </activity>
     </application>
 
