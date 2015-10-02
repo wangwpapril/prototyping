@@ -1,8 +1,7 @@
 package com.swishlabs.prototyping.activity;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
@@ -11,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.adapter.MainHomeListAdapter;
+import com.swishlabs.prototyping.helper.FixedGridLayoutManager;
 import com.swishlabs.prototyping.helper.OnStartDragListener;
 import com.swishlabs.prototyping.helper.SimpleItemTouchHelperCallback;
 
@@ -41,8 +41,9 @@ public class MainHomeActivityFragment extends Fragment implements OnStartDragLis
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setLayoutManager(new FixedGridLayoutManager());
         mRecyclerView.setAdapter(adapter);
+//        mRecyclerView.setScrollContainer(false);
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);

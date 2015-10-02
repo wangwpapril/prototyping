@@ -83,11 +83,11 @@ public class MyLayoutManager extends LinearLayoutManager {
 
 		final int unspecified = makeUnspecifiedSpec();
 
-		if (exactWidth && exactHeight) {
+/*		if (exactWidth && exactHeight) {
 			// in case of exact calculations for both dimensions let's use default "onMeasure" implementation
 			super.onMeasure(recycler, state, widthSpec, heightSpec);
 			return;
-		}
+		}*/
 
 		final boolean vertical = getOrientation() == VERTICAL;
 
@@ -113,12 +113,12 @@ public class MyLayoutManager extends LinearLayoutManager {
 					if (i < stateItemCount) {
 						// we should not exceed state count, otherwise we'll get IndexOutOfBoundsException. For such items
 						// we will use previously calculated dimensions
-						measureChild(recycler, i, widthSize, unspecified, childDimensions);
+						measureChild(recycler, i, widthSize, heightSize, childDimensions);
 					} else {
 						logMeasureWarning(i);
 					}
 				}
-				height += childDimensions[CHILD_HEIGHT];
+//				height += childDimensions[CHILD_HEIGHT];
 				if (i == 0) {
 					width = childDimensions[CHILD_WIDTH];
 				}
@@ -165,12 +165,13 @@ public class MyLayoutManager extends LinearLayoutManager {
 
 		setMeasuredDimension(width, height);
 
-		if (view != null && overScrollMode == ViewCompat.OVER_SCROLL_IF_CONTENT_SCROLLS) {
+		ViewCompat.setOverScrollMode(view, ViewCompat.OVER_SCROLL_NEVER);
+/*		if (view != null && overScrollMode == ViewCompat.OVER_SCROLL_IF_CONTENT_SCROLLS) {
 			final boolean fit = (vertical && (!hasHeightSize || height < heightSize))
 					|| (!vertical && (!hasWidthSize || width < widthSize));
 
 			ViewCompat.setOverScrollMode(view, fit ? ViewCompat.OVER_SCROLL_NEVER : ViewCompat.OVER_SCROLL_ALWAYS);
-		}
+		}*/
 	}
 
 	private void logMeasureWarning(int child) {
@@ -251,6 +252,7 @@ public class MyLayoutManager extends LinearLayoutManager {
 		final int childHeightSpec = getChildMeasureSpec(heightSize, vPadding + vMargin + vDecoration, p.height, canScrollVertically());
 
 		child.measure(childWidthSpec, childHeightSpec);
+//		child.layout(0,0,300,300);
 
 		dimensions[CHILD_WIDTH] = getDecoratedMeasuredWidth(child) + p.leftMargin + p.rightMargin;
 		dimensions[CHILD_HEIGHT] = getDecoratedMeasuredHeight(child) + p.bottomMargin + p.topMargin;
@@ -283,5 +285,13 @@ public class MyLayoutManager extends LinearLayoutManager {
 			Log.w("LinearLayoutManager", "Can't make LayoutParams insets dirty, decorations measurements might be incorrect");
 		}
 	}
+
+	@Override
+	public RecyclerView.LayoutParams generateDefaultLayoutParams() {
+		return new RecyclerView.LayoutParams(
+				RecyclerView.LayoutParams.WRAP_CONTENT,
+				RecyclerView.LayoutParams.WRAP_CONTENT);
+	}
+
 
 }
