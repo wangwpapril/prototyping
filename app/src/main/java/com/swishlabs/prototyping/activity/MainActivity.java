@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
@@ -15,6 +17,7 @@ public class MainActivity extends BaseFragmentActivity {
 
     private BaseFragment mFragmentPreHome;
     private BaseFragment mCurrFragment;
+    private ImageView mDrawerImage;
     private MyApplication mApp;
 
     @Override
@@ -23,8 +26,21 @@ public class MainActivity extends BaseFragmentActivity {
 
         setContentView(R.layout.activity_main);
 
+        mDrawerImage = (ImageView)findViewById(R.id.drawerImage);
+        mDrawerImage.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                getSlidingMenu().showMenu();
+
+            }
+        });
+
+ //       getSlidingMenu().setSlidingEnabled(true);
+
+
         mFragmentPreHome = BaseFragment.newInstance(null,null);
-        switchFragment(mFragmentPreHome);
+ //       switchFragment(mFragmentPreHome);
     }
 
     void switchFragment(BaseFragment fragment) {

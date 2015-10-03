@@ -39,9 +39,9 @@ public class SplashActivity extends Activity {
 			public void run(){
 				Intent mIntent = null;
 				if(MyApplication.getLoginStatus()) {
-					mIntent = new Intent(SplashActivity.this,MainHomeActivity.class);
+					mIntent = new Intent(SplashActivity.this,MainActivity.class);
 				}else{
-					mIntent = new Intent(SplashActivity.this,MainHomeActivity.class);
+					mIntent = new Intent(SplashActivity.this,MainActivity.class);
 				}
 				startActivity(mIntent);
 				SplashActivity.this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
