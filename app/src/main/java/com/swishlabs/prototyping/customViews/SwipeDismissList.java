@@ -530,7 +530,7 @@ public final class SwipeDismissList implements View.OnTouchListener {
 					child = mProfileLayout.getChildAt(i);
 					child.getHitRect(rect);
 					if (rect.contains(x, y)) {
-						if (i == 1 && _views.size() > 0)
+//						if (i == 1 && _views.size() > 0)
 						{
 							View tmpView = _views.get(_position);
 							if (tmpView != null)

@@ -25,13 +25,6 @@ import com.swishlabs.prototyping.net.WebApi;
 public class BaseFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
     private MyApplication mApp;
@@ -48,14 +41,14 @@ public class BaseFragment extends Fragment {
      * @return A new instance of fragment BaseFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BaseFragment newInstance(String param1, String param2) {
+ /*   public static BaseFragment newInstance(String param1, String param2) {
         BaseFragment fragment = new BaseFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
+    }*/
 
     public BaseFragment() {
         // Required empty public constructor
@@ -64,10 +57,10 @@ public class BaseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+/*        if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        }*/
 
         mActivity = getActivity();
         mApp = (MyApplication)mActivity.getApplication();
@@ -75,14 +68,14 @@ public class BaseFragment extends Fragment {
 
     }
 
-    @Override
+/*    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         TextView textView = new TextView(getActivity());
         textView.setText(R.string.hello_blank_fragment);
         return textView;
     }
-
+*/
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

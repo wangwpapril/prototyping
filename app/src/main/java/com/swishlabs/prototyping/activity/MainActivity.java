@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.fragment.BaseFragment;
+import com.swishlabs.prototyping.fragment.SwipeFragment;
 
 public class MainActivity extends BaseFragmentActivity {
 
@@ -39,8 +40,8 @@ public class MainActivity extends BaseFragmentActivity {
  //       getSlidingMenu().setSlidingEnabled(true);
 
 
-        mFragmentPreHome = BaseFragment.newInstance(null,null);
- //       switchFragment(mFragmentPreHome);
+        mFragmentPreHome = SwipeFragment.newInstance(null, null);
+        switchFragment(mFragmentPreHome);
     }
 
     void switchFragment(BaseFragment fragment) {

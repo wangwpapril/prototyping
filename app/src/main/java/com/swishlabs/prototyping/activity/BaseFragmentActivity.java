@@ -41,7 +41,7 @@ public class BaseFragmentActivity extends SlidingFragmentActivity implements Bas
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSlidingMenu().setSlidingEnabled(true);
+ //       getSlidingMenu().setSlidingEnabled(true);
 
         mSlideMenuAdapter = new SlideMenuAdapter(this, getResources().getStringArray(R.array.slide_menu_list), null);
         initSlidingLayout();
@@ -133,7 +133,9 @@ public class BaseFragmentActivity extends SlidingFragmentActivity implements Bas
 
         getSlidingMenu().setBehindOffset((int) (100 * getResources().getDisplayMetrics().density));
         getSlidingMenu().setSlidingEnabled(true);
-        getSlidingMenu().setTouchModeAbove(SlidingMenu.LEFT);
+        getSlidingMenu().setShadowWidth(3);
+        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+//        getSlidingMenu().setMode(SlidingMenu.RIGHT);
 
         ListView listView = (ListView) mBehindMenu.findViewById(R.id.listViewSlideMenu);
 
