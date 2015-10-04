@@ -107,7 +107,7 @@ public class SwipeFragment extends BaseFragment {
 
             @Override
             public SwipeDismissList.Undoable onDismiss(RelativeLayout layout, int position, boolean isLeft) {
-                //               setAction(position, isLeft);
+                               setAction(position, isLeft);
 
 //				ResourceManager.OtherProfiles.remove(position);
                 return null;
@@ -231,7 +231,46 @@ public class SwipeFragment extends BaseFragment {
 
     }
 
+    public int setAction(int position, boolean isLeft)
+    {
+        int pos = position;
 
+        if (isLeft)
+        {
+//            BackgroundTask.GetInstance(this).reject(position, isFilterProfiles);
+//            pos = holder.mProfileView.setNextPosition(position, isFilterProfiles);
+            mSwipeList.setPosition(position, params);
+        }
+        else
+        {
+//            BackgroundTask.GetInstance(this).accept(position, isFilterProfiles);
+//            mSwipeList.disableRow(position);
+//            pos = holder.mProfileView.disabledViewAt(position, isFilterProfiles);
+
+/*            if (isFilterProfiles)
+            {
+                User tmpUser = ResourceManager.filteredPreHomeProfiles.get(position);
+                tmpUser.setEnabled(false);
+
+                for (int i=0; i<ResourceManager.OtherProfiles.size(); i++)
+                {
+                    if (ResourceManager.OtherProfiles.get(i).equals(tmpUser))
+                    {
+                        ResourceManager.OtherProfiles.get(i).setEnabled(false);
+                        break;
+                    }
+                }
+            }
+            else
+                ResourceManager.OtherProfiles.get(position).setEnabled(false);
+
+            WidgetProvider.setUserEnabled(ResourceManager.OtherProfiles.get(position), false);*/
+
+            mSwipeList.setPosition(position, params);
+        }
+
+        return pos;
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
  /*   public void onButtonPressed(Uri uri) {
