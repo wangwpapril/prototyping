@@ -10,9 +10,41 @@
         android:id="@+id/profileCardLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true">
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:id="@+id/declineImage"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:src="@drawable/pass_button"
+            android:layout_alignParentLeft="true"/>
+
+
+
+        <ImageView
+            android:id="@+id/acceptImage"
+            android:src="@drawable/connect_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:layout_alignParentRight="true"
+
+            />
+
+    </LinearLayout>
 
 </RelativeLayout>

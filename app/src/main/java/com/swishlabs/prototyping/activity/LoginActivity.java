@@ -278,12 +278,18 @@ public class LoginActivity extends BaseActivity {
             public void onSucceed(final String sessionId) {
 
                 SharedPreferenceUtil.setString(Enums.PreferenceKeys.sessionId.toString(), sessionId);
-//                SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), true);
+                SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), true);
 
                 getProfile(sessionId);
                 getConnections(sessionId);
                 getService(sessionId);
                 getProfiles(sessionId);
+
+                Intent mainIntent = new Intent(getBaseContext(), MainActivity.class);
+                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(mainIntent);
+                finish();
+
 
                 return;
 /*                if (!TextUtils.isEmpty(tokenInfo)) {

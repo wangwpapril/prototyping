@@ -141,6 +141,8 @@ public class SwipeFragment extends BaseFragment {
 
         params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        params.setMargins(0, 50, 0, 100);
+//        params.bottomMargin = 150;
 //        mSwipeList.setInitialPos(300, 300);
 
         mProfileFrameLayout.addView(profileView,0,params);
@@ -212,6 +214,7 @@ public class SwipeFragment extends BaseFragment {
             public void onAnimationEnd(Animation animation) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                params.setMargins(0, 50, 0, 100);
 
  /*               if (ConfigurationScreen.CheckScreenSize(instance).equals(ConfigurationScreen.NORMAL))
                     params.setMargins(

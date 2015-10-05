@@ -1,5 +1,6 @@
 package com.swishlabs.prototyping.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import com.swishlabs.prototyping.adapter.SlideMenuAdapter;
 import com.swishlabs.prototyping.customViews.app.SlidingFragmentActivity;
 import com.swishlabs.prototyping.customViews.app.SlidingMenu;
 import com.swishlabs.prototyping.fragment.BaseFragment;
+import com.swishlabs.prototyping.util.Enums;
+import com.swishlabs.prototyping.util.SharedPreferenceUtil;
 
 public class BaseFragmentActivity extends SlidingFragmentActivity implements BaseFragment.OnFragmentInteractionListener {
 
@@ -148,6 +151,13 @@ public class BaseFragmentActivity extends SlidingFragmentActivity implements Bas
 
                     if (position == SIGNOUT)
                     {
+                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.sessionId.toString(), "");
+                        SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), false);
+                        Intent mainIntent = new Intent(getBaseContext(), LoginActivity.class);
+                        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(mainIntent);
+                        finish();
+
  /*                       Editor editor = GrabopApplication.SharedPreference.edit();
                         editor.putBoolean(GrabOpSharedPreference.AUTOLOGIN, false);
                         editor.commit();
