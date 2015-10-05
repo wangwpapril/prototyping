@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,6 +38,9 @@ public class SwipeFragment extends BaseFragment {
     private SwipeDismissList mSwipeList;
     private static RelativeLayout mProfileFrameLayout;
     private RelativeLayout.LayoutParams params;
+    private ImageView mDeclineImage;
+    private ImageView mAcceptImage;
+
 
     /**
      * Use this factory method to create a new instance of
@@ -68,31 +72,6 @@ public class SwipeFragment extends BaseFragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-//        initUI();
-    }
-
-    private void initUI() {
-
-        SwipeDismissList.OnDismissCallback callback = new SwipeDismissList.OnDismissCallback() {
-
-            @Override
-            public SwipeDismissList.Undoable onDismiss(RelativeLayout layout, int position, boolean isLeft) {
- //               setAction(position, isLeft);
-
-//				ResourceManager.OtherProfiles.remove(position);
-                return null;
-            }
-
-            @Override
-            public void onShowMoreInfo(int position, View view) {
-//                animateToNextActivity(view, position);
-            }
-
-            @Override
-            public void onMoveToResetPosition(View view, float x, float y, float rotateDegree) {
- //               animateToResetPosition(view, x, y, rotateDegree);
-            }
-        };
     }
 
     @Override
@@ -102,12 +81,15 @@ public class SwipeFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_swip, container, false);
         mProfileFrameLayout = (RelativeLayout)view.findViewById(R.id.profileCardLayout);
 //        mProfileFrameLayout.bringToFront();
+        mDeclineImage = (ImageView)view.findViewById(R.id.declineImage);
+        mAcceptImage = (ImageView)view.findViewById(R.id.acceptImage);
+
 
         SwipeDismissList.OnDismissCallback callback = new SwipeDismissList.OnDismissCallback() {
 
             @Override
             public SwipeDismissList.Undoable onDismiss(RelativeLayout layout, int position, boolean isLeft) {
-                               setAction(position, isLeft);
+                setAction(position, isLeft);
 
 //				ResourceManager.OtherProfiles.remove(position);
                 return null;
@@ -174,6 +156,7 @@ public class SwipeFragment extends BaseFragment {
             public void onAnimationEnd(Animation animation) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                params.setMargins(0, 50, 0, 100);
 
 /*                if (ConfigurationScreen.CheckScreenSize(instance).equals(ConfigurationScreen.NORMAL))
                     params.setMargins(
