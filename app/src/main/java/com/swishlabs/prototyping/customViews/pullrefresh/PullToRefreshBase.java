@@ -1,207 +1,858 @@
+/*******************************************************************************
+ * Copyright 2011, 2012 Chris Banes.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
 package com.swishlabs.prototyping.customViews.pullrefresh;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import com.swishlabs.prototyping.customViews.pullrefresh.ILoadingLayout.State;
 
-/**
- *
- * 
- * @author
- * @since
- * @param <T>
- */
+import com.swishlabs.prototyping.R;
+import com.swishlabs.prototyping.customViews.pullrefresh.internal.FlipLoadingLayout;
+import com.swishlabs.prototyping.customViews.pullrefresh.internal.LoadingLayout;
+import com.swishlabs.prototyping.customViews.pullrefresh.internal.RotateLoadingLayout;
+import com.swishlabs.prototyping.customViews.pullrefresh.internal.Utils;
+import com.swishlabs.prototyping.customViews.pullrefresh.internal.ViewCompat;
+
 public abstract class PullToRefreshBase<T extends View> extends LinearLayout implements IPullToRefresh<T> {
-	/**
-	 *
-	 * 
-	 * @author
-	 * @since
-	 */
-	public interface OnRefreshListener<V extends View> {
 
-		/**
-		 *
-		 * 
-		 * @param refreshView
-		 *
-		 */
-		void onPullDownToRefresh(final PullToRefreshBase<V> refreshView);
+	// ===========================================================
+	// Constants
+	// ===========================================================
 
-		/**
-		 *
-		 * 
-		 * @param refreshView
-		 *
-		 */
-		void onPullUpToRefresh(final PullToRefreshBase<V> refreshView);
-	}
+	static final boolean DEBUG = true;
 
-	/** duration for scroll back  */
-	private static final int SCROLL_DURATION = 150;
-	/**  */
-	private static final float OFFSET_RADIO = 2.5f;
-	/**  */
-	private float mLastMotionY = -1;
-	/**  */
-	private float mLastDownMotionY = -1;
-	/**  */
-	private OnRefreshListener<T> mRefreshListener;
-	/**  */
-	private LoadingLayout mHeaderLayout;
-	/**  */
-	private LoadingLayout mFooterLayout;
-	/**  */
-	private int mHeaderHeight;
-	/**  */
-	private int mFooterHeight;
-	/**  */
-	private boolean mPullRefreshEnabled = true;
-	/**  */
-	private boolean mPullLoadEnabled = true;
-	/**  */
-	private boolean mScrollLoadEnabled = false;
-	/**  */
-	private boolean mInterceptEventEnable = true;
-	/** if consume the touch event, if yes, will not call the parent's onTouchEvent */
-	private boolean mIsHandledTouchEvent = false;
-	/**  */
+	static final boolean USE_HW_LAYERS = false;
+
+	static final String LOG_TAG = "PullToRefresh";
+
+	static final float FRICTION = 2.0f;
+
+	public static final int SMOOTH_SCROLL_DURATION_MS = 200;
+	public static final int SMOOTH_SCROLL_LONG_DURATION_MS = 325;
+	static final int DEMO_SCROLL_INTERVAL = 225;
+
+	static final String STATE_STATE = "ptr_state";
+	static final String STATE_MODE = "ptr_mode";
+	static final String STATE_CURRENT_MODE = "ptr_current_mode";
+	static final String STATE_SCROLLING_REFRESHING_ENABLED = "ptr_disable_scrolling";
+	static final String STATE_SHOW_REFRESHING_VIEW = "ptr_show_refreshing_view";
+	static final String STATE_SUPER = "ptr_super";
+
+	// ===========================================================
+	// Fields
+	// ===========================================================
+
 	private int mTouchSlop;
-	/**  */
-	private ILoadingLayout.State mPullDownState = ILoadingLayout.State.NONE;
-	/**  */
-	private ILoadingLayout.State mPullUpState = ILoadingLayout.State.NONE;
-	/**  */
+	private float mLastMotionX, mLastMotionY;
+	private float mInitialMotionX, mInitialMotionY;
+
+	private boolean mIsBeingDragged = false;
+	private State mState = State.RESET;
+	private Mode mMode = Mode.getDefault();
+
+	private Mode mCurrentMode;
 	T mRefreshableView;
-	/**  */
-	private SmoothScrollRunnable mSmoothScrollRunnable;
-	/**  */
 	private FrameLayout mRefreshableViewWrapper;
 
-	/**
-	 *
-	 * 
-	 * @param context
-	 *            context
-	 */
+	private boolean mShowViewWhileRefreshing = true;
+	private boolean mScrollingWhileRefreshingEnabled = false;
+	private boolean mFilterTouchEvents = true;
+	private boolean mOverScrollEnabled = true;
+	private boolean mLayoutVisibilityChangesEnabled = true;
+
+	private Interpolator mScrollAnimationInterpolator;
+	private AnimationStyle mLoadingAnimationStyle = AnimationStyle.getDefault();
+
+	private LoadingLayout mHeaderLayout;
+	private LoadingLayout mFooterLayout;
+
+	private OnRefreshListener<T> mOnRefreshListener;
+	private OnRefreshListener2<T> mOnRefreshListener2;
+	private OnPullEventListener<T> mOnPullEventListener;
+
+	private SmoothScrollRunnable mCurrentSmoothScrollRunnable;
+
+	// ===========================================================
+	// Constructors
+	// ===========================================================
+
 	public PullToRefreshBase(Context context) {
 		super(context);
 		init(context, null);
 	}
 
-	/**
-	 *
-	 * 
-	 * @param context
-	 *            context
-	 * @param attrs
-	 *            attrs
-	 */
 	public PullToRefreshBase(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context, attrs);
 	}
 
-	/**
-	 *
-	 * 
-	 * @param context
-	 *            context
-	 * @param attrs
-	 *            attrs
-	 * @param defStyle
-	 *            defStyle
-	 */
-	/*
-	 * public PullToRefreshBase(Context context, AttributeSet attrs, int
-	 * defStyle) { super(context, attrs, defStyle); init(context, attrs); }
-	 */
-	/**
-	 *
-	 * 
-	 * @param context
-	 *            context
-	 */
-	private void init(Context context, AttributeSet attrs) {
-		setOrientation(LinearLayout.VERTICAL);
+	public PullToRefreshBase(Context context, Mode mode) {
+		super(context);
+		mMode = mode;
+		init(context, null);
+	}
 
-		mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+	public PullToRefreshBase(Context context, Mode mode, AnimationStyle animStyle) {
+		super(context);
+		mMode = mode;
+		mLoadingAnimationStyle = animStyle;
+		init(context, null);
+	}
 
-		mHeaderLayout = createHeaderLoadingLayout(context, attrs);
-		mFooterLayout = createFooterLoadingLayout(context, attrs);
-		mRefreshableView = createRefreshableView(context, attrs);
-
-		if (null == mRefreshableView) {
-			throw new NullPointerException("Refreshable view can not be null.");
+	@Override
+	public void addView(View child, int index, ViewGroup.LayoutParams params) {
+		if (DEBUG) {
+			Log.d(LOG_TAG, "addView: " + child.getClass().getSimpleName());
 		}
 
-		addRefreshableView(context, mRefreshableView);
-		addHeaderAndFooter(context);
+		final T refreshableView = getRefreshableView();
 
-		// get the height of the Header, it will return 0 in the onLayout()
-		getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-			@Override
-			public void onGlobalLayout() {
-				refreshLoadingViewsSize();
-				getViewTreeObserver().removeGlobalOnLayoutListener(this);
-			}
-		});
+		if (refreshableView instanceof ViewGroup) {
+			((ViewGroup) refreshableView).addView(child, index, params);
+		} else {
+			throw new UnsupportedOperationException("Refreshable View is not a ViewGroup so can't addView");
+		}
+	}
+
+	@Override
+	public final boolean demo() {
+		if (mMode.showHeaderLoadingLayout() && isReadyForPullStart()) {
+			smoothScrollToAndBack(-getHeaderSize() * 2);
+			return true;
+		} else if (mMode.showFooterLoadingLayout() && isReadyForPullEnd()) {
+			smoothScrollToAndBack(getFooterSize() * 2);
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public final Mode getCurrentMode() {
+		return mCurrentMode;
+	}
+
+	@Override
+	public final boolean getFilterTouchEvents() {
+		return mFilterTouchEvents;
+	}
+
+	@Override
+	public final ILoadingLayout getLoadingLayoutProxy() {
+		return getLoadingLayoutProxy(true, true);
+	}
+
+	@Override
+	public final ILoadingLayout getLoadingLayoutProxy(boolean includeStart, boolean includeEnd) {
+		return createLoadingLayoutProxy(includeStart, includeEnd);
+	}
+
+	@Override
+	public final Mode getMode() {
+		return mMode;
+	}
+
+	@Override
+	public final T getRefreshableView() {
+		return mRefreshableView;
+	}
+
+	@Override
+	public final boolean getShowViewWhileRefreshing() {
+		return mShowViewWhileRefreshing;
+	}
+
+	@Override
+	public final State getState() {
+		return mState;
 	}
 
 	/**
-	 * initialize padding，set top padding and bottom padding according to the height of header and footer
+	 * @deprecated See {@link #isScrollingWhileRefreshingEnabled()}.
 	 */
-	private void refreshLoadingViewsSize() {
-		//
-		int headerHeight = (null != mHeaderLayout) ? mHeaderLayout.getContentSize() : 0;
-		int footerHeight = (null != mFooterLayout) ? mFooterLayout.getContentSize() : 0;
+	public final boolean isDisableScrollingWhileRefreshing() {
+		return !isScrollingWhileRefreshingEnabled();
+	}
 
-		if (headerHeight < 0) {
-			headerHeight = 0;
+	@Override
+	public final boolean isPullToRefreshEnabled() {
+		return mMode.permitsPullToRefresh();
+	}
+
+	@Override
+	public final boolean isPullToRefreshOverScrollEnabled() {
+		return VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD && mOverScrollEnabled
+				&& OverscrollHelper.isAndroidOverScrollEnabled(mRefreshableView);
+	}
+
+	@Override
+	public final boolean isRefreshing() {
+		return mState == State.REFRESHING || mState == State.MANUAL_REFRESHING;
+	}
+
+	@Override
+	public final boolean isScrollingWhileRefreshingEnabled() {
+		return mScrollingWhileRefreshingEnabled;
+	}
+
+	@Override
+	public final boolean onInterceptTouchEvent(MotionEvent event) {
+
+		if (!isPullToRefreshEnabled()) {
+			return false;
 		}
 
-		if (footerHeight < 0) {
-			footerHeight = 0;
+		final int action = event.getAction();
+
+		if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
+			mIsBeingDragged = false;
+			return false;
 		}
 
-		mHeaderHeight = headerHeight;
-		mFooterHeight = footerHeight;
-
-		//
-		headerHeight = (null != mHeaderLayout) ? mHeaderLayout.getMeasuredHeight() : 0;
-		footerHeight = (null != mFooterLayout) ? mFooterLayout.getMeasuredHeight() : 0;
-		if (0 == footerHeight) {
-			footerHeight = mFooterHeight;
+		if (action != MotionEvent.ACTION_DOWN && mIsBeingDragged) {
+			return true;
 		}
 
-		int pLeft = getPaddingLeft();
-		int pTop = getPaddingTop();
-		int pRight = getPaddingRight();
-		int pBottom = getPaddingBottom();
+		switch (action) {
+			case MotionEvent.ACTION_MOVE: {
+				// If we're refreshing, and the flag is set. Eat all MOVE events
+				if (!mScrollingWhileRefreshingEnabled && isRefreshing()) {
+					return true;
+				}
 
-		pTop = -headerHeight;
-		pBottom = -footerHeight;
+				if (isReadyForPull()) {
+					final float y = event.getY(), x = event.getX();
+					final float diff, oppositeDiff, absDiff;
 
-		setPadding(pLeft, pTop, pRight, pBottom);
+					// We need to use the correct values, based on scroll
+					// direction
+					switch (getPullToRefreshScrollDirection()) {
+						case HORIZONTAL:
+							diff = x - mLastMotionX;
+							oppositeDiff = y - mLastMotionY;
+							break;
+						case VERTICAL:
+						default:
+							diff = y - mLastMotionY;
+							oppositeDiff = x - mLastMotionX;
+							break;
+					}
+					absDiff = Math.abs(diff);
+
+					if (absDiff > mTouchSlop && (!mFilterTouchEvents || absDiff > Math.abs(oppositeDiff))) {
+						if (mMode.showHeaderLoadingLayout() && diff >= 1f && isReadyForPullStart()) {
+							mLastMotionY = y;
+							mLastMotionX = x;
+							mIsBeingDragged = true;
+							if (mMode == Mode.BOTH) {
+								mCurrentMode = Mode.PULL_FROM_START;
+							}
+						} else if (mMode.showFooterLoadingLayout() && diff <= -1f && isReadyForPullEnd()) {
+							mLastMotionY = y;
+							mLastMotionX = x;
+							mIsBeingDragged = true;
+							if (mMode == Mode.BOTH) {
+								mCurrentMode = Mode.PULL_FROM_END;
+							}
+						}
+					}
+				}
+				break;
+			}
+			case MotionEvent.ACTION_DOWN: {
+				if (isReadyForPull()) {
+					mLastMotionY = mInitialMotionY = event.getY();
+					mLastMotionX = mInitialMotionX = event.getX();
+					mIsBeingDragged = false;
+				}
+				break;
+			}
+		}
+
+		return mIsBeingDragged;
+	}
+
+	@Override
+	public final void onRefreshComplete() {
+		if (isRefreshing()) {
+			setState(State.RESET);
+		}
+	}
+
+	@Override
+	public final boolean onTouchEvent(MotionEvent event) {
+
+		if (!isPullToRefreshEnabled()) {
+			return false;
+		}
+
+		// If we're refreshing, and the flag is set. Eat the event
+		if (!mScrollingWhileRefreshingEnabled && isRefreshing()) {
+			return true;
+		}
+
+		if (event.getAction() == MotionEvent.ACTION_DOWN && event.getEdgeFlags() != 0) {
+			return false;
+		}
+
+		switch (event.getAction()) {
+			case MotionEvent.ACTION_MOVE: {
+				if (mIsBeingDragged) {
+					mLastMotionY = event.getY();
+					mLastMotionX = event.getX();
+					pullEvent();
+					return true;
+				}
+				break;
+			}
+
+			case MotionEvent.ACTION_DOWN: {
+				if (isReadyForPull()) {
+					mLastMotionY = mInitialMotionY = event.getY();
+					mLastMotionX = mInitialMotionX = event.getX();
+					return true;
+				}
+				break;
+			}
+
+			case MotionEvent.ACTION_CANCEL:
+			case MotionEvent.ACTION_UP: {
+				if (mIsBeingDragged) {
+					mIsBeingDragged = false;
+
+					if (mState == State.RELEASE_TO_REFRESH
+							&& (null != mOnRefreshListener || null != mOnRefreshListener2)) {
+						setState(State.REFRESHING, true);
+						return true;
+					}
+
+					// If we're already refreshing, just scroll back to the top
+					if (isRefreshing()) {
+						smoothScrollTo(0);
+						return true;
+					}
+
+					// If we haven't returned by here, then we're not in a state
+					// to pull, so just reset
+					setState(State.RESET);
+
+					return true;
+				}
+				break;
+			}
+		}
+
+		return false;
+	}
+
+	public final void setScrollingWhileRefreshingEnabled(boolean allowScrollingWhileRefreshing) {
+		mScrollingWhileRefreshingEnabled = allowScrollingWhileRefreshing;
+	}
+
+	/**
+	 * @deprecated See {@link #setScrollingWhileRefreshingEnabled(boolean)}
+	 */
+	public void setDisableScrollingWhileRefreshing(boolean disableScrollingWhileRefreshing) {
+		setScrollingWhileRefreshingEnabled(!disableScrollingWhileRefreshing);
+	}
+
+	@Override
+	public final void setFilterTouchEvents(boolean filterEvents) {
+		mFilterTouchEvents = filterEvents;
+	}
+
+	/**
+	 * @deprecated You should now call this method on the result of
+	 *             {@link #getLoadingLayoutProxy()}.
+	 */
+	public void setLastUpdatedLabel(CharSequence label) {
+		getLoadingLayoutProxy().setLastUpdatedLabel(label);
+	}
+
+	/**
+	 * @deprecated You should now call this method on the result of
+	 *             {@link #getLoadingLayoutProxy()}.
+	 */
+	public void setLoadingDrawable(Drawable drawable) {
+		getLoadingLayoutProxy().setLoadingDrawable(drawable);
+	}
+
+	/**
+	 * @deprecated You should now call this method on the result of
+	 *             {@link #getLoadingLayoutProxy(boolean, boolean)}.
+	 */
+	public void setLoadingDrawable(Drawable drawable, Mode mode) {
+		getLoadingLayoutProxy(mode.showHeaderLoadingLayout(), mode.showFooterLoadingLayout()).setLoadingDrawable(
+				drawable);
+	}
+
+	@Override
+	public void setLongClickable(boolean longClickable) {
+		getRefreshableView().setLongClickable(longClickable);
+	}
+
+	@Override
+	public final void setMode(Mode mode) {
+		if (mode != mMode) {
+			if (DEBUG) {
+				Log.d(LOG_TAG, "Setting mode to: " + mode);
+			}
+			mMode = mode;
+			updateUIForMode();
+		}
+	}
+
+	public void setOnPullEventListener(OnPullEventListener<T> listener) {
+		mOnPullEventListener = listener;
+	}
+
+	@Override
+	public final void setOnRefreshListener(OnRefreshListener<T> listener) {
+		mOnRefreshListener = listener;
+		mOnRefreshListener2 = null;
+	}
+
+	@Override
+	public final void setOnRefreshListener(OnRefreshListener2<T> listener) {
+		mOnRefreshListener2 = listener;
+		mOnRefreshListener = null;
+	}
+
+	/**
+	 * @deprecated You should now call this method on the result of
+	 *             {@link #getLoadingLayoutProxy()}.
+	 */
+	public void setPullLabel(CharSequence pullLabel) {
+		getLoadingLayoutProxy().setPullLabel(pullLabel);
+	}
+
+	/**
+	 * @deprecated You should now call this method on the result of
+	 *             {@link #getLoadingLayoutProxy(boolean, boolean)}.
+	 */
+	public void setPullLabel(CharSequence pullLabel, Mode mode) {
+		getLoadingLayoutProxy(mode.showHeaderLoadingLayout(), mode.showFooterLoadingLayout()).setPullLabel(pullLabel);
+	}
+
+	/**
+	 * @param enable Whether Pull-To-Refresh should be used
+	 * @deprecated This simple calls setMode with an appropriate mode based on
+	 *             the passed value.
+	 */
+	public final void setPullToRefreshEnabled(boolean enable) {
+		setMode(enable ? Mode.getDefault() : Mode.DISABLED);
+	}
+
+	@Override
+	public final void setPullToRefreshOverScrollEnabled(boolean enabled) {
+		mOverScrollEnabled = enabled;
+	}
+
+	@Override
+	public final void setRefreshing() {
+		setRefreshing(true);
+	}
+
+	@Override
+	public final void setRefreshing(boolean doScroll) {
+		if (!isRefreshing()) {
+			setState(State.MANUAL_REFRESHING, doScroll);
+		}
+	}
+
+	/**
+	 * @deprecated You should now call this method on the result of
+	 *             {@link #getLoadingLayoutProxy()}.
+	 */
+	public void setRefreshingLabel(CharSequence refreshingLabel) {
+		getLoadingLayoutProxy().setRefreshingLabel(refreshingLabel);
+	}
+
+	/**
+	 * @deprecated You should now call this method on the result of
+	 *             {@link #getLoadingLayoutProxy(boolean, boolean)}.
+	 */
+	public void setRefreshingLabel(CharSequence refreshingLabel, Mode mode) {
+		getLoadingLayoutProxy(mode.showHeaderLoadingLayout(), mode.showFooterLoadingLayout()).setRefreshingLabel(
+				refreshingLabel);
+	}
+
+	/**
+	 * @deprecated You should now call this method on the result of
+	 *             {@link #getLoadingLayoutProxy()}.
+	 */
+	public void setReleaseLabel(CharSequence releaseLabel) {
+		setReleaseLabel(releaseLabel, Mode.BOTH);
+	}
+
+	/**
+	 * @deprecated You should now call this method on the result of
+	 *             {@link #getLoadingLayoutProxy(boolean, boolean)}.
+	 */
+	public void setReleaseLabel(CharSequence releaseLabel, Mode mode) {
+		getLoadingLayoutProxy(mode.showHeaderLoadingLayout(), mode.showFooterLoadingLayout()).setReleaseLabel(
+				releaseLabel);
+	}
+
+	public void setScrollAnimationInterpolator(Interpolator interpolator) {
+		mScrollAnimationInterpolator = interpolator;
+	}
+
+	@Override
+	public final void setShowViewWhileRefreshing(boolean showView) {
+		mShowViewWhileRefreshing = showView;
+	}
+
+	/**
+	 * @return Either {@link Orientation#VERTICAL} or
+	 *         {@link Orientation#HORIZONTAL} depending on the scroll direction.
+	 */
+	public abstract Orientation getPullToRefreshScrollDirection();
+
+	final void setState(State state, final boolean... params) {
+		mState = state;
+		if (DEBUG) {
+			Log.d(LOG_TAG, "State: " + mState.name());
+		}
+
+		switch (mState) {
+			case RESET:
+				onReset();
+				break;
+			case PULL_TO_REFRESH:
+				onPullToRefresh();
+				break;
+			case RELEASE_TO_REFRESH:
+				onReleaseToRefresh();
+				break;
+			case REFRESHING:
+			case MANUAL_REFRESHING:
+				onRefreshing(params[0]);
+				break;
+			case OVERSCROLLING:
+				// NO-OP
+				break;
+		}
+
+		// Call OnPullEventListener
+		if (null != mOnPullEventListener) {
+			mOnPullEventListener.onPullEvent(this, mState, mCurrentMode);
+		}
+	}
+
+	/**
+	 * Used internally for adding view. Need because we override addView to
+	 * pass-through to the Refreshable View
+	 */
+	protected final void addViewInternal(View child, int index, ViewGroup.LayoutParams params) {
+		super.addView(child, index, params);
+	}
+
+	/**
+	 * Used internally for adding view. Need because we override addView to
+	 * pass-through to the Refreshable View
+	 */
+	protected final void addViewInternal(View child, ViewGroup.LayoutParams params) {
+		super.addView(child, -1, params);
+	}
+
+	protected LoadingLayout createLoadingLayout(Context context, Mode mode, TypedArray attrs) {
+		LoadingLayout layout = mLoadingAnimationStyle.createLoadingLayout(context, mode,
+				getPullToRefreshScrollDirection(), attrs);
+		layout.setVisibility(View.INVISIBLE);
+		return layout;
+	}
+
+	/**
+	 * Used internally for {@link #getLoadingLayoutProxy(boolean, boolean)}.
+	 * Allows derivative classes to include any extra LoadingLayouts.
+	 */
+	protected LoadingLayoutProxy createLoadingLayoutProxy(final boolean includeStart, final boolean includeEnd) {
+		LoadingLayoutProxy proxy = new LoadingLayoutProxy();
+
+		if (includeStart && mMode.showHeaderLoadingLayout()) {
+			proxy.addLayout(mHeaderLayout);
+		}
+		if (includeEnd && mMode.showFooterLoadingLayout()) {
+			proxy.addLayout(mFooterLayout);
+		}
+
+		return proxy;
+	}
+
+	/**
+	 * This is implemented by derived classes to return the created View. If you
+	 * need to use a custom View (such as a custom ListView), override this
+	 * method and return an instance of your custom class.
+	 * <p/>
+	 * Be sure to set the ID of the view in this method, especially if you're
+	 * using a ListActivity or ListFragment.
+	 * 
+	 * @param context Context to create view with
+	 * @param attrs AttributeSet from wrapped class. Means that anything you
+	 *            include in the XML layout declaration will be routed to the
+	 *            created View
+	 * @return New instance of the Refreshable View
+	 */
+	protected abstract T createRefreshableView(Context context, AttributeSet attrs);
+
+	protected final void disableLoadingLayoutVisibilityChanges() {
+		mLayoutVisibilityChangesEnabled = false;
+	}
+
+	protected final LoadingLayout getFooterLayout() {
+		return mFooterLayout;
+	}
+
+	protected final int getFooterSize() {
+		return mFooterLayout.getContentSize();
+	}
+
+	protected final LoadingLayout getHeaderLayout() {
+		return mHeaderLayout;
+	}
+
+	protected final int getHeaderSize() {
+		return mHeaderLayout.getContentSize();
+	}
+
+	protected int getPullToRefreshScrollDuration() {
+		return SMOOTH_SCROLL_DURATION_MS;
+	}
+
+	protected int getPullToRefreshScrollDurationLonger() {
+		return SMOOTH_SCROLL_LONG_DURATION_MS;
+	}
+
+	protected FrameLayout getRefreshableViewWrapper() {
+		return mRefreshableViewWrapper;
+	}
+
+	/**
+	 * Allows Derivative classes to handle the XML Attrs without creating a
+	 * TypedArray themsevles
+	 * 
+	 * @param a - TypedArray of PullToRefresh Attributes
+	 */
+	protected void handleStyledAttributes(TypedArray a) {
+	}
+
+	/**
+	 * Implemented by derived class to return whether the View is in a state
+	 * where the user can Pull to Refresh by scrolling from the end.
+	 * 
+	 * @return true if the View is currently in the correct state (for example,
+	 *         bottom of a ListView)
+	 */
+	protected abstract boolean isReadyForPullEnd();
+
+	/**
+	 * Implemented by derived class to return whether the View is in a state
+	 * where the user can Pull to Refresh by scrolling from the start.
+	 * 
+	 * @return true if the View is currently the correct state (for example, top
+	 *         of a ListView)
+	 */
+	protected abstract boolean isReadyForPullStart();
+
+	/**
+	 * Called by {@link #onRestoreInstanceState(Parcelable)} so that derivative
+	 * classes can handle their saved instance state.
+	 * 
+	 * @param savedInstanceState - Bundle which contains saved instance state.
+	 */
+	protected void onPtrRestoreInstanceState(Bundle savedInstanceState) {
+	}
+
+	/**
+	 * Called by {@link #onSaveInstanceState()} so that derivative classes can
+	 * save their instance state.
+	 * 
+	 * @param saveState - Bundle to be updated with saved state.
+	 */
+	protected void onPtrSaveInstanceState(Bundle saveState) {
+	}
+
+	/**
+	 * Called when the UI has been to be updated to be in the
+	 * {@link State#PULL_TO_REFRESH} state.
+	 */
+	protected void onPullToRefresh() {
+		switch (mCurrentMode) {
+			case PULL_FROM_END:
+				mFooterLayout.pullToRefresh();
+				break;
+			case PULL_FROM_START:
+				mHeaderLayout.pullToRefresh();
+				break;
+			default:
+				// NO-OP
+				break;
+		}
+	}
+
+	/**
+	 * Called when the UI has been to be updated to be in the
+	 * {@link State#REFRESHING} or {@link State#MANUAL_REFRESHING} state.
+	 * 
+	 * @param doScroll - Whether the UI should scroll for this event.
+	 */
+	protected void onRefreshing(final boolean doScroll) {
+		if (mMode.showHeaderLoadingLayout()) {
+			mHeaderLayout.refreshing();
+		}
+		if (mMode.showFooterLoadingLayout()) {
+			mFooterLayout.refreshing();
+		}
+
+		if (doScroll) {
+			if (mShowViewWhileRefreshing) {
+
+				// Call Refresh Listener when the Scroll has finished
+				OnSmoothScrollFinishedListener listener = new OnSmoothScrollFinishedListener() {
+					@Override
+					public void onSmoothScrollFinished() {
+						callRefreshListener();
+					}
+				};
+
+				switch (mCurrentMode) {
+					case MANUAL_REFRESH_ONLY:
+					case PULL_FROM_END:
+						smoothScrollTo(getFooterSize(), listener);
+						break;
+					default:
+					case PULL_FROM_START:
+						smoothScrollTo(-getHeaderSize(), listener);
+						break;
+				}
+			} else {
+				smoothScrollTo(0);
+			}
+		} else {
+			// We're not scrolling, so just call Refresh Listener now
+			callRefreshListener();
+		}
+	}
+
+	/**
+	 * Called when the UI has been to be updated to be in the
+	 * {@link State#RELEASE_TO_REFRESH} state.
+	 */
+	protected void onReleaseToRefresh() {
+		switch (mCurrentMode) {
+			case PULL_FROM_END:
+				mFooterLayout.releaseToRefresh();
+				break;
+			case PULL_FROM_START:
+				mHeaderLayout.releaseToRefresh();
+				break;
+			default:
+				// NO-OP
+				break;
+		}
+	}
+
+	/**
+	 * Called when the UI has been to be updated to be in the
+	 * {@link State#RESET} state.
+	 */
+	protected void onReset() {
+		mIsBeingDragged = false;
+		mLayoutVisibilityChangesEnabled = true;
+
+		// Always reset both layouts, just in case...
+		mHeaderLayout.reset();
+		mFooterLayout.reset();
+
+		smoothScrollTo(0);
+	}
+
+	@Override
+	protected final void onRestoreInstanceState(Parcelable state) {
+		if (state instanceof Bundle) {
+			Bundle bundle = (Bundle) state;
+
+			setMode(Mode.mapIntToValue(bundle.getInt(STATE_MODE, 0)));
+			mCurrentMode = Mode.mapIntToValue(bundle.getInt(STATE_CURRENT_MODE, 0));
+
+			mScrollingWhileRefreshingEnabled = bundle.getBoolean(STATE_SCROLLING_REFRESHING_ENABLED, false);
+			mShowViewWhileRefreshing = bundle.getBoolean(STATE_SHOW_REFRESHING_VIEW, true);
+
+			// Let super Restore Itself
+			super.onRestoreInstanceState(bundle.getParcelable(STATE_SUPER));
+
+			State viewState = State.mapIntToValue(bundle.getInt(STATE_STATE, 0));
+			if (viewState == State.REFRESHING || viewState == State.MANUAL_REFRESHING) {
+				setState(viewState, true);
+			}
+
+			// Now let derivative classes restore their state
+			onPtrRestoreInstanceState(bundle);
+			return;
+		}
+
+		super.onRestoreInstanceState(state);
+	}
+
+	@Override
+	protected final Parcelable onSaveInstanceState() {
+		Bundle bundle = new Bundle();
+
+		// Let derivative classes get a chance to save state first, that way we
+		// can make sure they don't overrite any of our values
+		onPtrSaveInstanceState(bundle);
+
+		bundle.putInt(STATE_STATE, mState.getIntValue());
+		bundle.putInt(STATE_MODE, mMode.getIntValue());
+		bundle.putInt(STATE_CURRENT_MODE, mCurrentMode.getIntValue());
+		bundle.putBoolean(STATE_SCROLLING_REFRESHING_ENABLED, mScrollingWhileRefreshingEnabled);
+		bundle.putBoolean(STATE_SHOW_REFRESHING_VIEW, mShowViewWhileRefreshing);
+		bundle.putParcelable(STATE_SUPER, super.onSaveInstanceState());
+
+		return bundle;
 	}
 
 	@Override
 	protected final void onSizeChanged(int w, int h, int oldw, int oldh) {
+		if (DEBUG) {
+			Log.d(LOG_TAG, String.format("onSizeChanged. W: %d, H: %d", w, h));
+		}
+
 		super.onSizeChanged(w, h, oldw, oldh);
 
 		// We need to update the header/footer when our size changes
 		refreshLoadingViewsSize();
 
-		// set the size of the view
+		// Update the Refreshable View layout
 		refreshRefreshableViewSize(w, h);
 
 		/**
@@ -216,724 +867,747 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		});
 	}
 
-	@Override
-	public void setOrientation(int orientation) {
-		if (LinearLayout.VERTICAL != orientation) {
-			throw new IllegalArgumentException("This class only supports VERTICAL orientation.");
-		}
+	/**
+	 * Re-measure the Loading Views height, and adjust internal padding as
+	 * necessary
+	 */
+	protected final void refreshLoadingViewsSize() {
+		final int maximumPullScroll = (int) (getMaximumPullScroll() * 1.2f);
 
-		// Only support vertical orientation
-		super.setOrientation(orientation);
-	}
+		int pLeft = getPaddingLeft();
+		int pTop = getPaddingTop();
+		int pRight = getPaddingRight();
+		int pBottom = getPaddingBottom();
 
-	@Override
-	public boolean onInterceptTouchEvent(MotionEvent event) {
-		if (!isInterceptTouchEventEnabled()) {
-			return false;
-		}
-
-		if (!isPullLoadEnabled() && !isPullRefreshEnabled()) {
-			return false;
-		}
-
-		final int action = event.getAction();
-		if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
-			mIsHandledTouchEvent = false;
-			return false;
-		}
-
-		if (action != MotionEvent.ACTION_DOWN && mIsHandledTouchEvent) {
-			return true;
-		}
-
-		switch (action) {
-		case MotionEvent.ACTION_DOWN:
-			mLastMotionY = event.getY();
-			mLastDownMotionY = event.getY();
-			mIsHandledTouchEvent = false;
-			break;
-
-		case MotionEvent.ACTION_MOVE:
-			final float deltaY = event.getY() - mLastMotionY;
-			final float absDiff = Math.abs(deltaY);
-			// 3 conditions：
-			// 1，> mTouchSlop，prevent pull quickly
-			// 2，isPullRefreshing()，if pull down now, permit scroll up and move Header
-			// 3，isPullLoading()，same as no.2
-			if (absDiff > mTouchSlop || isPullRefreshing() || isPullLoading()) {
-				mLastMotionY = event.getY();
-				// the 1st one displayed , Header already displayed
-				if (isPullRefreshEnabled() && isReadyForPullDown()) {
-					// 1，Math.abs(getScrollY()) >
-					// 0：indicate that either HeaderView show up or invisible completely
-					// 2，deltaY > 0.5f：
-					mIsHandledTouchEvent = (Math.abs(getScrollYValue()) > 0 || deltaY > 0.5f);
-					//
-					if (mIsHandledTouchEvent) {
-						mRefreshableView.onTouchEvent(event);
-					}
-				} else if (isPullLoadEnabled() && isReadyForPullUp()) {
-					//
-					mIsHandledTouchEvent = (Math.abs(getScrollYValue()) > 0 || deltaY < -0.5f);
+		switch (getPullToRefreshScrollDirection()) {
+			case HORIZONTAL:
+				if (mMode.showHeaderLoadingLayout()) {
+					mHeaderLayout.setWidth(maximumPullScroll);
+					pLeft = -maximumPullScroll;
+				} else {
+					pLeft = 0;
 				}
-			}
-			break;
 
-		default:
-			break;
+				if (mMode.showFooterLoadingLayout()) {
+					mFooterLayout.setWidth(maximumPullScroll);
+					pRight = -maximumPullScroll;
+				} else {
+					pRight = 0;
+				}
+				break;
+
+			case VERTICAL:
+				if (mMode.showHeaderLoadingLayout()) {
+					mHeaderLayout.setHeight(maximumPullScroll);
+					pTop = -maximumPullScroll;
+				} else {
+					pTop = 0;
+				}
+
+				if (mMode.showFooterLoadingLayout()) {
+					mFooterLayout.setHeight(maximumPullScroll);
+					pBottom = -maximumPullScroll;
+				} else {
+					pBottom = 0;
+				}
+				break;
 		}
 
-		return mIsHandledTouchEvent;
+		if (DEBUG) {
+			Log.d(LOG_TAG, String.format("Setting Padding. L: %d, T: %d, R: %d, B: %d", pLeft, pTop, pRight, pBottom));
+		}
+		setPadding(pLeft, pTop, pRight, pBottom);
 	}
 
-	@Override
-	public boolean onTouchEvent(MotionEvent ev) {
-		boolean handled = false;
-		switch (ev.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-			mLastMotionY = ev.getY();
-			mIsHandledTouchEvent = false;
-			break;
+	protected final void refreshRefreshableViewSize(int width, int height) {
+		// We need to set the Height of the Refreshable View to the same as
+		// this layout
+		LayoutParams lp = (LayoutParams) mRefreshableViewWrapper.getLayoutParams();
 
-		case MotionEvent.ACTION_MOVE:
-			final float deltaY = ev.getY() - mLastMotionY;
-			mLastMotionY = ev.getY();
-			if (isPullRefreshEnabled() && isReadyForPullDown()) {
-				pullHeaderLayout(deltaY / OFFSET_RADIO);
-				handled = true;
-			} else if (isPullLoadEnabled() && isReadyForPullUp()) {
-				pullFooterLayout(deltaY / OFFSET_RADIO);
-				handled = true;
+		switch (getPullToRefreshScrollDirection()) {
+			case HORIZONTAL:
+				if (lp.width != width) {
+					lp.width = width;
+					mRefreshableViewWrapper.requestLayout();
+				}
+				break;
+			case VERTICAL:
+				if (lp.height != height) {
+					lp.height = height;
+					mRefreshableViewWrapper.requestLayout();
+				}
+				break;
+		}
+	}
+
+	/**
+	 * Helper method which just calls scrollTo() in the correct scrolling
+	 * direction.
+	 * 
+	 * @param value - New Scroll value
+	 */
+	protected final void setHeaderScroll(int value) {
+		if (DEBUG) {
+			Log.d(LOG_TAG, "setHeaderScroll: " + value);
+		}
+
+		// Clamp value to with pull scroll range
+		final int maximumPullScroll = getMaximumPullScroll();
+		value = Math.min(maximumPullScroll, Math.max(-maximumPullScroll, value));
+
+		if (mLayoutVisibilityChangesEnabled) {
+			if (value < 0) {
+				mHeaderLayout.setVisibility(View.VISIBLE);
+			} else if (value > 0) {
+				mFooterLayout.setVisibility(View.VISIBLE);
 			} else {
-				mIsHandledTouchEvent = false;
-			}
-			break;
-
-		case MotionEvent.ACTION_CANCEL:
-		case MotionEvent.ACTION_UP:
-			if (mIsHandledTouchEvent) {
-				mIsHandledTouchEvent = false;
-				// when the first displayed
-				if (isReadyForPullDown()) {
-					// refresh
-					if (mPullRefreshEnabled && (mPullDownState == ILoadingLayout.State.RELEASE_TO_REFRESH)) {
-						startRefreshing();
-						handled = true;
-					}
-					resetHeaderLayout();
-				} else if (isReadyForPullUp()) {
-					// load more
-					if (isPullLoadEnabled() && (mPullUpState == ILoadingLayout.State.RELEASE_TO_REFRESH)) {
-						startLoading();
-						handled = true;
-					}
-					resetFooterLayout();
-				}
-			}
-			break;
-
-		default:
-			break;
-		}
-
-		return handled;
-	}
-
-	@Override
-	public void setPullRefreshEnabled(boolean pullRefreshEnabled) {
-		mPullRefreshEnabled = pullRefreshEnabled;
-	}
-
-	@Override
-	public void setPullLoadEnabled(boolean pullLoadEnabled) {
-		mPullLoadEnabled = pullLoadEnabled;
-	}
-
-	@Override
-	public void setScrollLoadEnabled(boolean scrollLoadEnabled) {
-		mScrollLoadEnabled = scrollLoadEnabled;
-	}
-
-	@Override
-	public boolean isPullRefreshEnabled() {
-		return mPullRefreshEnabled && (null != mHeaderLayout);
-	}
-
-	@Override
-	public boolean isPullLoadEnabled() {
-		return mPullLoadEnabled && (null != mFooterLayout);
-	}
-
-	@Override
-	public boolean isScrollLoadEnabled() {
-		return mScrollLoadEnabled;
-	}
-
-	@Override
-	public void setOnRefreshListener(OnRefreshListener<T> refreshListener) {
-		mRefreshListener = refreshListener;
-	}
-
-	@Override
-	public void onPullDownRefreshComplete() {
-		if (isPullRefreshing()) {
-			mPullDownState = State.RESET;
-			onStateChanged(State.RESET, true);
-
-			// scrolling back take some time, we will set the state to normal after it complete
-			// before normal state, don't intercept touch event
-			postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					setInterceptTouchEventEnabled(true);
-					mHeaderLayout.setState(State.RESET);
-				}
-			}, getSmoothScrollDuration());
-
-			resetHeaderLayout();
-			setInterceptTouchEventEnabled(false);
-		}
-	}
-
-	@Override
-	public void onPullUpRefreshComplete() {
-		if (isPullLoading()) {
-			mPullUpState = ILoadingLayout.State.RESET;
-			onStateChanged(ILoadingLayout.State.RESET, false);
-
-			postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					setInterceptTouchEventEnabled(true);
-					mFooterLayout.setState(ILoadingLayout.State.RESET);
-				}
-			}, getSmoothScrollDuration());
-
-			resetFooterLayout();
-			setInterceptTouchEventEnabled(false);
-		}
-	}
-
-	@Override
-	public T getRefreshableView() {
-		return mRefreshableView;
-	}
-
-	@Override
-	public LoadingLayout getHeaderLoadingLayout() {
-		return mHeaderLayout;
-	}
-
-	@Override
-	public LoadingLayout getFooterLoadingLayout() {
-		return mFooterLayout;
-	}
-
-	@Override
-	public void setLastUpdatedLabel(CharSequence label) {
-		if (null != mHeaderLayout) {
-			mHeaderLayout.setLastUpdatedLabel(label);
-		}
-
-		if (null != mFooterLayout) {
-			mFooterLayout.setLastUpdatedLabel(label);
-		}
-	}
-
-	public void doPullRefreshing(boolean smoothScroll) {
-		doPullRefreshing(smoothScroll, 0);
-	}
-
-	/**
-	 * not by pull , but typically when the first time enter the screen
-	 * 
-	 * @param smoothScroll
-	 *            whether smooth scrolling
-	 * @param delayMillis
-	 *
-	 */
-	public void doPullRefreshing(final boolean smoothScroll, final long delayMillis) {
-		postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				int newScrollValue = -mHeaderHeight;
-				int duration = smoothScroll ? SCROLL_DURATION : 0;
-
-				startRefreshing();
-				smoothScrollTo(newScrollValue, duration, 0);
-			}
-		}, delayMillis);
-	}
-
-	/**
-	 *
-	 * 
-	 * @param context
-	 *            context
-	 * @param attrs
-	 *
-	 * @return View
-	 */
-	protected abstract T createRefreshableView(Context context, AttributeSet attrs);
-
-	/**
-	 * check if the view is scrolled to the top
-	 * 
-	 * @return
-	 */
-	protected abstract boolean isReadyForPullDown();
-
-	/**
-	 * check if the view is scrolled to the bottom
-	 * 
-	 * @return
-	 */
-	protected abstract boolean isReadyForPullUp();
-
-	/**
-	 *
-	 * 
-	 * @param context
-	 *            context
-	 * @param attrs
-	 *
-	 * @return LoadingLayout
-	 */
-	protected LoadingLayout createHeaderLoadingLayout(Context context, AttributeSet attrs) {
-		return new HeaderLoadingLayout(context);
-	}
-
-	/**
-	 *
-	 * 
-	 * @param context
-	 *            context
-	 * @param attrs
-	 *
-	 * @return LoadingLayout
-	 */
-	protected LoadingLayout createFooterLoadingLayout(Context context, AttributeSet attrs) {
-		return new FooterLoadingLayout(context);
-	}
-
-	/**
-	 *
-	 * 
-	 * @return milli second
-	 */
-	protected long getSmoothScrollDuration() {
-		return SCROLL_DURATION;
-	}
-
-	/**
-	 * calculate the size of the view
-	 * 
-	 * @param width
-	 *
-	 * @param height
-	 *
-	 */
-	protected void refreshRefreshableViewSize(int width, int height) {
-		if (null != mRefreshableViewWrapper) {
-			LayoutParams lp = (LayoutParams) mRefreshableViewWrapper.getLayoutParams();
-			if (lp.height != height) {
-				lp.height = height;
-				mRefreshableViewWrapper.requestLayout();
+				mHeaderLayout.setVisibility(View.INVISIBLE);
+				mFooterLayout.setVisibility(View.INVISIBLE);
 			}
 		}
+
+		if (USE_HW_LAYERS) {
+			/**
+			 * Use a Hardware Layer on the Refreshable View if we've scrolled at
+			 * all. We don't use them on the Header/Footer Views as they change
+			 * often, which would negate any HW layer performance boost.
+			 */
+			ViewCompat.setLayerType(mRefreshableViewWrapper, value != 0 ? View.LAYER_TYPE_HARDWARE
+					: View.LAYER_TYPE_NONE);
+		}
+
+		switch (getPullToRefreshScrollDirection()) {
+			case VERTICAL:
+				scrollTo(0, value);
+				break;
+			case HORIZONTAL:
+				scrollTo(value, 0);
+				break;
+		}
 	}
 
 	/**
-	 * add view to the container
+	 * Smooth Scroll to position using the default duration of
+	 * {@value #SMOOTH_SCROLL_DURATION_MS} ms.
 	 * 
-	 * @param context
-	 *            context
-	 * @param refreshableView
-	 *
+	 * @param scrollValue - Position to scroll to
 	 */
-	protected void addRefreshableView(Context context, T refreshableView) {
-		int width = ViewGroup.LayoutParams.MATCH_PARENT;
-		int height = ViewGroup.LayoutParams.MATCH_PARENT;
+	protected final void smoothScrollTo(int scrollValue) {
+		smoothScrollTo(scrollValue, getPullToRefreshScrollDuration());
+	}
 
-		// create a wrap container
+	/**
+	 * Smooth Scroll to position using the default duration of
+	 * {@value #SMOOTH_SCROLL_DURATION_MS} ms.
+	 * 
+	 * @param scrollValue - Position to scroll to
+	 * @param listener - Listener for scroll
+	 */
+	protected final void smoothScrollTo(int scrollValue, OnSmoothScrollFinishedListener listener) {
+		smoothScrollTo(scrollValue, getPullToRefreshScrollDuration(), 0, listener);
+	}
+
+	/**
+	 * Smooth Scroll to position using the longer default duration of
+	 * {@value #SMOOTH_SCROLL_LONG_DURATION_MS} ms.
+	 * 
+	 * @param scrollValue - Position to scroll to
+	 */
+	protected final void smoothScrollToLonger(int scrollValue) {
+		smoothScrollTo(scrollValue, getPullToRefreshScrollDurationLonger());
+	}
+
+	/**
+	 * Updates the View State when the mode has been set. This does not do any
+	 * checking that the mode is different to current state so always updates.
+	 */
+	protected void updateUIForMode() {
+		// We need to use the correct LayoutParam values, based on scroll
+		// direction
+		final LayoutParams lp = getLoadingLayoutLayoutParams();
+
+		// Remove Header, and then add Header Loading View again if needed
+		if (this == mHeaderLayout.getParent()) {
+			removeView(mHeaderLayout);
+		}
+		if (mMode.showHeaderLoadingLayout()) {
+			addViewInternal(mHeaderLayout, 0, lp);
+		}
+
+		// Remove Footer, and then add Footer Loading View again if needed
+		if (this == mFooterLayout.getParent()) {
+			removeView(mFooterLayout);
+		}
+		if (mMode.showFooterLoadingLayout()) {
+			addViewInternal(mFooterLayout, lp);
+		}
+
+		// Hide Loading Views
+		refreshLoadingViewsSize();
+
+		// If we're not using Mode.BOTH, set mCurrentMode to mMode, otherwise
+		// set it to pull down
+		mCurrentMode = (mMode != Mode.BOTH) ? mMode : Mode.PULL_FROM_START;
+	}
+
+	private void addRefreshableView(Context context, T refreshableView) {
 		mRefreshableViewWrapper = new FrameLayout(context);
-		mRefreshableViewWrapper.addView(refreshableView, width, height);
+		mRefreshableViewWrapper.addView(refreshableView, ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.MATCH_PARENT);
 
-		// set the height of Refresh view to a very small value，it will be set to MATCH_PARENT in onSizeChanged()
-		// the reason is if at this time its height is MATCH_PARENT，then the height of footer wil be 0
-		height = 10;
-		addView(mRefreshableViewWrapper, new LayoutParams(width, height));
+		addViewInternal(mRefreshableViewWrapper, new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.MATCH_PARENT));
 	}
 
-	/**
-	 *
-	 * 
-	 * @param context
-	 *            context
-	 */
-	protected void addHeaderAndFooter(Context context) {
-		LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT);
-
-		final LoadingLayout headerLayout = mHeaderLayout;
-		final LoadingLayout footerLayout = mFooterLayout;
-
-		if (null != headerLayout) {
-			if (this == headerLayout.getParent()) {
-				removeView(headerLayout);
-			}
-
-			addView(headerLayout, 0, params);
-		}
-
-		if (null != footerLayout) {
-			if (this == footerLayout.getParent()) {
-				removeView(footerLayout);
-			}
-
-			addView(footerLayout, -1, params);
-		}
-	}
-
-	/**
-	 * Pull Header Layout
-	 * 
-	 * @param delta
-	 *            distance moved
-	 */
-	protected void pullHeaderLayout(float delta) {
-		// scroll up, no scroll when current scrollY is 0
-		int oldScrollY = getScrollYValue();
-		if (delta < 0 && (oldScrollY - delta) >= 0) {
-			setScrollTo(0, 0);
-			return;
-		}
-
-		// scroll down
-		setScrollBy(0, -(int) delta);
-
-		// if (delta < 0 && getScrollYValue() > 0) {
-		// setScrollTo(0, 0);
-		// }
-
-		if (null != mHeaderLayout && 0 != mHeaderHeight) {
-			float scale = Math.abs(getScrollYValue()) / (float) mHeaderHeight;
-			mHeaderLayout.onPull(scale);
-		}
-
-		// not in refreshing state, update the arrow
-		int scrollY = Math.abs(getScrollYValue());
-		if (isPullRefreshEnabled() && !isPullRefreshing()) {
-			if (scrollY > mHeaderHeight) {
-				mPullDownState = State.RELEASE_TO_REFRESH;
-			} else {
-				mPullDownState = State.PULL_TO_REFRESH;
-			}
-
-			mHeaderLayout.setState(mPullDownState);
-			onStateChanged(mPullDownState, true);
-		}
-	}
-
-	/**
-	 *
-	 * 
-	 * @param delta
-	 *            distance moved
-	 */
-	protected void pullFooterLayout(float delta) {
-		int oldScrollY = getScrollYValue();
-		if (delta > 0 && (oldScrollY - delta) <= 0) {
-			setScrollTo(0, 0);
-			return;
-		}
-
-		setScrollBy(0, -(int) delta);
-
-		// if (delta > 0 && getScrollYValue() < 0) {
-		// setScrollTo(0, 0);
-		// }
-
-		if (null != mFooterLayout && 0 != mFooterHeight) {
-			float scale = Math.abs(getScrollYValue()) / (float) mFooterHeight;
-			mFooterLayout.onPull(scale);
-		}
-
-		int scrollY = Math.abs(getScrollYValue());
-		if (isPullLoadEnabled() && !isPullLoading()) {
-			if (scrollY > mFooterHeight) {
-				mPullUpState = ILoadingLayout.State.RELEASE_TO_REFRESH;
-			} else {
-				mPullUpState = ILoadingLayout.State.PULL_TO_REFRESH;
-			}
-
-			mFooterLayout.setState(mPullUpState);
-			onStateChanged(mPullUpState, false);
-		}
-	}
-
-	/**
-	 *
-	 */
-	protected void resetHeaderLayout() {
-		final int scrollY = Math.abs(getScrollYValue());
-		final boolean refreshing = isPullRefreshing();
-
-		if (refreshing && scrollY <= mHeaderHeight) {
-			smoothScrollTo(0);
-			return;
-		}
-
-		if (refreshing) {
-			smoothScrollTo(-mHeaderHeight);
-		} else {
-			smoothScrollTo(0);
-		}
-	}
-
-	/**
-	 *
-	 */
-	protected void resetFooterLayout() {
-		int scrollY = Math.abs(getScrollYValue());
-		boolean isPullLoading = isPullLoading();
-
-		if (isPullLoading && scrollY <= mFooterHeight) {
-			smoothScrollTo(0);
-			return;
-		}
-
-		if (isPullLoading) {
-			smoothScrollTo(mFooterHeight);
-		} else {
-			smoothScrollTo(0);
-		}
-	}
-
-	/**
-	 *
-	 * 
-	 * @return
-	 */
-	protected boolean isPullRefreshing() {
-		return (mPullDownState == State.REFRESHING);
-	}
-
-	/**
-	 *
-	 * 
-	 * @return
-	 */
-	protected boolean isPullLoading() {
-		return (mPullUpState == State.REFRESHING);
-	}
-
-	/**
-	 *
-	 */
-	protected void startRefreshing() {
-		//
-		if (isPullRefreshing()) {
-			return;
-		}
-
-		mPullDownState = State.REFRESHING;
-		onStateChanged(State.REFRESHING, true);
-
-		if (null != mHeaderLayout) {
-			mHeaderLayout.setState(State.REFRESHING);
-		}
-
-		if (null != mRefreshListener) {
-			// because it will take 200 to scroll back to the original location, so we need to wait until the complete
-			postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					mRefreshListener.onPullDownToRefresh(PullToRefreshBase.this);
-				}
-			}, getSmoothScrollDuration());
-		}
-	}
-
-	/**
-	 *
-	 */
-	protected void startLoading() {
-		//
-		if (isPullLoading()) {
-			return;
-		}
-
-		mPullUpState = State.REFRESHING;
-		onStateChanged(State.REFRESHING, false);
-
-		if (null != mFooterLayout) {
-			mFooterLayout.setState(State.REFRESHING);
-		}
-
-		if (null != mRefreshListener) {
-			// because it will take 200 to scroll back to the original location, so we need to wait until the complete
-			postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					mRefreshListener.onPullUpToRefresh(PullToRefreshBase.this);
-				}
-			}, getSmoothScrollDuration());
-		}
-	}
-
-	/**
-	 *
-	 * 
-	 * @param state
-	 *
-	 * @param isPullDown
-	 *
-	 */
-	protected void onStateChanged(ILoadingLayout.State state, boolean isPullDown) {
-
-	}
-
-	/**
-	 *
-	 * 
-	 * @param x
-	 *
-	 * @param y
-	 *
-	 */
-	private void setScrollTo(int x, int y) {
-		scrollTo(x, y);
-	}
-
-	/**
-	 *
-	 * 
-	 * @param x
-	 *
-	 * @param y
-	 *
-	 */
-	private void setScrollBy(int x, int y) {
-		scrollBy(x, y);
-	}
-
-	/**
-	 *
-	 * 
-	 * @return
-	 */
-	private int getScrollYValue() {
-		return getScrollY();
-	}
-
-	/**
-	 *
-	 * 
-	 * @param newScrollValue
-	 *
-	 */
-	private void smoothScrollTo(int newScrollValue) {
-		smoothScrollTo(newScrollValue, getSmoothScrollDuration(), 0);
-	}
-
-	/**
-	 *
-	 * 
-	 * @param newScrollValue
-	 *
-	 * @param duration
-	 *
-	 * @param delayMillis
-	 *
-	 */
-	private void smoothScrollTo(int newScrollValue, long duration, long delayMillis) {
-		if (null != mSmoothScrollRunnable) {
-			mSmoothScrollRunnable.stop();
-		}
-
-		int oldScrollValue = this.getScrollYValue();
-		boolean post = (oldScrollValue != newScrollValue);
-		if (post) {
-			mSmoothScrollRunnable = new SmoothScrollRunnable(oldScrollValue, newScrollValue, duration);
-		}
-
-		if (post) {
-			if (delayMillis > 0) {
-				postDelayed(mSmoothScrollRunnable, delayMillis);
-			} else {
-				post(mSmoothScrollRunnable);
+	private void callRefreshListener() {
+		if (null != mOnRefreshListener) {
+			mOnRefreshListener.onRefresh(this);
+		} else if (null != mOnRefreshListener2) {
+			if (mCurrentMode == Mode.PULL_FROM_START) {
+				mOnRefreshListener2.onPullDownToRefresh(this);
+			} else if (mCurrentMode == Mode.PULL_FROM_END) {
+				mOnRefreshListener2.onPullUpToRefresh(this);
 			}
 		}
 	}
 
-	/**
-	 *
-	 * 
-	 * @param enabled
-	 *            true for intercept，false no
-	 */
-	private void setInterceptTouchEventEnabled(boolean enabled) {
-		mInterceptEventEnable = enabled;
-	}
+	@SuppressWarnings("deprecation")
+	private void init(Context context, AttributeSet attrs) {
+		switch (getPullToRefreshScrollDirection()) {
+			case HORIZONTAL:
+				setOrientation(LinearLayout.HORIZONTAL);
+				break;
+			case VERTICAL:
+			default:
+				setOrientation(LinearLayout.VERTICAL);
+				break;
+		}
 
-	/**
-	 *
-	 * 
-	 * @return true for intercept ，false no
-	 */
-	private boolean isInterceptTouchEventEnabled() {
-		return mInterceptEventEnable;
-	}
+		setGravity(Gravity.CENTER);
 
-	/**
-	 *
-	 * 
-	 * @author
-	 * @since
-	 */
-	final class SmoothScrollRunnable implements Runnable {
-		/** animation effect */
-		private final Interpolator mInterpolator;
-		/**  */
-		private final int mScrollToY;
-		/**  */
-		private final int mScrollFromY;
-		/**  */
-		private final long mDuration;
-		/**  */
-		private boolean mContinueRunning = true;
-		/**  */
-		private long mStartTime = -1;
-		/**  */
-		private int mCurrentY = -1;
+		ViewConfiguration config = ViewConfiguration.get(context);
+		mTouchSlop = config.getScaledTouchSlop();
+
+		// Styleables from XML
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PullToRefresh);
+
+		if (a.hasValue(R.styleable.PullToRefresh_ptrMode)) {
+			mMode = Mode.mapIntToValue(a.getInteger(R.styleable.PullToRefresh_ptrMode, 0));
+		}
+
+		if (a.hasValue(R.styleable.PullToRefresh_ptrAnimationStyle)) {
+			mLoadingAnimationStyle = AnimationStyle.mapIntToValue(a.getInteger(
+					R.styleable.PullToRefresh_ptrAnimationStyle, 0));
+		}
+
+		// Refreshable View
+		// By passing the attrs, we can add ListView/GridView params via XML
+		mRefreshableView = createRefreshableView(context, attrs);
+		addRefreshableView(context, mRefreshableView);
+
+		// We need to create now layouts now
+		mHeaderLayout = createLoadingLayout(context, Mode.PULL_FROM_START, a);
+		mFooterLayout = createLoadingLayout(context, Mode.PULL_FROM_END, a);
 
 		/**
-		 *
-		 * 
-		 * @param fromY
-		 *
-		 * @param toY
-		 *
-		 * @param duration
-		 *            animation duration
+		 * Styleables from XML
 		 */
-		public SmoothScrollRunnable(int fromY, int toY, long duration) {
+		if (a.hasValue(R.styleable.PullToRefresh_ptrRefreshableViewBackground)) {
+			Drawable background = a.getDrawable(R.styleable.PullToRefresh_ptrRefreshableViewBackground);
+			if (null != background) {
+				mRefreshableView.setBackgroundDrawable(background);
+			}
+		} else if (a.hasValue(R.styleable.PullToRefresh_ptrAdapterViewBackground)) {
+			Utils.warnDeprecation("ptrAdapterViewBackground", "ptrRefreshableViewBackground");
+			Drawable background = a.getDrawable(R.styleable.PullToRefresh_ptrAdapterViewBackground);
+			if (null != background) {
+				mRefreshableView.setBackgroundDrawable(background);
+			}
+		}
+
+		if (a.hasValue(R.styleable.PullToRefresh_ptrOverScroll)) {
+			mOverScrollEnabled = a.getBoolean(R.styleable.PullToRefresh_ptrOverScroll, true);
+		}
+
+		if (a.hasValue(R.styleable.PullToRefresh_ptrScrollingWhileRefreshingEnabled)) {
+			mScrollingWhileRefreshingEnabled = a.getBoolean(
+					R.styleable.PullToRefresh_ptrScrollingWhileRefreshingEnabled, false);
+		}
+
+		// Let the derivative classes have a go at handling attributes, then
+		// recycle them...
+		handleStyledAttributes(a);
+		a.recycle();
+
+		// Finally update the UI for the modes
+		updateUIForMode();
+	}
+
+	private boolean isReadyForPull() {
+		switch (mMode) {
+			case PULL_FROM_START:
+				return isReadyForPullStart();
+			case PULL_FROM_END:
+				return isReadyForPullEnd();
+			case BOTH:
+				return isReadyForPullEnd() || isReadyForPullStart();
+			default:
+				return false;
+		}
+	}
+
+	/**
+	 * Actions a Pull Event
+	 * 
+	 * @return true if the Event has been handled, false if there has been no
+	 *         change
+	 */
+	private void pullEvent() {
+		final int newScrollValue;
+		final int itemDimension;
+		final float initialMotionValue, lastMotionValue;
+
+		switch (getPullToRefreshScrollDirection()) {
+			case HORIZONTAL:
+				initialMotionValue = mInitialMotionX;
+				lastMotionValue = mLastMotionX;
+				break;
+			case VERTICAL:
+			default:
+				initialMotionValue = mInitialMotionY;
+				lastMotionValue = mLastMotionY;
+				break;
+		}
+
+		switch (mCurrentMode) {
+			case PULL_FROM_END:
+				newScrollValue = Math.round(Math.max(initialMotionValue - lastMotionValue, 0) / FRICTION);
+				itemDimension = getFooterSize();
+				break;
+			case PULL_FROM_START:
+			default:
+				newScrollValue = Math.round(Math.min(initialMotionValue - lastMotionValue, 0) / FRICTION);
+				itemDimension = getHeaderSize();
+				break;
+		}
+
+		setHeaderScroll(newScrollValue);
+
+		if (newScrollValue != 0 && !isRefreshing()) {
+			float scale = Math.abs(newScrollValue) / (float) itemDimension;
+			switch (mCurrentMode) {
+				case PULL_FROM_END:
+					mFooterLayout.onPull(scale);
+					break;
+				case PULL_FROM_START:
+				default:
+					mHeaderLayout.onPull(scale);
+					break;
+			}
+
+			if (mState != State.PULL_TO_REFRESH && itemDimension >= Math.abs(newScrollValue)) {
+				setState(State.PULL_TO_REFRESH);
+			} else if (mState == State.PULL_TO_REFRESH && itemDimension < Math.abs(newScrollValue)) {
+				setState(State.RELEASE_TO_REFRESH);
+			}
+		}
+	}
+
+	private LayoutParams getLoadingLayoutLayoutParams() {
+		switch (getPullToRefreshScrollDirection()) {
+			case HORIZONTAL:
+				return new LayoutParams(LayoutParams.WRAP_CONTENT,
+						LayoutParams.MATCH_PARENT);
+			case VERTICAL:
+			default:
+				return new LayoutParams(LayoutParams.MATCH_PARENT,
+						LayoutParams.WRAP_CONTENT);
+		}
+	}
+
+	private int getMaximumPullScroll() {
+		switch (getPullToRefreshScrollDirection()) {
+			case HORIZONTAL:
+				return Math.round(getWidth() / FRICTION);
+			case VERTICAL:
+			default:
+				return Math.round(getHeight() / FRICTION);
+		}
+	}
+
+	/**
+	 * Smooth Scroll to position using the specific duration
+	 * 
+	 * @param scrollValue - Position to scroll to
+	 * @param duration - Duration of animation in milliseconds
+	 */
+	private final void smoothScrollTo(int scrollValue, long duration) {
+		smoothScrollTo(scrollValue, duration, 0, null);
+	}
+
+	private final void smoothScrollTo(int newScrollValue, long duration, long delayMillis,
+			OnSmoothScrollFinishedListener listener) {
+		if (null != mCurrentSmoothScrollRunnable) {
+			mCurrentSmoothScrollRunnable.stop();
+		}
+
+		final int oldScrollValue;
+		switch (getPullToRefreshScrollDirection()) {
+			case HORIZONTAL:
+				oldScrollValue = getScrollX();
+				break;
+			case VERTICAL:
+			default:
+				oldScrollValue = getScrollY();
+				break;
+		}
+
+		if (oldScrollValue != newScrollValue) {
+			if (null == mScrollAnimationInterpolator) {
+				// Default interpolator is a Decelerate Interpolator
+				mScrollAnimationInterpolator = new DecelerateInterpolator();
+			}
+			mCurrentSmoothScrollRunnable = new SmoothScrollRunnable(oldScrollValue, newScrollValue, duration, listener);
+
+			if (delayMillis > 0) {
+				postDelayed(mCurrentSmoothScrollRunnable, delayMillis);
+			} else {
+				post(mCurrentSmoothScrollRunnable);
+			}
+		}
+	}
+
+	private final void smoothScrollToAndBack(int y) {
+		smoothScrollTo(y, SMOOTH_SCROLL_DURATION_MS, 0, new OnSmoothScrollFinishedListener() {
+
+			@Override
+			public void onSmoothScrollFinished() {
+				smoothScrollTo(0, SMOOTH_SCROLL_DURATION_MS, DEMO_SCROLL_INTERVAL, null);
+			}
+		});
+	}
+
+	public static enum AnimationStyle {
+		/**
+		 * This is the default for Android-PullToRefresh. Allows you to use any
+		 * drawable, which is automatically rotated and used as a Progress Bar.
+		 */
+		ROTATE,
+
+		/**
+		 * This is the old default, and what is commonly used on iOS. Uses an
+		 * arrow image which flips depending on where the user has scrolled.
+		 */
+		FLIP;
+
+		static AnimationStyle getDefault() {
+			return ROTATE;
+		}
+
+		/**
+		 * Maps an int to a specific mode. This is needed when saving state, or
+		 * inflating the view from XML where the mode is given through a attr
+		 * int.
+		 * 
+		 * @param modeInt - int to map a Mode to
+		 * @return Mode that modeInt maps to, or ROTATE by default.
+		 */
+		static AnimationStyle mapIntToValue(int modeInt) {
+			switch (modeInt) {
+				case 0x0:
+				default:
+					return ROTATE;
+				case 0x1:
+					return FLIP;
+			}
+		}
+
+		LoadingLayout createLoadingLayout(Context context, Mode mode, Orientation scrollDirection, TypedArray attrs) {
+			switch (this) {
+				case ROTATE:
+				default:
+					return new RotateLoadingLayout(context, mode, scrollDirection, attrs);
+				case FLIP:
+					return new FlipLoadingLayout(context, mode, scrollDirection, attrs);
+			}
+		}
+	}
+
+	public static enum Mode {
+
+		/**
+		 * Disable all Pull-to-Refresh gesture and Refreshing handling
+		 */
+		DISABLED(0x0),
+
+		/**
+		 * Only allow the user to Pull from the start of the Refreshable View to
+		 * refresh. The start is either the Top or Left, depending on the
+		 * scrolling direction.
+		 */
+		PULL_FROM_START(0x1),
+
+		/**
+		 * Only allow the user to Pull from the end of the Refreshable View to
+		 * refresh. The start is either the Bottom or Right, depending on the
+		 * scrolling direction.
+		 */
+		PULL_FROM_END(0x2),
+
+		/**
+		 * Allow the user to both Pull from the start, from the end to refresh.
+		 */
+		BOTH(0x3),
+
+		/**
+		 * Disables Pull-to-Refresh gesture handling, but allows manually
+		 * setting the Refresh state via
+		 * {@link PullToRefreshBase#setRefreshing() setRefreshing()}.
+		 */
+		MANUAL_REFRESH_ONLY(0x4);
+
+		/**
+		 * @deprecated Use {@link #PULL_FROM_START} from now on.
+		 */
+		public static Mode PULL_DOWN_TO_REFRESH = Mode.PULL_FROM_START;
+
+		/**
+		 * @deprecated Use {@link #PULL_FROM_END} from now on.
+		 */
+		public static Mode PULL_UP_TO_REFRESH = Mode.PULL_FROM_END;
+
+		/**
+		 * Maps an int to a specific mode. This is needed when saving state, or
+		 * inflating the view from XML where the mode is given through a attr
+		 * int.
+		 * 
+		 * @param modeInt - int to map a Mode to
+		 * @return Mode that modeInt maps to, or PULL_FROM_START by default.
+		 */
+		static Mode mapIntToValue(final int modeInt) {
+			for (Mode value : Mode.values()) {
+				if (modeInt == value.getIntValue()) {
+					return value;
+				}
+			}
+
+			// If not, return default
+			return getDefault();
+		}
+
+		static Mode getDefault() {
+			return PULL_FROM_START;
+		}
+
+		private int mIntValue;
+
+		// The modeInt values need to match those from attrs.xml
+		Mode(int modeInt) {
+			mIntValue = modeInt;
+		}
+
+		/**
+		 * @return true if the mode permits Pull-to-Refresh
+		 */
+		boolean permitsPullToRefresh() {
+			return !(this == DISABLED || this == MANUAL_REFRESH_ONLY);
+		}
+
+		/**
+		 * @return true if this mode wants the Loading Layout Header to be shown
+		 */
+		public boolean showHeaderLoadingLayout() {
+			return this == PULL_FROM_START || this == BOTH;
+		}
+
+		/**
+		 * @return true if this mode wants the Loading Layout Footer to be shown
+		 */
+		public boolean showFooterLoadingLayout() {
+			return this == PULL_FROM_END || this == BOTH || this == MANUAL_REFRESH_ONLY;
+		}
+
+		int getIntValue() {
+			return mIntValue;
+		}
+
+	}
+
+	// ===========================================================
+	// Inner, Anonymous Classes, and Enumerations
+	// ===========================================================
+
+	/**
+	 * Simple Listener that allows you to be notified when the user has scrolled
+	 * to the end of the AdapterView. See (
+	 * {@link PullToRefreshAdapterViewBase#setOnLastItemVisibleListener}.
+	 * 
+	 * @author Chris Banes
+	 */
+	public static interface OnLastItemVisibleListener {
+
+		/**
+		 * Called when the user has scrolled to the end of the list
+		 */
+		public void onLastItemVisible();
+
+	}
+
+	/**
+	 * Listener that allows you to be notified when the user has started or
+	 * finished a touch event. Useful when you want to append extra UI events
+	 * (such as sounds). See (
+	 * {@link PullToRefreshAdapterViewBase#setOnPullEventListener}.
+	 * 
+	 * @author Chris Banes
+	 */
+	public static interface OnPullEventListener<V extends View> {
+
+		/**
+		 * Called when the internal state has been changed, usually by the user
+		 * pulling.
+		 * 
+		 * @param refreshView - View which has had it's state change.
+		 * @param state - The new state of View.
+		 * @param direction - One of {@link Mode#PULL_FROM_START} or
+		 *            {@link Mode#PULL_FROM_END} depending on which direction
+		 *            the user is pulling. Only useful when <var>state</var> is
+		 *            {@link State#PULL_TO_REFRESH} or
+		 *            {@link State#RELEASE_TO_REFRESH}.
+		 */
+		public void onPullEvent(final PullToRefreshBase<V> refreshView, State state, Mode direction);
+
+	}
+
+	/**
+	 * Simple Listener to listen for any callbacks to Refresh.
+	 * 
+	 * @author Chris Banes
+	 */
+	public static interface OnRefreshListener<V extends View> {
+
+		/**
+		 * onRefresh will be called for both a Pull from start, and Pull from
+		 * end
+		 */
+		public void onRefresh(final PullToRefreshBase<V> refreshView);
+
+	}
+
+	/**
+	 * An advanced version of the Listener to listen for callbacks to Refresh.
+	 * This listener is different as it allows you to differentiate between Pull
+	 * Ups, and Pull Downs.
+	 * 
+	 * @author Chris Banes
+	 */
+	public static interface OnRefreshListener2<V extends View> {
+		// TODO These methods need renaming to START/END rather than DOWN/UP
+
+		/**
+		 * onPullDownToRefresh will be called only when the user has Pulled from
+		 * the start, and released.
+		 */
+		public void onPullDownToRefresh(final PullToRefreshBase<V> refreshView);
+
+		/**
+		 * onPullUpToRefresh will be called only when the user has Pulled from
+		 * the end, and released.
+		 */
+		public void onPullUpToRefresh(final PullToRefreshBase<V> refreshView);
+
+	}
+
+	public static enum Orientation {
+		VERTICAL, HORIZONTAL;
+	}
+
+	public static enum State {
+
+		/**
+		 * When the UI is in a state which means that user is not interacting
+		 * with the Pull-to-Refresh function.
+		 */
+		RESET(0x0),
+
+		/**
+		 * When the UI is being pulled by the user, but has not been pulled far
+		 * enough so that it refreshes when released.
+		 */
+		PULL_TO_REFRESH(0x1),
+
+		/**
+		 * When the UI is being pulled by the user, and <strong>has</strong>
+		 * been pulled far enough so that it will refresh when released.
+		 */
+		RELEASE_TO_REFRESH(0x2),
+
+		/**
+		 * When the UI is currently refreshing, caused by a pull gesture.
+		 */
+		REFRESHING(0x8),
+
+		/**
+		 * When the UI is currently refreshing, caused by a call to
+		 * {@link PullToRefreshBase#setRefreshing() setRefreshing()}.
+		 */
+		MANUAL_REFRESHING(0x9),
+
+		/**
+		 * When the UI is currently overscrolling, caused by a fling on the
+		 * Refreshable View.
+		 */
+		OVERSCROLLING(0x10);
+
+		/**
+		 * Maps an int to a specific state. This is needed when saving state.
+		 * 
+		 * @param stateInt - int to map a State to
+		 * @return State that stateInt maps to
+		 */
+		static State mapIntToValue(final int stateInt) {
+			for (State value : State.values()) {
+				if (stateInt == value.getIntValue()) {
+					return value;
+				}
+			}
+
+			// If not, return default
+			return RESET;
+		}
+
+		private int mIntValue;
+
+		State(int intValue) {
+			mIntValue = intValue;
+		}
+
+		int getIntValue() {
+			return mIntValue;
+		}
+	}
+
+	final class SmoothScrollRunnable implements Runnable {
+		private final Interpolator mInterpolator;
+		private final int mScrollToY;
+		private final int mScrollFromY;
+		private final long mDuration;
+		private OnSmoothScrollFinishedListener mListener;
+
+		private boolean mContinueRunning = true;
+		private long mStartTime = -1;
+		private int mCurrentY = -1;
+
+		public SmoothScrollRunnable(int fromY, int toY, long duration, OnSmoothScrollFinishedListener listener) {
 			mScrollFromY = fromY;
 			mScrollToY = toY;
+			mInterpolator = mScrollAnimationInterpolator;
 			mDuration = duration;
-			mInterpolator = new DecelerateInterpolator();
+			mListener = listener;
 		}
 
 		@Override
 		public void run() {
-			/**
-			 * If the duration is 0, we scroll the view to target y directly.
-			 */
-			if (mDuration <= 0) {
-				setScrollTo(0, mScrollToY);
-				return;
-			}
 
 			/**
 			 * Only set mStartTime if this is the first time we're starting,
@@ -948,53 +1622,33 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				 * calculations. We use 1000 as it gives us good accuracy and
 				 * small rounding errors
 				 */
-				final long oneSecond = 1000; // SUPPRESS CHECKSTYLE
-				long normalizedTime = (oneSecond * (System.currentTimeMillis() - mStartTime)) / mDuration;
-				normalizedTime = Math.max(Math.min(normalizedTime, oneSecond), 0);
+				long normalizedTime = (1000 * (System.currentTimeMillis() - mStartTime)) / mDuration;
+				normalizedTime = Math.max(Math.min(normalizedTime, 1000), 0);
 
 				final int deltaY = Math.round((mScrollFromY - mScrollToY)
-						* mInterpolator.getInterpolation(normalizedTime / (float) oneSecond));
+						* mInterpolator.getInterpolation(normalizedTime / 1000f));
 				mCurrentY = mScrollFromY - deltaY;
-
-				setScrollTo(0, mCurrentY);
+				setHeaderScroll(mCurrentY);
 			}
 
 			// If we're not at the target Y, keep going...
 			if (mContinueRunning && mScrollToY != mCurrentY) {
-				PullToRefreshBase.this.postDelayed(this, 16);// SUPPRESS
-																// CHECKSTYLE
+				ViewCompat.postOnAnimation(PullToRefreshBase.this, this);
+			} else {
+				if (null != mListener) {
+					mListener.onSmoothScrollFinished();
+				}
 			}
 		}
 
-		/**
-		 * stop scrolling
-		 */
 		public void stop() {
 			mContinueRunning = false;
 			removeCallbacks(this);
 		}
 	}
 
-	/**
-	 *
-	 * 
-	 * @return
-	 */
-	protected boolean hasMoreData() {
-		return mFooterLayout.getState() != State.NO_MORE_DATA;
+	static interface OnSmoothScrollFinishedListener {
+		void onSmoothScrollFinished();
 	}
 
-	/**
-	 *
-	 * 
-	 * @param hasMoreData
-	 *
-	 */
-	public void setHasMoreData(boolean hasMoreData) {
-		if (!hasMoreData) {
-			mFooterLayout.setState(State.NO_MORE_DATA);
-		} else {
-			mFooterLayout.setState(State.HAS_MORE_DATA);
-		}
-	}
 }
