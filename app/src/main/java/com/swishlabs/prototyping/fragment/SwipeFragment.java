@@ -123,7 +123,8 @@ public class SwipeFragment extends BaseFragment {
 
         params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        params.setMargins(0, 50, 0, 100);
+        params.setMargins(0, getResources().getDimensionPixelSize(R.dimen.profile_card_top),
+                0, getResources().getDimensionPixelSize(R.dimen.profile_card_bottom));
 //        params.bottomMargin = 150;
 //        mSwipeList.setInitialPos(300, 300);
 
@@ -156,7 +157,8 @@ public class SwipeFragment extends BaseFragment {
             public void onAnimationEnd(Animation animation) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-                params.setMargins(0, 50, 0, 100);
+                params.setMargins(0, getResources().getDimensionPixelSize(R.dimen.profile_card_top),
+                        0, getResources().getDimensionPixelSize(R.dimen.profile_card_bottom));
 
 /*                if (ConfigurationScreen.CheckScreenSize(instance).equals(ConfigurationScreen.NORMAL))
                     params.setMargins(
@@ -197,7 +199,8 @@ public class SwipeFragment extends BaseFragment {
             public void onAnimationEnd(Animation animation) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-                params.setMargins(0, 50, 0, 100);
+                params.setMargins(0, getResources().getDimensionPixelSize(R.dimen.profile_card_top),
+                        0, getResources().getDimensionPixelSize(R.dimen.profile_card_bottom));
 
  /*               if (ConfigurationScreen.CheckScreenSize(instance).equals(ConfigurationScreen.NORMAL))
                     params.setMargins(
