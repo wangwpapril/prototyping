@@ -1,86 +1,57 @@
 package com.swishlabs.prototyping.customViews.pullrefresh;
 
-/**
- * UI interface
- * 
- * @author
- * @since
- */
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+
 public interface ILoadingLayout {
-	/**
-	 * current state
-	 */
-	public enum State {
-
-		/**
-		 * Initial state
-		 */
-		NONE,
-
-		/**
-		 * When the UI is in a state which means that user is not interacting
-		 * with the Pull-to-Refresh function.
-		 */
-		RESET,
-
-		/**
-		 * When the UI is being pulled by the user, but has not been pulled far
-		 * enough so that it refreshes when released.
-		 */
-		PULL_TO_REFRESH,
-
-		/**
-		 * When the UI is being pulled by the user, and <strong>has</strong>
-		 * been pulled far enough so that it will refresh when released.
-		 */
-		RELEASE_TO_REFRESH,
-
-		/**
-		 * When the UI is currently refreshing, caused by a pull gesture.
-		 */
-		REFRESHING,
-
-		/**
-		 * When the UI is currently refreshing, caused by a pull gesture.
-		 */
-		@Deprecated
-		LOADING,
-
-		/**
-		 * No more data
-		 */
-		NO_MORE_DATA,
-
-		HAS_MORE_DATA
-	}
 
 	/**
-	 * current state, sub-Class should change the view accordingly
+	 * Set the Last Updated Text. This displayed under the main label when
+	 * Pulling
 	 * 
-	 * @param state
-	 *
+	 * @param label - Label to set
 	 */
-	public void setState(State state);
+	public void setLastUpdatedLabel(CharSequence label);
 
 	/**
-	 *
+	 * Set the drawable used in the loading layout. This is the same as calling
+	 * <code>setLoadingDrawable(drawable, Mode.BOTH)</code>
 	 * 
-	 * @return State
+	 * @param drawable - Drawable to display
 	 */
-	public State getState();
+	public void setLoadingDrawable(Drawable drawable);
 
 	/**
-	 * Get the current layout height, which is the threshold for the refresh
+	 * Set Text to show when the Widget is being Pulled
+	 * <code>setPullLabel(releaseLabel, Mode.BOTH)</code>
 	 * 
-	 * @return height
+	 * @param pullLabel - CharSequence to display
 	 */
-	public int getContentSize();
+	public void setPullLabel(CharSequence pullLabel);
 
 	/**
-	 * Called when pulling
+	 * Set Text to show when the Widget is refreshing
+	 * <code>setRefreshingLabel(releaseLabel, Mode.BOTH)</code>
 	 * 
-	 * @param scale
-	 *
+	 * @param refreshingLabel - CharSequence to display
 	 */
-	public void onPull(float scale);
+	public void setRefreshingLabel(CharSequence refreshingLabel);
+
+	/**
+	 * Set Text to show when the Widget is being pulled, and will refresh when
+	 * released. This is the same as calling
+	 * <code>setReleaseLabel(releaseLabel, Mode.BOTH)</code>
+	 * 
+	 * @param releaseLabel - CharSequence to display
+	 */
+	public void setReleaseLabel(CharSequence releaseLabel);
+
+	/**
+	 * Set's the Sets the typeface and style in which the text should be
+	 * displayed. Please see
+	 * {@link android.widget.TextView#setTypeface(Typeface)
+	 * TextView#setTypeface(Typeface)}.
+	 */
+	public void setTextTypeface(Typeface tf);
+
 }
