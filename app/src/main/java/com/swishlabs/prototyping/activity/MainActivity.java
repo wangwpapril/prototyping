@@ -11,13 +11,15 @@ import android.widget.ImageView;
 import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.fragment.BaseFragment;
+import com.swishlabs.prototyping.fragment.PreHomeFragment;
 import com.swishlabs.prototyping.fragment.SwipeFragment;
 
 public class MainActivity extends BaseFragmentActivity {
 
 
-    private BaseFragment mFragmentPreHome;
+    private BaseFragment mPreHomeFragment;
     private BaseFragment mCurrFragment;
+    private BaseFragment mSwipeFragment;
     private ImageView mDrawerImage;
     private MyApplication mApp;
 
@@ -40,8 +42,10 @@ public class MainActivity extends BaseFragmentActivity {
  //       getSlidingMenu().setSlidingEnabled(true);
 
 
-        mFragmentPreHome = SwipeFragment.newInstance(null, null);
-        switchFragment(mFragmentPreHome);
+        mPreHomeFragment = PreHomeFragment.newInstance(null, null);
+        mSwipeFragment = SwipeFragment.newInstance(null,null);
+
+        switchFragment(mPreHomeFragment);
     }
 
     void switchFragment(BaseFragment fragment) {
