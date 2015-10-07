@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+        <ImageView
+	        android:id="@+id/drawerImage"
+	        android:layout_width="43dp"
+	        android:layout_height="43dp"
+	        android:layout_marginLeft="10dp"
+	        android:src="@drawable/ic_drawer2" />
+	
+    
+    <RelativeLayout 
+        android:id="@+id/myProfileLayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/drawerImage"
+        android:layout_centerHorizontal="true">
+        
+            <Button 
+        android:id="@+id/editProfileButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/editprofile_icon"
+        android:layout_alignParentRight="true"/>
+    
+        
+        <ImageView 
+            android:id="@+id/myProfileImage"
+	        android:layout_width="90dp"
+	        android:layout_height="90dp"
+	        android:layout_marginTop="0dp"
+	        android:src="@drawable/avata"
+	        android:scaleType="fitXY"
+	        android:layout_centerHorizontal="true"
+	        android:layout_centerVertical="true"
+	        />
+                
+        
+        
+    </RelativeLayout>
+    
+    <android.support.v7.widget.CardView
+             xmlns:card_view="http://schemas.android.com/apk/res-auto"
+             android:id="@+id/myProfileCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/myProfileLayout"
+                card_view:cardBackgroundColor="@color/white"
+                android:elevation="4dp"
+		android:translationZ="4dp"
+                  android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginLeft="24dp">
+        
+            <RelativeLayout 
+            android:id="@+id/myProfileDescLayout"
+            android:layout_width="match_parent"
+           	android:layout_height="160dp"
+           	android:layout_centerHorizontal="true"
+            android:background="@drawable/transparent_background">
+            
+            <TextView 
+	            android:id="@+id/myProfileNameText"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerHorizontal="true"
+	            android:layout_marginTop="15dp"
+	            android:text="Name"
+				android:textSize="22sp"
+	            android:textColor="@android:color/black"
+	            android:textAppearance="?android:attr/textAppearanceLarge"/>
+	        
+
+	        <TextView 
+	            android:id="@+id/myProfileEmailText"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@+id/myProfileNameText"
+				android:layout_marginTop="5dp"
+	            android:layout_centerHorizontal="true"
+				android:textSize="18sp"
+	            android:text="name@hotmail.com"
+	            android:textColor="@android:color/black"
+	            android:textAppearance="?android:attr/textAppearanceSmall"/>
+	        
+	        <TextView 
+	            android:id="@+id/myProfilePhoneNumText"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@+id/myProfileEmailText"
+				android:layout_marginTop="5dp"
+	            android:layout_centerHorizontal="true"
+				android:textSize="18sp"
+	            android:text="4160000000"
+	            android:textColor="@android:color/black"
+	            android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+				<TextView
+					android:id="@+id/myProfileLocationText"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/myProfilePhoneNumText"
+					android:layout_marginTop="5dp"
+					android:layout_centerHorizontal="true"
+					android:text="Location"
+					android:textSize="18sp"
+					android:textColor="@android:color/black"
+					android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+
+			</RelativeLayout>
+    </android.support.v7.widget.CardView>
+    
+        <android.support.v7.widget.CardView
+             xmlns:card_view="http://schemas.android.com/apk/res-auto"
+             android:id="@+id/myProfilePager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/myProfileCard"
+                card_view:cardBackgroundColor="@color/white"
+                android:elevation="4dp"
+			android:translationZ="4dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="20dp">
+    
+    
+    <RelativeLayout 
+        android:id="@+id/profileViewPagerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <com.swishlabs.prototyping.customViews.PagerSlidingTabStrip
+	        android:id="@+id/tabs"
+	        android:layout_width="match_parent"
+	        android:layout_height="50dp"
+	        android:background="@android:color/white"/>
+	
+	    <android.support.v4.view.ViewPager
+	        android:id="@+id/pager"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/tabs"/>
+    </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
