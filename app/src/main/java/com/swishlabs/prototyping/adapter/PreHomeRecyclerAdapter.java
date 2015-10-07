@@ -1,6 +1,5 @@
 package com.swishlabs.prototyping.adapter;
 
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,11 +34,16 @@ public class PreHomeRecyclerAdapter extends RecyclerView.Adapter<PreHomeRecycler
 
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
-        return false;
+ //       Collections.swap(mItems, fromPosition, toPosition);
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+//        return false;
     }
 
     @Override
     public void onItemDismiss(int position) {
+ //       mItems.remove(position);
+        notifyItemRemoved(position);
 
     }
 
@@ -50,12 +54,12 @@ public class PreHomeRecyclerAdapter extends RecyclerView.Adapter<PreHomeRecycler
 
         @Override
         public void onItemSelected() {
-            itemView.setBackgroundColor(Color.BLUE);
+//            itemView.setBackgroundColor(Color.BLUE);
         }
 
         @Override
         public void onItemClear() {
-            itemView.setBackgroundColor(0);
+  //          itemView.setBackgroundColor(0);
 
         }
     }
