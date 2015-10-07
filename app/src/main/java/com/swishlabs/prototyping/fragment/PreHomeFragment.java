@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.adapter.PreHomeRecyclerAdapter;
+import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshBase;
+import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshRecyclerView;
 import com.swishlabs.prototyping.helper.SimpleItemTouchHelperCallback;
 
 /**
@@ -35,6 +37,7 @@ public class PreHomeFragment extends BaseFragment {
 
     private RecyclerView mRecyclerView;
     private ItemTouchHelper mItemTouchHelper;
+    private PullToRefreshRecyclerView mPullToRefreshRV;
 
     /**
      * Use this factory method to create a new instance of
@@ -83,11 +86,29 @@ public class PreHomeFragment extends BaseFragment {
         final int spanCount = 2;
         final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.pre_home_card_list);
+        mPullToRefreshRV = (PullToRefreshRecyclerView) view.findViewById(R.id.pre_home_card_list);
+
+ //       mPullToRefreshRV.setMode(PullToRefreshBase.Mode.BOTH);
+        mRecyclerView = mPullToRefreshRV.getRefreshableView();
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(adapter);
 //        mRecyclerView.setScrollContainer(false);
+
+ //       mPullToRefreshRV.addView(mRecyclerView,0);
+        mPullToRefreshRV.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+
+            }
+        });
+
+        mPullToRefreshRV.setOnPullEventListener(new PullToRefreshBase.OnPullEventListener<RecyclerView>() {
+            @Override
+            public void onPullEvent(PullToRefreshBase<RecyclerView> refreshView, PullToRefreshBase.State state, PullToRefreshBase.Mode direction) {
+
+            }
+        });
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);

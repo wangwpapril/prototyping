@@ -1047,7 +1047,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 		// If we're not using Mode.BOTH, set mCurrentMode to mMode, otherwise
 		// set it to pull down
-		mCurrentMode = (mMode != Mode.BOTH) ? mMode : Mode.PULL_FROM_START;
+//		mCurrentMode = (mMode != Mode.BOTH) ? mMode : Mode.PULL_FROM_START;
+		mCurrentMode =mMode;
 	}
 
 	private void addRefreshableView(Context context, T refreshableView) {
