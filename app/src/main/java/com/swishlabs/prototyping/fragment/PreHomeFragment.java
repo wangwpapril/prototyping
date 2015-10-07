@@ -93,12 +93,14 @@ public class PreHomeFragment extends BaseFragment {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setFocusableInTouchMode(true);
 //        mRecyclerView.setScrollContainer(false);
 
  //       mPullToRefreshRV.addView(mRecyclerView,0);
         mPullToRefreshRV.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
             @Override
             public void onRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+                refreshView.getRefreshableView();
 
             }
         });
@@ -107,6 +109,7 @@ public class PreHomeFragment extends BaseFragment {
             @Override
             public void onPullEvent(PullToRefreshBase<RecyclerView> refreshView, PullToRefreshBase.State state, PullToRefreshBase.Mode direction) {
 
+                refreshView.getRefreshableView();
             }
         });
 
