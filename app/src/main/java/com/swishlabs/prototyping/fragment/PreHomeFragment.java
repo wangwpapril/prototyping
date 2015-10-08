@@ -1,10 +1,13 @@
 package com.swishlabs.prototyping.fragment;
 
 import android.app.Fragment;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,23 +87,53 @@ public class PreHomeFragment extends BaseFragment {
         PreHomeRecyclerAdapter adapter = new PreHomeRecyclerAdapter();
 
         final int spanCount = 2;
-        final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
+        final RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
+//        final FixedGridLayoutManager layoutManager = new FixedGridLayoutManager();
+  //      layoutManager.setTotalColumnCount(2);
+//        layoutManager.offsetChildrenHorizontal(30);
+  //      layoutManager.offsetChildrenVertical(30);
+
+
 
         mPullToRefreshRV = (PullToRefreshRecyclerView) view.findViewById(R.id.pre_home_card_list);
 
  //       mPullToRefreshRV.setMode(PullToRefreshBase.Mode.BOTH);
         mRecyclerView = mPullToRefreshRV.getRefreshableView();
         mRecyclerView.setHasFixedSize(true);
+ //       mRecyclerView.setClipToPadding(true);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setFocusableInTouchMode(true);
+        mRecyclerView.setFocusableInTouchMode(false);
+        mRecyclerView.setFocusable(false);
 //        mRecyclerView.setScrollContainer(false);
+        mRecyclerView.addItemDecoration(new SpacesItemDecoration(20));
 
  //       mPullToRefreshRV.addView(mRecyclerView,0);
         mPullToRefreshRV.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
             @Override
             public void onRefresh(PullToRefreshBase<RecyclerView> refreshView) {
                 refreshView.getRefreshableView();
+                String label = DateUtils.formatDateTime(getContext(), System.currentTimeMillis(),
+                        DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+
+                // Update the LastUpdatedLabel
+                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+//                refreshView.onRefreshComplete();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+ //                       simpleRecyclerViewAdapter.insert(moreNum++ + "  Refresh things", 0);
+                        mPullToRefreshRV.onRefreshComplete();
+                        mRecyclerView.getLayoutManager().scrollToPosition(0);
+                        mRecyclerView.getAdapter().notifyDataSetChanged();
+
+                        //   ultimateRecyclerView.scrollBy(0, -50);
+//                        linearLayoutManager.scrollToPosition(0);
+//                        ultimateRecyclerView.setAdapter(simpleRecyclerViewAdapter);
+//                        simpleRecyclerViewAdapter.notifyDataSetChanged();
+                    }
+                }, 1000);
 
             }
         });
@@ -119,7 +152,28 @@ public class PreHomeFragment extends BaseFragment {
 
     }
 
+    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
 
+        private int halfSpace;
+
+        public SpacesItemDecoration(int space) {
+            this.halfSpace = space / 2;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+
+            if (parent.getPaddingLeft() != halfSpace) {
+                parent.setPadding(halfSpace, halfSpace, halfSpace, halfSpace);
+                parent.setClipToPadding(false);
+            }
+
+            outRect.top = halfSpace;
+            outRect.bottom = halfSpace;
+            outRect.left = halfSpace;
+            outRect.right = halfSpace;
+        }
+    }
 
 
 }

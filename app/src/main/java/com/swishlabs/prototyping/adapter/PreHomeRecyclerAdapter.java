@@ -29,7 +29,7 @@ public class PreHomeRecyclerAdapter extends RecyclerView.Adapter<PreHomeRecycler
 
     @Override
     public int getItemCount() {
-        return 10;
+        return 20;
     }
 
     @Override
