@@ -6,12 +6,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+import com.lidroid.xutils.DbUtils;
 import com.swishlabs.prototyping.activity.MainActivity;
 import com.swishlabs.prototyping.activity.SplashActivity;
 import com.swishlabs.prototyping.data.ServiceManager;
 import com.swishlabs.prototyping.data.store.Database;
 import com.swishlabs.prototyping.data.store.DatabaseManager;
-import com.swishlabs.prototyping.entity.FinalDbUpdateListener;
 import com.swishlabs.prototyping.util.AndroidLocationServices;
 import com.swishlabs.prototyping.util.DeviceInfoHelper;
 import com.swishlabs.prototyping.util.Enums;
@@ -19,14 +19,14 @@ import com.swishlabs.prototyping.util.Logger;
 import com.swishlabs.prototyping.util.NotifyDispatcher;
 import com.swishlabs.prototyping.util.SharedPreferenceUtil;
 
-import net.tsz.afinal.FinalDb;
-
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static com.lidroid.xutils.DbUtils.DbUpgradeListener;
 
 
 public class MyApplication extends Application implements UncaughtExceptionHandler{
@@ -48,7 +48,7 @@ public class MyApplication extends Application implements UncaughtExceptionHandl
 
 	private static MyApplication instance;
 
-	private FinalDb mFinalDb;
+	private DbUtils mFinalDb;
 
 	private final String DBName = "afinal.db";
 
@@ -186,7 +186,12 @@ public class MyApplication extends Application implements UncaughtExceptionHandl
 		loginStatus = SharedPreferenceUtil.getBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), false);
 		activityList = new ArrayList<Activity>();
 
-		mFinalDb = FinalDb.create(this, DBName, false, DB_VERSION, new FinalDbUpdateListener());
+		mFinalDb = DbUtils.create(this, DBName, DB_VERSION, new DbUpgradeListener() {
+			@Override
+			public void onUpgrade(DbUtils dbUtils, int i, int i1) {
+
+			}
+		});
 
 
 		Thread.setDefaultUncaughtExceptionHandler(this);

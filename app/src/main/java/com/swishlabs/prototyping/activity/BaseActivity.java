@@ -9,13 +9,12 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lidroid.xutils.DbUtils;
 import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.data.ServiceManager;
 import com.swishlabs.prototyping.data.store.Database;
 import com.swishlabs.prototyping.data.store.DatabaseManager;
 import com.swishlabs.prototyping.util.Common;
-
-import net.tsz.afinal.FinalDb;
 
 
 public abstract class BaseActivity extends Activity implements OnClickListener{
@@ -25,7 +24,7 @@ public abstract class BaseActivity extends Activity implements OnClickListener{
 	protected ImageView ivTitleBack;
 	protected ImageView ivTitleRight;
 
-	protected FinalDb mFinalDb;
+	protected DbUtils mFinalDb;
 
     public DatabaseManager mDatabaseManager;
     public Database mDatabase;
@@ -41,7 +40,7 @@ public abstract class BaseActivity extends Activity implements OnClickListener{
 		context = this;
 		Common.context = this;
 
-		mFinalDb = FinalDb.create(this);
+		mFinalDb = DbUtils.create(this);
 
         loadDatabase();
 	}

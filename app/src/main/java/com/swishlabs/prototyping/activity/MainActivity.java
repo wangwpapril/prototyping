@@ -8,11 +8,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.lidroid.xutils.exception.DbException;
 import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
+import com.swishlabs.prototyping.entity.Profile;
+import com.swishlabs.prototyping.entity.Service;
 import com.swishlabs.prototyping.fragment.BaseFragment;
 import com.swishlabs.prototyping.fragment.PreHomeFragment;
 import com.swishlabs.prototyping.fragment.SwipeFragment;
+
+import java.util.List;
 
 public class MainActivity extends BaseFragmentActivity {
 
@@ -46,6 +51,24 @@ public class MainActivity extends BaseFragmentActivity {
         mSwipeFragment = SwipeFragment.newInstance(null,null);
 
         switchFragment(mPreHomeFragment);
+
+//        List<Profile> profile = mFinalDb.findAll(Profile.class);
+        List<Profile> profileList = null;
+        try {
+            profileList = mFinalDb.findAll(Profile.class);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
+        List<Service> services = null;
+        try {
+            services = mFinalDb.findAll(Service.class);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
+//        List<Service> services = mFinalDb.findAll(Service.class);
+
     }
 
     void switchFragment(BaseFragment fragment) {

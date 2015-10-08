@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
+import com.lidroid.xutils.db.sqlite.Selector;
+import com.lidroid.xutils.exception.DbException;
 import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.data.api.callback.ControllerContentTask;
@@ -285,10 +287,10 @@ public class LoginActivity extends BaseActivity {
                 getService(sessionId);
                 getProfiles(sessionId);
 
-                Intent mainIntent = new Intent(getBaseContext(), MainActivity.class);
+/*                Intent mainIntent = new Intent(getBaseContext(), MainActivity.class);
                 mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(mainIntent);
-                finish();
+                finish();*/
 
 
                 return;
@@ -368,9 +370,13 @@ public class LoginActivity extends BaseActivity {
             public void onSucceed(Profile result) {
 
 //                mFinalDb.deleteAll(Profile.class);
-                mFinalDb.save(result);
+                try {
+                    mFinalDb.save(result);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
 
-                List<Profile> profile = mFinalDb.findAll(Profile.class);
+ //               List<Profile> profile = mFinalDb.findAll(Profile.class);
             }
 
             @Override
@@ -404,11 +410,23 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onSucceed(List<Profile> result) {
 //                mFinalDb.deleteAll(Profile.class);
-                mFinalDb.save(result, Profile.class);
+                try {
+                    mFinalDb.saveAll(result);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
 
-                List<Profile> profileList = mFinalDb.findAll(Profile.class);
+                try {
+                    List<Profile> profileList = mFinalDb.findAll(Profile.class);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
 //                List<Profile> profile = mFinalDb.findAllByWhere(Profile.class, "sessionId == \"117\"");
-                List<Profile> profile = mFinalDb.findAllByWhere(Profile.class, "sessionId = 117");
+                try {
+                   Profile profile = mFinalDb.findFirst(Selector.from(Profile.class).where( "sessionId", "=", "117"));
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
 
             }
 
@@ -439,11 +457,20 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onSucceed(List<Service> result) {
 
-                List<Service> services1 = mFinalDb.findAll(Service.class);
+//                List<Service> services1 = mFinalDb.findAll(Service.class);
 
-                mFinalDb.save(result, Service.class);
+                try {
+                    mFinalDb.saveAll(result);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
 
-                List<Service> services = mFinalDb.findAll(Service.class);
+                List<Service> services = null;
+                try {
+                    services = mFinalDb.findAll(Service.class);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
 
                 services.get(0).getUser();
 
@@ -484,9 +511,15 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onSucceed(List<ProfileAround> result) {
-                mFinalDb.save(result, ProfileAround.class);
+//                mFinalDb.save(result, ProfileAround.class);
 
-                List<ProfileAround> profileList = mFinalDb.findAll(ProfileAround.class);
+  //              List<ProfileAround> profileList = mFinalDb.findAll(ProfileAround.class);
+
+                Intent mainIntent = new Intent(getBaseContext(), MainActivity.class);
+                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(mainIntent);
+                finish();
+
 
             }
 

@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lidroid.xutils.DbUtils;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.adapter.SlideMenuAdapter;
 import com.swishlabs.prototyping.customViews.app.SlidingFragmentActivity;
@@ -28,6 +29,9 @@ public class BaseFragmentActivity extends SlidingFragmentActivity implements Bas
     private TextView mTxtViewLoginState;
     private ImageView mImgViewAvata;
     private int[] mSlidingMenuIds;
+
+    protected DbUtils mFinalDb;
+
 
     public static int MYPROFILE = 0;
     public static int DEFAULTSETTING = 1;
@@ -48,6 +52,9 @@ public class BaseFragmentActivity extends SlidingFragmentActivity implements Bas
 
         mSlideMenuAdapter = new SlideMenuAdapter(this, getResources().getStringArray(R.array.slide_menu_list), null);
         initSlidingLayout();
+
+        mFinalDb = DbUtils.create(this);
+
     }
 
 
