@@ -54,6 +54,7 @@ public class PreHomeRecyclerAdapter extends RecyclerView.Adapter<PreHomeRecycler
 
         @Override
         public void onItemSelected() {
+            itemView.setAlpha(0.5F);
 //            itemView.setBackgroundColor(Color.BLUE);
         }
 
