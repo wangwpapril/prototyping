@@ -14,6 +14,7 @@ import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.entity.Service;
 import com.swishlabs.prototyping.fragment.BaseFragment;
+import com.swishlabs.prototyping.fragment.MyProfileFragment;
 import com.swishlabs.prototyping.fragment.PreHomeFragment;
 import com.swishlabs.prototyping.fragment.SwipeFragment;
 
@@ -25,6 +26,7 @@ public class MainActivity extends BaseFragmentActivity {
     private BaseFragment mPreHomeFragment;
     private BaseFragment mCurrFragment;
     private BaseFragment mSwipeFragment;
+    private BaseFragment mMyProfileFragment;
     private ImageView mDrawerImage;
     private MyApplication mApp;
 
@@ -49,8 +51,9 @@ public class MainActivity extends BaseFragmentActivity {
 
         mPreHomeFragment = PreHomeFragment.newInstance(null, null);
         mSwipeFragment = SwipeFragment.newInstance(null,null);
+        mMyProfileFragment = MyProfileFragment.newInstance(null,null);
 
-        switchFragment(mPreHomeFragment);
+        switchFragment(mMyProfileFragment);
 
 //        List<Profile> profile = mFinalDb.findAll(Profile.class);
         List<Profile> profileList = null;
