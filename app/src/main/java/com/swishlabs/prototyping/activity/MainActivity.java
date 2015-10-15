@@ -1,5 +1,9 @@
 package com.swishlabs.prototyping.activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +21,7 @@ import com.swishlabs.prototyping.fragment.BaseFragment;
 import com.swishlabs.prototyping.fragment.MyProfileFragment;
 import com.swishlabs.prototyping.fragment.PreHomeFragment;
 import com.swishlabs.prototyping.fragment.SwipeFragment;
+import com.swishlabs.prototyping.services.RequestCheckService;
 
 import java.util.List;
 
@@ -29,6 +34,8 @@ public class MainActivity extends BaseFragmentActivity {
     private BaseFragment mMyProfileFragment;
     private ImageView mDrawerImage;
     private MyApplication mApp;
+
+    private PendingIntent pendingIntent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,5 +113,18 @@ public class MainActivity extends BaseFragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+//        startCheckService();
+    }
+
+    public void startCheckService(){
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, RequestCheckService.class);
+        intent.setAction(RequestCheckService.ACTION_CHECK_REQUEST);
+        pendingIntent = PendingIntent.getService(this, 1, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, 10*1000, pendingIntent);
+    }
 
 }

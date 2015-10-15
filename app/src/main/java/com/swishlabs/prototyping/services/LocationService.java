@@ -8,9 +8,9 @@ import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.os.Handler;
 import android.util.Log;
 
 import com.swishlabs.prototyping.data.api.callback.ControllerContentTask;
@@ -51,7 +51,7 @@ public class LocationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.e("onStartCommand,startId=", String.valueOf(startId));
+        Log.e("Travel onStartCommand", String.valueOf(startId));
 
         if(token == null)
             token = SharedPreferenceUtil.getString(Enums.PreferenceKeys.token.toString(), null);
@@ -77,7 +77,8 @@ public class LocationService extends Service {
         }
 //        initTimer();
 
-        return super.onStartCommand(intent, flags, startId);
+//        return super.onStartCommand(intent, Service.START_REDELIVER_INTENT, startId);
+        return START_REDELIVER_INTENT;
 
     }
 
@@ -106,7 +107,7 @@ public class LocationService extends Service {
                 final Location mLocation = getCurrentLocation();
                 if(mLocation != null){
                     sendCoordinatesToIntrepid(mLocation.getLongitude(), mLocation.getLatitude());
-               }
+                }
                 super.handleMessage(msg);
             }
         }
@@ -132,7 +133,7 @@ public class LocationService extends Service {
 
         }
 
-         return location;
+        return location;
     }
 
     private void sendCoordinatesToIntrepid(double longitude, double latitude){
@@ -169,7 +170,7 @@ public class LocationService extends Service {
 
         ControllerContentTask cct = new ControllerContentTask(
                 Constants.BASE_URL+"users/"+userId+"/coordinates?token="+token, icc,
-                Enums.ConnMethod.POST,false);
+                Enums.ConnMethod.POST,true);
 
         JSONObject coordinatesDetails = new JSONObject();
         String country = getApplicationContext().getResources().getConfiguration().locale.getDisplayCountry();
@@ -187,7 +188,7 @@ public class LocationService extends Service {
                     cityName = addresses.get(0).getSubLocality();
                 }
 
-                System.out.println(cityName);
+//                System.out.println(cityName);
             }
         } catch (IOException e)
         {
