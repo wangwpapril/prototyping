@@ -30,6 +30,7 @@ import com.swishlabs.prototyping.util.Enums;
 import com.swishlabs.prototyping.util.GsonUtil;
 import com.swishlabs.prototyping.util.SharedPreferenceUtil;
 import com.swishlabs.prototyping.util.StringUtil;
+import com.swishlabs.prototyping.util.ToastUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -273,12 +274,13 @@ public class LoginActivity extends BaseActivity {
                     .getString(R.string.login_password_null), this);
             return;
         }
-//        showProgressDlg(R.string.login_ing);
+        showProgressDlg(R.string.login_title_name);
         mWebApi.login(phoneNum, psw, new IResponse<String>() {
 
             @Override
             public void onSucceed(final String sessionId) {
 
+                dismissProgressDlg();
                 SharedPreferenceUtil.setString(Enums.PreferenceKeys.sessionId.toString(), sessionId);
                 SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), true);
 
@@ -340,8 +342,8 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onFailed(String code, String errMsg) {
-//                dismissProgressDlg();
-//                ToastUtil.showToast(getBaseContext(), errMsg);
+                dismissProgressDlg();
+                ToastUtil.showToast(getBaseContext(), errMsg);
             }
 
             @Override

@@ -28,10 +28,10 @@ public class Contract {
 		
 	static {
 		if (BuildConfig.DEBUG) {
-			BASE_URL = "http://grabopws.azurewebsites.net/";
+			BASE_URL = "http://grabopwsdev.azurewebsites.net/";
 			
 		} else {
-			BASE_URL = "http://grabopws.azurewebsites.net/";
+			BASE_URL = "http://grabopwsdev.azurewebsites.net/";
 		}
 	}
 
@@ -64,6 +64,7 @@ public class Contract {
 	interface FuncUrls {
 		public static final String REGISTER = BASE_URL + "register";
 		public static final String LOGIN = BASE_URL + "auth";
+		public static final String PROFILE_URL = BASE_URL + "profiles/";
 
 	}
 	

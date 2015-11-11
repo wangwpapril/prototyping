@@ -1,6 +1,8 @@
 package com.swishlabs.prototyping.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +28,9 @@ public abstract class BaseActivity extends Activity implements OnClickListener{
 
 	protected DbUtils mFinalDb;
 
-    public DatabaseManager mDatabaseManager;
+	private ProgressDialog mProgressDlg ;
+
+	public DatabaseManager mDatabaseManager;
     public Database mDatabase;
 	
 	@Override
@@ -63,6 +67,7 @@ public abstract class BaseActivity extends Activity implements OnClickListener{
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		dismissProgressDlg();
 		Log.i(MyApplication.TAG, "Base Activity onDestory()");
 		
 	}
@@ -88,5 +93,41 @@ public abstract class BaseActivity extends Activity implements OnClickListener{
 		super.onPause();
 		Common.context = null;
 	}
-	
+
+	protected void showMessageDlg(int strResId) {
+		showMessageDlg(getString(strResId));
+	}
+
+	protected void showMessageDlg(String str) {
+		if(!isFinishing()){
+			new AlertDialog.Builder(this).setMessage(str).setNegativeButton("OK", null).show();
+		}
+	}
+
+	protected void showProgressDlg(int resId){
+		showProgressDlg(getString(resId),true);
+	}
+
+	protected void showProgressDlg(int resId,boolean isCancelable){
+		showProgressDlg(getString(resId), isCancelable);
+	}
+
+	protected void showProgressDlg(String msg,boolean isCancelable) {
+		dismissProgressDlg();
+		if (!isFinishing()) {
+			mProgressDlg = new ProgressDialog(this);
+			mProgressDlg.setMessage(msg);
+			mProgressDlg.setCancelable(isCancelable);
+			mProgressDlg.show();
+		}
+	}
+
+	protected void dismissProgressDlg() {
+		if (mProgressDlg != null) {
+			mProgressDlg.dismiss();
+		}
+	}
+
+
+
 }
