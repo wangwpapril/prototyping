@@ -51,8 +51,8 @@ public class PreHomeFragment extends BaseFragment {
      * @return A new instance of fragment PreHomeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MyProfileFragment newInstance(String param1, String param2) {
-        MyProfileFragment fragment = new MyProfileFragment();
+    public static PreHomeFragment newInstance(String param1, String param2) {
+        PreHomeFragment fragment = new PreHomeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

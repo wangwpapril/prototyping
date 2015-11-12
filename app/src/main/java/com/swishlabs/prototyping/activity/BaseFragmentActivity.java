@@ -1,13 +1,11 @@
 package com.swishlabs.prototyping.activity;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -19,16 +17,15 @@ import com.swishlabs.prototyping.adapter.SlideMenuAdapter;
 import com.swishlabs.prototyping.customViews.app.SlidingFragmentActivity;
 import com.swishlabs.prototyping.customViews.app.SlidingMenu;
 import com.swishlabs.prototyping.fragment.BaseFragment;
-import com.swishlabs.prototyping.util.Enums;
-import com.swishlabs.prototyping.util.SharedPreferenceUtil;
 
 public class BaseFragmentActivity extends SlidingFragmentActivity implements BaseFragment.OnFragmentInteractionListener {
 
-    private SlideMenuAdapter mSlideMenuAdapter;
+    protected SlideMenuAdapter mSlideMenuAdapter;
     private RelativeLayout mBehindMenu;
     private TextView mTxtViewLoginState;
     private ImageView mImgViewAvata;
     private int[] mSlidingMenuIds;
+    protected ListView listView;
 
     protected DbUtils mFinalDb;
 
@@ -147,72 +144,8 @@ public class BaseFragmentActivity extends SlidingFragmentActivity implements Bas
         getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 //        getSlidingMenu().setMode(SlidingMenu.RIGHT);
 
-        ListView listView = (ListView) mBehindMenu.findViewById(R.id.listViewSlideMenu);
+        listView = (ListView) mBehindMenu.findViewById(R.id.listViewSlideMenu);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position < mSlideMenuAdapter.getCount()) {
-                    getSlidingMenu().toggle();
-
-                    if (position == SIGNOUT)
-                    {
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.sessionId.toString(), "");
-                        SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), false);
-                        Intent mainIntent = new Intent(getBaseContext(), LoginActivity.class);
-                        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(mainIntent);
-                        finish();
-
- /*                       Editor editor = GrabopApplication.SharedPreference.edit();
-                        editor.putBoolean(GrabOpSharedPreference.AUTOLOGIN, false);
-                        editor.commit();
-
-                        ResourceManager.isAdvanceSearchProfiles = false;
-
-                        GrabOpRestful.ClearAllList();
-                        ResourceManager.NewUser();
-                        stopWidget();
-
-                        Intent mainIntent = new Intent(getBaseContext(), ActivityMain.class);
-                        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(mainIntent);
-                        finish();*/
-                    }
-
-                    if (position == DEFAULTSETTING)
-                    {
-/*                        Intent defaultSettingIntent = new Intent(getBaseContext(), ActivityDefaultSetting.class);
-                        startActivityForResult(defaultSettingIntent, DEFAULT_SETTING);*/
-                    }
-
-                    if (position == MYCONTACTS)
-                    {
- /*                       Intent mainIntent = new Intent(getBaseContext(), ActivityMyContacts.class);
-                        startActivity(mainIntent);
-                        finish();*/
-                    }
-
-                    if (position == MYPROFILE)
-                    {
-/*                        Intent myProfileIntent = new Intent(getBaseContext(), ActivityMyProfile.class);
-                        startActivity(myProfileIntent);
-                        finish();*/
-                    }
-
-//                    GrabOpRestful.AddedNotifyId.clear();
-                    //                  BackgroundTask.GetInstance(mActivity).destroy();
-
-                } else {
-                    // Intent intent = new Intent(getBaseContext(),
-                    // CustomOrderActivity.class);
-                    // startActivity(intent);
-                    // getSlidingMenu().toggle();
-                }
-
-            }
-        });
         listView.setAdapter(mSlideMenuAdapter);
 
 
