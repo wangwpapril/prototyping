@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.lidroid.xutils.DbUtils;
 import com.swishlabs.prototyping.activity.MainActivity;
 import com.swishlabs.prototyping.activity.SplashActivity;
@@ -19,6 +20,7 @@ import com.swishlabs.prototyping.util.Logger;
 import com.swishlabs.prototyping.util.NotifyDispatcher;
 import com.swishlabs.prototyping.util.SharedPreferenceUtil;
 
+import io.fabric.sdk.android.Fabric;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -177,6 +179,7 @@ public class MyApplication extends Application implements UncaughtExceptionHandl
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		Fabric.with(this, new Crashlytics());
 		Log.i(TAG, "Application onCreate()");
 		instance=this;
 		mLock=new Object();

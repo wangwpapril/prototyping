@@ -28,8 +28,8 @@ public class BaseFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private MyApplication mApp;
-    private WebApi mWebApi;
-    private Activity mActivity;
+    protected WebApi mWebApi;
+    protected Activity mActivity;
     protected Handler mHandler = new Handler();
 
     /**

@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="green">#00cc66</color>
+    <color name="dark_gray">#666666</color>"
+    <color name="light_orange">#FF9900</color>
+    <color name="page_background">#F3F3F3</color>
+    <color name="notify_background">#6f7071</color>
+    <color name="tradeopportunity_background">#ef6830</color>
+
+
+    <color name="reglog_edittext_bg">#ffffff</color>
+    <color name="reglog_edittext_text">#808386</color>
+    <color name="empty_content_hint">#3c3b40</color>
+    <color name="profile_moreinfo_underline_pagerstrip">#e1e1e1</color>
+    <color name="profile_moreinfo_pagerstrip">#fc8005</color>
+    <color name="prehome_background">#F3F3F3</color>
+
+    <color name="profile_post_background">#47484a</color>
+
     <color name="transparent">#00000000</color>
     <color name="window_bg">#f0f0f0</color>
     <color name="light_gray">#999999</color>

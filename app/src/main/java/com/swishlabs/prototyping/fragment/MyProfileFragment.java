@@ -90,7 +90,7 @@ public class MyProfileFragment extends BaseFragment {
         }
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-//        tabLayout.setTabTextColors();
+        tabLayout.setTabTextColors(R.color.black,R.color.orange);
         tabLayout.setupWithViewPager(viewPager);
 
         return view;
