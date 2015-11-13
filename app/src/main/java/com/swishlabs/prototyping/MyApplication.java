@@ -20,13 +20,14 @@ import com.swishlabs.prototyping.util.Logger;
 import com.swishlabs.prototyping.util.NotifyDispatcher;
 import com.swishlabs.prototyping.util.SharedPreferenceUtil;
 
-import io.fabric.sdk.android.Fabric;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import io.fabric.sdk.android.Fabric;
 
 import static com.lidroid.xutils.DbUtils.DbUpgradeListener;
 
@@ -197,7 +198,7 @@ public class MyApplication extends Application implements UncaughtExceptionHandl
 		});
 
 
-		Thread.setDefaultUncaughtExceptionHandler(this);
+//		Thread.setDefaultUncaughtExceptionHandler(this);
 //	    loadDatabase();
 	}
 

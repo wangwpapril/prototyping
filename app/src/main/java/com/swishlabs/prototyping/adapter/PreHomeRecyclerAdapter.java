@@ -1,5 +1,6 @@
 package com.swishlabs.prototyping.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.helper.ItemTouchHelperAdapter;
 import com.swishlabs.prototyping.helper.ItemTouchHelperViewHolder;
+import com.swishlabs.prototyping.util.CircleTransform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +25,11 @@ public class PreHomeRecyclerAdapter extends RecyclerView.Adapter<PreHomeRecycler
         implements ItemTouchHelperAdapter{
 
     protected List<Profile> mListProfile;
+    protected Context mContext;
 
-    public PreHomeRecyclerAdapter() {
+    public PreHomeRecyclerAdapter(Context context) {
         mListProfile = new ArrayList<Profile>();
+        mContext = context;
     }
 
     public void setData(List<Profile> listProfile) {
@@ -43,6 +48,10 @@ public class PreHomeRecyclerAdapter extends RecyclerView.Adapter<PreHomeRecycler
 
         holder.profileNameV.setText( mListProfile.get(position).getUserName());
         holder.profileOccuV.setText( mListProfile.get(position).getOccupation());
+        if(mListProfile.get(position).getAvatarUrl() != null)
+            Picasso.with(mContext).load(mListProfile.get(position).getAvatarUrl()).transform(new CircleTransform())
+                .fit().into(holder.profileImageV);
+
 
     }
 

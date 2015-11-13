@@ -53,6 +53,7 @@ public class PreHomeFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
     private ItemTouchHelper mItemTouchHelper;
     private PullToRefreshRecyclerView mPullToRefreshRV;
+    private PreHomeRecyclerAdapter mAdapter;
     private List<Profile> mListProfile;
 
     /**
@@ -91,47 +92,40 @@ public class PreHomeFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pre_home, container, false);
-    }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
+        super.onCreateView(inflater,container,savedInstanceState);
 
-        PreHomeRecyclerAdapter adapter = new PreHomeRecyclerAdapter();
+        View view = inflater.inflate(R.layout.fragment_pre_home, container, false);
+        mAdapter = new PreHomeRecyclerAdapter(getContext());
 
         final int spanCount = 2;
         final RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
 //        final FixedGridLayoutManager layoutManager = new FixedGridLayoutManager();
-  //      layoutManager.setTotalColumnCount(2);
+        //      layoutManager.setTotalColumnCount(2);
 //        layoutManager.offsetChildrenHorizontal(30);
-  //      layoutManager.offsetChildrenVertical(30);
+        //      layoutManager.offsetChildrenVertical(30);
 
 
 
         mPullToRefreshRV = (PullToRefreshRecyclerView) view.findViewById(R.id.pre_home_card_list);
 
- //       mPullToRefreshRV.setMode(PullToRefreshBase.Mode.BOTH);
+        mPullToRefreshRV.setMode(PullToRefreshBase.Mode.BOTH);
         mRecyclerView = mPullToRefreshRV.getRefreshableView();
         mRecyclerView.setHasFixedSize(true);
- //       mRecyclerView.setClipToPadding(true);
+        //       mRecyclerView.setClipToPadding(true);
         mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setFocusableInTouchMode(false);
         mRecyclerView.setFocusable(false);
 //        mRecyclerView.setScrollContainer(false);
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(20));
 
-
- //       mPullToRefreshRV.addView(mRecyclerView,0);
         mPullToRefreshRV.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
             @Override
             public void onRefresh(final PullToRefreshBase<RecyclerView> refreshView) {
                 String label = DateUtils.formatDateTime(getContext(), System.currentTimeMillis(),
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
 
-                // Update the LastUpdatedLabel
                 refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
  /*               new Handler().postDelayed(new Runnable() {
                     @Override
@@ -157,23 +151,30 @@ public class PreHomeFragment extends BaseFragment {
             @Override
             public void onPullEvent(PullToRefreshBase<RecyclerView> refreshView, PullToRefreshBase.State state, PullToRefreshBase.Mode direction) {
 
-                if(state == PullToRefreshBase.State.PULL_TO_REFRESH && direction == PullToRefreshBase.Mode.PULL_FROM_END) {
+                if(state == PullToRefreshBase.State.RELEASE_TO_REFRESH && direction == PullToRefreshBase.Mode.PULL_FROM_END) {
 
                     getProfiles("153");
 
                 }else if(state == PullToRefreshBase.State.MANUAL_REFRESHING) {
                     mListProfile.clear();
                     getProfiles("153");
-                }else if(state == PullToRefreshBase.State.PULL_TO_REFRESH && direction == PullToRefreshBase.Mode.PULL_FROM_START) {
+                }else if(state == PullToRefreshBase.State.RELEASE_TO_REFRESH && direction == PullToRefreshBase.Mode.PULL_FROM_START) {
                     mListProfile.clear();
                     getProfiles("153");
                 }
             }
         });
 
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -182,12 +183,6 @@ public class PreHomeFragment extends BaseFragment {
             }
         }, 3000);
 
-//        mPullToRefreshRV.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-//            @Override
-//            public boolean onPreDraw() {
-//                return false;
-//            }
-//        });
     }
 
     private void getProfiles(String id) {
