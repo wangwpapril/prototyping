@@ -3,7 +3,6 @@ package com.swishlabs.prototyping.fragment;
 import android.app.Fragment;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -118,7 +117,8 @@ public class PreHomeFragment extends BaseFragment {
         mRecyclerView.setFocusableInTouchMode(false);
         mRecyclerView.setFocusable(false);
 //        mRecyclerView.setScrollContainer(false);
-        mRecyclerView.addItemDecoration(new SpacesItemDecoration(20));
+        mRecyclerView.addItemDecoration(new SpacesItemDecoration(40));
+//        mRecyclerView.setPadding(10,10,10,10);
 
         mPullToRefreshRV.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
             @Override
@@ -127,7 +127,7 @@ public class PreHomeFragment extends BaseFragment {
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
 
                 refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
- /*               new Handler().postDelayed(new Runnable() {
+  /*               new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         //                       simpleRecyclerViewAdapter.insert(moreNum++ + "  Refresh things", 0);
@@ -151,16 +151,18 @@ public class PreHomeFragment extends BaseFragment {
             @Override
             public void onPullEvent(PullToRefreshBase<RecyclerView> refreshView, PullToRefreshBase.State state, PullToRefreshBase.Mode direction) {
 
-                if(state == PullToRefreshBase.State.RELEASE_TO_REFRESH && direction == PullToRefreshBase.Mode.PULL_FROM_END) {
+                if(state == PullToRefreshBase.State.REFRESHING && direction == PullToRefreshBase.Mode.PULL_FROM_END) {
 
-                    getProfiles("153");
+                    getProfiles("153", mListProfile.size()-1);
 
                 }else if(state == PullToRefreshBase.State.MANUAL_REFRESHING) {
                     mListProfile.clear();
-                    getProfiles("153");
-                }else if(state == PullToRefreshBase.State.RELEASE_TO_REFRESH && direction == PullToRefreshBase.Mode.PULL_FROM_START) {
+                    getProfiles("153", 0);
+                }else if(state == PullToRefreshBase.State.REFRESHING && direction == PullToRefreshBase.Mode.PULL_FROM_START) {
                     mListProfile.clear();
-                    getProfiles("153");
+                    getProfiles("153", 0);
+                }else if(state == PullToRefreshBase.State.RESET && direction == PullToRefreshBase.Mode.PULL_FROM_START) {
+//                    mPullToRefreshRV.setRefreshing(true);
                 }
             }
         });
@@ -176,18 +178,19 @@ public class PreHomeFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPullToRefreshRV.setRefreshing(true);
-            }
-        }, 3000);
-
+        mPullToRefreshRV.setRefreshing(true);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mPullToRefreshRV.setRefreshing(true);
+//            }
+//        }, 3000);
+//
     }
 
-    private void getProfiles(String id) {
+    private void getProfiles(String id, int offset) {
 
-        mWebApi.getProfiles(id, new IResponse<List<ProfileAround>>() {
+        mWebApi.getProfiles(id, offset, new IResponse<List<ProfileAround>>() {
 
             @Override
             public void onSucceed(List<ProfileAround> result) {

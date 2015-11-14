@@ -22,7 +22,6 @@ import com.swishlabs.prototyping.data.api.model.Constants;
 import com.swishlabs.prototyping.data.api.model.User;
 import com.swishlabs.prototyping.data.store.beans.UserTable;
 import com.swishlabs.prototyping.entity.Profile;
-import com.swishlabs.prototyping.entity.ProfileAround;
 import com.swishlabs.prototyping.entity.Service;
 import com.swishlabs.prototyping.net.IResponse;
 import com.swishlabs.prototyping.net.WebApi;
@@ -287,7 +286,7 @@ public class LoginActivity extends BaseActivity {
                 getProfile(sessionId);
                 getConnections(sessionId);
                 getService(sessionId);
-                getProfiles(sessionId);
+//                getProfiles(sessionId);
 
 /*                Intent mainIntent = new Intent(getBaseContext(), MainActivity.class);
                 mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -498,51 +497,51 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private void getProfiles(String id) {
-
-        mWebApi.getProfiles(id, new IResponse<List<ProfileAround>>() {
-
-/*            @Override
-            public void onSuccessed(List<Profile> result) {
-                mFinalDb.save(result, Profile.class);
-
-                List<Profile> profileList = mFinalDb.findAll(Profile.class);
-                List<Profile> profile = mFinalDb.findAllByWhere(Profile.class, "id = 117");
-
-            }*/
-
-            @Override
-            public void onSucceed(List<ProfileAround> result) {
-//                mFinalDb.save(result, ProfileAround.class);
-
-  //              List<ProfileAround> profileList = mFinalDb.findAll(ProfileAround.class);
-
-                Intent mainIntent = new Intent(getBaseContext(), MainActivity.class);
-                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(mainIntent);
-                finish();
-
-
-            }
-
-            @Override
-            public void onFailed(String code, String errMsg) {
-//                dismissProgressDlg();
-//                ToastUtil.showToast(getBaseContext(), errMsg);
-            }
-
-            @Override
-            public List<ProfileAround> asObject(String rspStr) throws JSONException {
-
-                if (!TextUtils.isEmpty(rspStr)) {
-                    TypeToken<List<ProfileAround>> type = new TypeToken<List<ProfileAround>>() {
-                    };
-                    return GsonUtil.jsonToList(type.getType(), rspStr);
-                }
-                return new ArrayList<ProfileAround>();
-
-            }
-        });
-    }
+//    private void getProfiles(String id) {
+//
+//        mWebApi.getProfiles(id, new IResponse<List<ProfileAround>>() {
+//
+///*            @Override
+//            public void onSuccessed(List<Profile> result) {
+//                mFinalDb.save(result, Profile.class);
+//
+//                List<Profile> profileList = mFinalDb.findAll(Profile.class);
+//                List<Profile> profile = mFinalDb.findAllByWhere(Profile.class, "id = 117");
+//
+//            }*/
+//
+//            @Override
+//            public void onSucceed(List<ProfileAround> result) {
+////                mFinalDb.save(result, ProfileAround.class);
+//
+//  //              List<ProfileAround> profileList = mFinalDb.findAll(ProfileAround.class);
+//
+//                Intent mainIntent = new Intent(getBaseContext(), MainActivity.class);
+//                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(mainIntent);
+//                finish();
+//
+//
+//            }
+//
+//            @Override
+//            public void onFailed(String code, String errMsg) {
+////                dismissProgressDlg();
+////                ToastUtil.showToast(getBaseContext(), errMsg);
+//            }
+//
+//            @Override
+//            public List<ProfileAround> asObject(String rspStr) throws JSONException {
+//
+//                if (!TextUtils.isEmpty(rspStr)) {
+//                    TypeToken<List<ProfileAround>> type = new TypeToken<List<ProfileAround>>() {
+//                    };
+//                    return GsonUtil.jsonToList(type.getType(), rspStr);
+//                }
+//                return new ArrayList<ProfileAround>();
+//
+//            }
+//        });
+//    }
 
 }
