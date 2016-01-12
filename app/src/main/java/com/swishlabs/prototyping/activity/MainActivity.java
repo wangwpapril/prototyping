@@ -28,7 +28,7 @@ public class MainActivity extends BaseFragmentActivity {
 
     private BaseFragment mPreHomeFragment;
     private BaseFragment mCurrFragment;
-    private BaseFragment mSwipeFragment;
+    public BaseFragment mSwipeFragment;
     private BaseFragment mMyProfileFragment;
     private ImageView mDrawerImage;
     private MyApplication mApp;
@@ -144,7 +144,7 @@ public class MainActivity extends BaseFragmentActivity {
 
     }
 
-    void switchFragment(BaseFragment fragment) {
+    public void switchFragment(BaseFragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.container, fragment, fragment.getClass().getSimpleName());

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.google.gson.reflect.TypeToken;
 import com.swishlabs.prototyping.R;
+import com.swishlabs.prototyping.activity.MainActivity;
 import com.swishlabs.prototyping.adapter.PreHomeRecyclerAdapter;
 import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshBase;
 import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshRecyclerView;
@@ -96,6 +97,14 @@ public class PreHomeFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.fragment_pre_home, container, false);
         mAdapter = new PreHomeRecyclerAdapter(getContext());
+        mAdapter.setOnItemClickListener(new PreHomeRecyclerAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void OnItemClick(View view, int position) {
+
+                ((SwipeFragment)((MainActivity) getActivity()).mSwipeFragment).setProfileList(mListProfile);
+                ((MainActivity) getActivity()).switchFragment(((MainActivity) getActivity()).mSwipeFragment);
+            }
+        });
 
         final int spanCount = 2;
         final RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
@@ -109,6 +118,7 @@ public class PreHomeFragment extends BaseFragment {
         mPullToRefreshRV = (PullToRefreshRecyclerView) view.findViewById(R.id.pre_home_card_list);
 
         mPullToRefreshRV.setMode(PullToRefreshBase.Mode.BOTH);
+        mPullToRefreshRV.setClickable(true);
         mRecyclerView = mPullToRefreshRV.getRefreshableView();
         mRecyclerView.setHasFixedSize(true);
         //       mRecyclerView.setClipToPadding(true);
@@ -116,9 +126,10 @@ public class PreHomeFragment extends BaseFragment {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setFocusableInTouchMode(false);
         mRecyclerView.setFocusable(false);
+        mRecyclerView.setClickable(true);
 //        mRecyclerView.setScrollContainer(false);
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(40));
-//        mRecyclerView.setPadding(10,10,10,10);
+
 
         mPullToRefreshRV.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
             @Override
@@ -186,6 +197,13 @@ public class PreHomeFragment extends BaseFragment {
 //            }
 //        }, 3000);
 //
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+//        mPullToRefreshRV.setRefreshing(true);
+
     }
 
     private void getProfiles(String id, int offset) {

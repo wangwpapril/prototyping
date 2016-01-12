@@ -47,7 +47,7 @@ public class SplashActivity extends Activity {
 				SplashActivity.this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 				SplashActivity.this.finish();
 			}
-		},2000);
+		},3000);
   
 	}
 	private void initialize(){

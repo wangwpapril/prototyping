@@ -26,6 +26,7 @@ public class PreHomeRecyclerAdapter extends RecyclerView.Adapter<PreHomeRecycler
 
     protected List<Profile> mListProfile;
     protected Context mContext;
+    protected OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
     public PreHomeRecyclerAdapter(Context context) {
         mListProfile = new ArrayList<Profile>();
@@ -36,10 +37,14 @@ public class PreHomeRecyclerAdapter extends RecyclerView.Adapter<PreHomeRecycler
         mListProfile = listProfile;
     }
 
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+        this.mOnItemClickListener = listener;
+    }
+
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.prehome_gridview_profiles_layout,parent,false);
-        ItemViewHolder itemViewHolder = new ItemViewHolder(view);
+        ItemViewHolder itemViewHolder = new ItemViewHolder(view, mOnItemClickListener);
         return itemViewHolder;
     }
 
@@ -76,19 +81,26 @@ public class PreHomeRecyclerAdapter extends RecyclerView.Adapter<PreHomeRecycler
 
     }
 
-    public class ItemViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
+    public static interface OnRecyclerViewItemClickListener {
+        void OnItemClick(View view, int position);
+    }
+
+    public class ItemViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder, View.OnClickListener {
 
         private ImageView profileImageV;
         private TextView profileNameV;
         private TextView profileOccuV;
         private TextView profileDisV;
+        protected OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
-        public ItemViewHolder(View itemView) {
+        public ItemViewHolder(View itemView, OnRecyclerViewItemClickListener listener) {
             super(itemView);
+            this.mOnItemClickListener = listener;
             profileImageV = (ImageView) itemView.findViewById(R.id.profile_image);
             profileNameV = (TextView) itemView.findViewById(R.id.profile_user_name);
             profileOccuV = (TextView) itemView.findViewById(R.id.profile_occupation);
             profileDisV = (TextView) itemView.findViewById(R.id.profile_distance);
+            itemView.setOnClickListener(this);
 
         }
 
@@ -101,6 +113,14 @@ public class PreHomeRecyclerAdapter extends RecyclerView.Adapter<PreHomeRecycler
         @Override
         public void onItemClear() {
   //          itemView.setBackgroundColor(0);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(mOnItemClickListener != null) {
+                mOnItemClickListener.OnItemClick(v, getPosition());
+            }
 
         }
     }

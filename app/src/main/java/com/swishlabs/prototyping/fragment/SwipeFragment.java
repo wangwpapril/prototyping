@@ -7,13 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.customViews.SwipeDismissList;
+import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.util.ViewAnimation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +45,9 @@ public class SwipeFragment extends BaseFragment {
     private RelativeLayout.LayoutParams params;
     private ImageView mDeclineImage;
     private ImageView mAcceptImage;
+
+    private List<Profile> mListProfile;
+    private List<View> mListView;
 
 
     /**
@@ -72,7 +80,19 @@ public class SwipeFragment extends BaseFragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+//        createViewList();
     }
+
+//    private void createViewList() {
+//        ProfileViewHolder profileViewHolder = new ProfileViewHolder();
+//        View profileView = inflater.inflate(R.layout.profileview_layout,null);
+//        for (Profile profile :
+//                mListProfile) {
+//            if (profileViewHolder != null){
+//                profileViewHolder.mProfileName = (TextView)profileView.findViewById(R.id.profile_user_name);
+//            }
+//        }
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -117,9 +137,24 @@ public class SwipeFragment extends BaseFragment {
         TextView mNameText1 = (TextView)profileView1.findViewById(R.id.profile_user_name);
         mNameText1.setText("wwp2");
 
-        profileView.setEnabled(true);
-        mSwipeList.addView(profileView);
-        mSwipeList.addView(profileView1);
+        ProfileViewHolder profileViewHolder = new ProfileViewHolder();
+
+        mListView = new ArrayList<View>();
+
+        for (Profile profile :
+                mListProfile) {
+            View profileView3 = inflater.inflate(R.layout.profileview_layout,null);
+            profileView.setEnabled(true);
+            TextView mProfileName = (TextView)profileView3.findViewById(R.id.profile_user_name);
+            mProfileName.setText(profile.getUserName());
+            mListView.add(profileView3);
+        }
+
+        mSwipeList.setView(mListView);
+
+//        profileView.setEnabled(true);
+//        mSwipeList.addView(profileView);
+//        mSwipeList.addView(profileView1);
 
         params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL);
@@ -128,8 +163,8 @@ public class SwipeFragment extends BaseFragment {
 //        params.bottomMargin = 150;
 //        mSwipeList.setInitialPos(300, 300);
 
-        mProfileFrameLayout.addView(profileView,0,params);
-        mProfileFrameLayout.addView(profileView1,0,params);
+//        mProfileFrameLayout.addView(profileView,0,params);
+//        mProfileFrameLayout.addView(profileView1,0,params);
 
         mSwipeList.setPosition(0, params);
 //        mSwipeList.setInitialPos(300,300);
@@ -137,6 +172,10 @@ public class SwipeFragment extends BaseFragment {
         return view;
     }
 
+    public void setProfileList(List<Profile> listProfile)
+    {
+        mListProfile = listProfile;
+    }
     @SuppressLint("NewApi")
     private void animateToNextActivity(final View view, final int position)
     {
@@ -299,5 +338,38 @@ public class SwipeFragment extends BaseFragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }*/
+
+    public class SwipeViewAdatper extends BaseAdapter {
+
+        private List<Profile> mListProfile;
+
+        public void setData(List<Profile> listView) {
+            mListProfile = listView;
+        }
+        @Override
+        public int getCount() {
+            return mListProfile.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return null;
+        }
+    }
+
+    public class ProfileViewHolder {
+        private TextView mProfileName;
+        private ImageView mProfileAvatar;
+    }
 
 }
