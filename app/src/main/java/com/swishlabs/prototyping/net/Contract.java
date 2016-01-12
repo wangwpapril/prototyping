@@ -70,17 +70,21 @@ public class Contract {
 	
 	
 	interface LocationKeys{
-		public static final String LATITUDE = "latitude";
-		public static final String LONGITUDE = "longitude";
+		public static final String LATITUDE = "latitude=";
+		public static final String LONGITUDE = "longitude=";
 		public static final String CITYNAME = "cityName";
 	}
 
 	interface CommonKeys {
 		public static final String RESPONSESTATUS = "ResponseStatus";
 
-		public static final String DISTANCE = "distance";
+		public static final String DISTANCE = "distance=";
 		
 		public static final String ID = "id";
+
+		public static final String PROFILESWITHINRATIO = "/profileswithinratio";
+
+		public static final String OFFSET = "offset=";
 		
 	}
 

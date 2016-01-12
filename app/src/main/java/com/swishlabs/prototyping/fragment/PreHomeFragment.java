@@ -208,7 +208,7 @@ public class PreHomeFragment extends BaseFragment {
 
     private void getProfiles(String id, int offset) {
 
-        mWebApi.getProfiles(id, offset, new IResponse<List<ProfileAround>>() {
+        mWebApi.getProfiles(id, 5.0, 0.0,0.0, offset, new IResponse<List<ProfileAround>>() {
 
             @Override
             public void onSucceed(List<ProfileAround> result) {

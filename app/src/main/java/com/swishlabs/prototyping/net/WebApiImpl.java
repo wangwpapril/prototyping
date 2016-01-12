@@ -338,8 +338,14 @@ class WebApiImpl extends WebApi {
 	}
 
 	@Override
-	public <T> void getProfiles(String id, int offset, IResponse<T> listener) {
-		get(Contract.FuncUrls.PROFILE_URL + id + "/profileswithinratio?distance=5.0&longitude=0.0&latitude=0.0&offset=" + offset + "&format=json",
+	public <T> void getProfiles(String id, double distance, double longtitude, double latitude, int offset, IResponse<T> listener) {
+//		get(Contract.FuncUrls.PROFILE_URL + id + "/profileswithinratio?distance=5.0&longitude=0.0&latitude=0.0&offset=" + offset + "&format=json",
+		get(Contract.FuncUrls.PROFILE_URL + id +
+				Contract.CommonKeys.PROFILESWITHINRATIO +"?" +
+				Contract.CommonKeys.DISTANCE + distance + "&" +
+				Contract.LocationKeys.LONGITUDE + longtitude + "&" +
+				Contract.LocationKeys.LATITUDE + latitude + "&" +
+				Contract.CommonKeys.OFFSET + offset + "&format=json",
 				buildHeader(), null, listener);
 	}
 
