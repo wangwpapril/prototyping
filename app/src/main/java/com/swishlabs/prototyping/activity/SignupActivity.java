@@ -1,38 +1,20 @@
 package com.swishlabs.prototyping.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.swishlabs.prototyping.R;
-import com.swishlabs.prototyping.data.api.callback.ControllerContentTask;
-import com.swishlabs.prototyping.data.api.callback.IControllerContentCallback;
-import com.swishlabs.prototyping.data.api.model.Country;
-import com.swishlabs.prototyping.data.api.model.User;
 import com.swishlabs.prototyping.net.IResponse;
 import com.swishlabs.prototyping.net.WebApi;
-import com.swishlabs.prototyping.util.Enums;
 import com.swishlabs.prototyping.util.StringUtil;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class SignupActivity extends BaseActivity {
@@ -42,6 +24,9 @@ public class SignupActivity extends BaseActivity {
 	private EditText signupUserName;
 	private EditText signupPassword;
 	private EditText signupPWconfirm;
+	private EditText signupFirstName;
+	private EditText signupLastName;
+
 	private Button btnSignUp;
 	private TextView termsOfUseBtn;
 
@@ -49,6 +34,8 @@ public class SignupActivity extends BaseActivity {
 	private String userName = null;
 	private String password = null;
 	private String passwordConf = null;
+	private String firstName = null;
+	private String lastName = null;
 
 	private WebApi mWebApi;
 
@@ -66,7 +53,11 @@ public class SignupActivity extends BaseActivity {
 	private void initView() {
 		super.initTitleView();
 
-        signupEmail = (EditText) findViewById(R.id.regEmailEditText);
+		signupFirstName = (EditText) findViewById(R.id.regFirstnameEditText);
+
+		signupLastName = (EditText) findViewById(R.id.regLastnameEditText);
+
+		signupEmail = (EditText) findViewById(R.id.regEmailEditText);
 
         signupUserName = (EditText) findViewById(R.id.regUsernameEditText);
 
@@ -92,6 +83,9 @@ public class SignupActivity extends BaseActivity {
 			userName =signupUserName.getText().toString();
 			password = signupPassword.getText().toString();
 			passwordConf = signupPWconfirm.getText().toString();
+
+			firstName = signupFirstName.getText().toString();
+			lastName = signupLastName.getText().toString();
 			
 			if (TextUtils.isEmpty(email) ||TextUtils.isEmpty(userName)
 					|| TextUtils.isEmpty(password) ||
@@ -147,7 +141,7 @@ public class SignupActivity extends BaseActivity {
 	private void doSignup() {
 //        showProgressDlg(R.string.login_ing);
 //		mWebApi.register("newapptest", "newapptest@hotmail.com", "1234", new IResponse<String>() {
-			mWebApi.register(userName, email, password, new IResponse<String>() {
+			mWebApi.register(firstName, lastName, userName, email, password, new IResponse<String>() {
 
 			@Override
 			public void onSucceed(final String tokenInfo) {

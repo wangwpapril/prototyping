@@ -29,7 +29,7 @@ public class Contract {
 	static {
 		if (BuildConfig.DEBUG) {
 			BASE_URL = "http://grabopwsdev.azurewebsites.net/";
-			
+
 		} else {
 			BASE_URL = "http://grabopwsdev.azurewebsites.net/";
 		}
@@ -87,6 +87,8 @@ public class Contract {
 	interface AccountKeys {
 		public static final String USERNAME = "UserName";
 		public static final String PASSWORD = "Password";
+		public static final String FIRSTNAME ="FirstName";
+		public static final String LASTNAME = "LastName";
 		public static final String SESSIONID = "SessionId";
 	}
 	

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    >
+            
+             <ImageView
+                android:id="@+id/grabop_logo_image"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="125dp"
+                android:layout_marginLeft="75dp"
+                android:layout_marginRight="75dp"
+                android:src="@drawable/grabop_logo" />
+             
+                 <Button
+        android:id="@+id/butSignUp"
+        android:layout_gravity="center"
+        android:text="REGISTER"
+        android:gravity="center"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:layout_width="225dp"
+        android:layout_height="58dp"
+        android:background="@drawable/button_login"
+        android:longClickable="false"
+        android:clickable="true"
+        android:adjustViewBounds="true"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:layout_below="@+id/grabop_logo_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp"
+        android:layout_marginLeft="95dp"
+        android:layout_marginRight="95dp"
+        android:textAlignment="center" />
+             
+                <Button
+        android:id="@+id/butSignIn"
+        android:layout_gravity="center"
+        android:text="SIGN IN"
+        android:gravity="center"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:layout_width="225dp"
+        android:layout_height="58dp"
+        android:background="@drawable/button_login"
+        android:longClickable="false"
+        android:clickable="true"
+        android:adjustViewBounds="true"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:layout_below="@+id/butSignUp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp"
+        android:layout_marginLeft="95dp"
+        android:layout_marginRight="95dp"
+        android:textAlignment="center" />
+                         
+</RelativeLayout>
+

@@ -291,11 +291,13 @@ class WebApiImpl extends WebApi {
 	}
 
 	@Override
-	public <T> void register(String userName, String email, String password,
+	public <T> void register(String firstName, String lastName, String userName, String email, String password,
 			 IResponse<T> listener) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(Contract.AccountKeys.PASSWORD, password);
 		params.put(Contract.AccountKeys.USERNAME, userName);
+		params.put(Contract.AccountKeys.FIRSTNAME, firstName);
+		params.put(Contract.AccountKeys.LASTNAME, lastName);
 		params.put(Contract.UserInfoKeys.EMAIL, email);
 		post(Contract.FuncUrls.REGISTER + Contract.FORMAT_JSON, buildHeader(), params, listener);
 	}

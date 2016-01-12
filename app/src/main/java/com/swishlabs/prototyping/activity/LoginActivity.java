@@ -2,7 +2,6 @@ package com.swishlabs.prototyping.activity;
 
 
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
@@ -54,7 +53,7 @@ public class LoginActivity extends BaseActivity {
     @Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.login_layout);
+		this.setContentView(R.layout.signin_layout);
 		MyApplication.getInstance().addActivity(this);
         mWebApi = WebApi.getInstance(this);
 
@@ -67,9 +66,9 @@ public class LoginActivity extends BaseActivity {
         emailTextField = (EditText) findViewById(R.id.signinEmailEditText);
         passwordTextField = (EditText) findViewById(R.id.signinPasswordEditText);
 
-		signUp = (TextView) findViewById(R.id.sign_up);
-        signUp.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-        signUp.setOnClickListener(this);
+//		signUp = (TextView) findViewById(R.id.sign_up);
+//        signUp.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+//        signUp.setOnClickListener(this);
 
 /*        learnMore = (TextView) findViewById(R.id.learnMore);
         learnMore.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
@@ -115,11 +114,6 @@ public class LoginActivity extends BaseActivity {
 
         }
 
-    }
-
-    @Override
-    public void onBackPressed(){
-        MyApplication.getInstance().exit();
     }
 
     public void logInOld(String email, String password){
@@ -544,4 +538,10 @@ public class LoginActivity extends BaseActivity {
 //        });
 //    }
 
+    @Override
+    public void onBackPressed() {
+        Intent mainIntent = new Intent(getBaseContext(), ActivityMain.class);
+        startActivity(mainIntent);
+        finish();
+    }
 }
