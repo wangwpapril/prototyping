@@ -9,7 +9,6 @@ import android.util.Log;
 import com.crashlytics.android.Crashlytics;
 import com.lidroid.xutils.DbUtils;
 import com.swishlabs.prototyping.activity.MainActivity;
-import com.swishlabs.prototyping.activity.SplashActivity;
 import com.swishlabs.prototyping.data.ServiceManager;
 import com.swishlabs.prototyping.data.store.Database;
 import com.swishlabs.prototyping.data.store.DatabaseManager;

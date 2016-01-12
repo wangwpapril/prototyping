@@ -70,12 +70,12 @@ public class MainActivity extends BaseFragmentActivity {
                     getSlidingMenu().toggle();
 
                     if (position == SIGNOUT) {
-//                        MyApplication.getInstance().logout();
-//                        Intent mainIntent = new Intent(, LoginActivity.class);
-//                        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        startActivity(mainIntent);
-//                        finish();
-//
+                        MyApplication.getInstance().logout();
+                        Intent mainIntent = new Intent(getBaseContext(), ActivityMain.class);
+                        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(mainIntent);
+                        finish();
+
  /*                       Editor editor = GrabopApplication.SharedPreference.edit();
                         editor.putBoolean(GrabOpSharedPreference.AUTOLOGIN, false);
                         editor.commit();
