@@ -20,8 +20,6 @@ import com.swishlabs.prototyping.fragment.MyProfileFragment;
 import com.swishlabs.prototyping.fragment.PreHomeFragment;
 import com.swishlabs.prototyping.fragment.SwipeFragment;
 import com.swishlabs.prototyping.services.RequestCheckService;
-import com.swishlabs.prototyping.util.Enums;
-import com.swishlabs.prototyping.util.SharedPreferenceUtil;
 
 public class MainActivity extends BaseFragmentActivity {
 
@@ -35,11 +33,15 @@ public class MainActivity extends BaseFragmentActivity {
 
     private PendingIntent pendingIntent;
 
+    private MainActivity instance;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        instance = this;
 
         mDrawerImage = (ImageView)findViewById(R.id.drawerImage);
         mDrawerImage.setOnClickListener(new View.OnClickListener() {
@@ -68,13 +70,12 @@ public class MainActivity extends BaseFragmentActivity {
                     getSlidingMenu().toggle();
 
                     if (position == SIGNOUT) {
-                        SharedPreferenceUtil.setString(Enums.PreferenceKeys.sessionId.toString(), "");
-                        SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), false);
-                        Intent mainIntent = new Intent(getBaseContext(), LoginActivity.class);
-                        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(mainIntent);
-                        finish();
-
+//                        MyApplication.getInstance().logout();
+//                        Intent mainIntent = new Intent(, LoginActivity.class);
+//                        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                        startActivity(mainIntent);
+//                        finish();
+//
  /*                       Editor editor = GrabopApplication.SharedPreference.edit();
                         editor.putBoolean(GrabOpSharedPreference.AUTOLOGIN, false);
                         editor.commit();

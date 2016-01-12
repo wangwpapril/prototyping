@@ -170,4 +170,11 @@ public class SignupActivity extends BaseActivity {
 		});
 	}
 
+	@Override
+	public void onBackPressed() {
+		Intent mainIntent = new Intent(getBaseContext(), ActivityMain.class);
+		startActivity(mainIntent);
+		finish();
+	}
+
 }

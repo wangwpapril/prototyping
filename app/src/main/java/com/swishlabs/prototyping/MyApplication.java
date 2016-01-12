@@ -100,7 +100,7 @@ public class MyApplication extends Application implements UncaughtExceptionHandl
 		startService(locationServices);
 	}
 
-    public void logout(final Activity activity){
+    public void logout(){
         SharedPreferenceUtil.setString(Enums.PreferenceKeys.userId.toString(), "");
         SharedPreferenceUtil.setString(Enums.PreferenceKeys.token.toString(), "");
         SharedPreferenceUtil.setString(Enums.PreferenceKeys.email.toString(), "");
@@ -109,11 +109,11 @@ public class MyApplication extends Application implements UncaughtExceptionHandl
         SharedPreferenceUtil.setString(Enums.PreferenceKeys.username.toString(), "");
         SharedPreferenceUtil.setString(Enums.PreferenceKeys.countryCode.toString(), "");
         SharedPreferenceUtil.setString(Enums.PreferenceKeys.currencyCode.toString(), "");
-        SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), false);
+        SharedPreferenceUtil.setBoolean(Enums.PreferenceKeys.loginStatus.toString(), false);
         MyApplication.setLoginStatus(false);
-        activity.finish();
-        Intent mIntent = new Intent(activity, SplashActivity.class);
-        startActivity(mIntent);
+//        activity.finish();
+//        Intent mIntent = new Intent(activity, SplashActivity.class);
+//        startActivity(mIntent);
     }
 	
 	public DeviceInfoHelper getDeviceInfoHelper(){
@@ -187,7 +187,7 @@ public class MyApplication extends Application implements UncaughtExceptionHandl
 		ServiceManager.init(this);
 //		asyncLocationUpdates();
 		intentHashMap=new HashMap<String, Object>();
-		loginStatus = SharedPreferenceUtil.getBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), false);
+		loginStatus = SharedPreferenceUtil.getBoolean(Enums.PreferenceKeys.loginStatus.toString(), false);
 		activityList = new ArrayList<Activity>();
 
 		mFinalDb = DbUtils.create(this, DBName, DB_VERSION, new DbUpgradeListener() {

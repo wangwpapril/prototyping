@@ -38,15 +38,17 @@ public class SplashActivity extends Activity {
 			@Override
 			public void run(){
 				Intent mIntent = null;
-//				if(MyApplication.getLoginStatus()) {
-//					mIntent = new Intent(SplashActivity.this,MainActivity.class);
-//				}else{
-//					mIntent = new Intent(SplashActivity.this,LoginActivity.class);
-//				}
-				mIntent = new Intent(SplashActivity.this,ActivityMain.class);
-				startActivity(mIntent);
-				SplashActivity.this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-				SplashActivity.this.finish();
+				if(MyApplication.getLoginStatus()) {
+					mIntent = new Intent(SplashActivity.this,MainActivity.class);
+					startActivity(mIntent);
+					SplashActivity.this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+					SplashActivity.this.finish();
+				}else {
+					mIntent = new Intent(SplashActivity.this, ActivityMain.class);
+					startActivity(mIntent);
+					SplashActivity.this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+					SplashActivity.this.finish();
+				}
 			}
 		},3000);
   

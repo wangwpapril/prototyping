@@ -196,7 +196,7 @@ public class LoginActivity extends BaseActivity {
                     SharedPreferenceUtil.setString(Enums.PreferenceKeys.username.toString(),user.userName);
                     SharedPreferenceUtil.setString(Enums.PreferenceKeys.countryCode.toString(),user.countryCode);
                     SharedPreferenceUtil.setString(Enums.PreferenceKeys.currencyCode.toString(),user.currencyCode);
-                    SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), true);
+                    SharedPreferenceUtil.setBoolean(Enums.PreferenceKeys.loginStatus.toString(), true);
                     SharedPreferenceUtil.setApList(getApplicationContext(), user.getCompany().getApList());
 
                     MyApplication.setLoginStatus(true);
@@ -275,7 +275,7 @@ public class LoginActivity extends BaseActivity {
 
                 dismissProgressDlg();
                 SharedPreferenceUtil.setString(Enums.PreferenceKeys.sessionId.toString(), sessionId);
-                SharedPreferenceUtil.setBoolean(getApplicationContext(), Enums.PreferenceKeys.loginStatus.toString(), true);
+                SharedPreferenceUtil.setBoolean(Enums.PreferenceKeys.loginStatus.toString(), true);
 
                 getProfile(sessionId);
                 getConnections(sessionId);

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.DbUtils;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.adapter.SlideMenuAdapter;
+import com.swishlabs.prototyping.customViews.app.SlidingActivity;
 import com.swishlabs.prototyping.customViews.app.SlidingFragmentActivity;
 import com.swishlabs.prototyping.customViews.app.SlidingMenu;
 import com.swishlabs.prototyping.fragment.BaseFragment;
