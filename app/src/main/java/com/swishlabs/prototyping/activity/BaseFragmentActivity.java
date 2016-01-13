@@ -11,12 +11,14 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.lidroid.xutils.DbUtils;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.adapter.SlideMenuAdapter;
 import com.swishlabs.prototyping.customViews.app.SlidingFragmentActivity;
 import com.swishlabs.prototyping.customViews.app.SlidingMenu;
 import com.swishlabs.prototyping.fragment.BaseFragment;
+import com.swishlabs.prototyping.services.GPSTracker;
 
 public class BaseFragmentActivity extends SlidingFragmentActivity implements BaseFragment.OnFragmentInteractionListener {
 
@@ -40,6 +42,8 @@ public class BaseFragmentActivity extends SlidingFragmentActivity implements Bas
     public static int TERMSOFUSE = 7;
 
 
+    protected GPSTracker gpsTracker;
+    protected LatLng mCurrLocation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,11 +54,26 @@ public class BaseFragmentActivity extends SlidingFragmentActivity implements Bas
         mSlideMenuAdapter = new SlideMenuAdapter(this, getResources().getStringArray(R.array.slide_menu_list), null);
         initSlidingLayout();
 
+        gpsTracker = new GPSTracker(this);
+
+//        if(gpsTracker.canGetLocation()) {
+//
+//            mCurrLocation = new LatLng(gpsTracker.getLatitude(),gpsTracker.getLongitude());
+//
+//        }else {
+////            gpsTracker.showSettingsAlert();
+//            mCurrLocation = new LatLng(0.0, 0.0);
+//        }
+
+
         mFinalDb = DbUtils.create(this);
 
     }
 
 
+    public GPSTracker getGpsTracker() {
+        return gpsTracker;
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

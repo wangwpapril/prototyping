@@ -36,27 +36,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/activity/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1499#1662#0" expanded="true" />
-                <element signature="e#1661#1662#0" expanded="true" />
-                <element signature="e#2006#4836#0" expanded="true" />
-                <element signature="e#4835#4836#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="WebApiImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/net/WebApiImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.451613">
-              <caret line="340" column="49" selection-start-line="340" selection-start-column="49" selection-end-line="340" selection-end-column="49" />
+            <state vertical-scroll-proportion="-3.7096775">
+              <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -82,81 +66,94 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ActivityMain.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/activity/ActivityMain.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="41" column="32" selection-start-line="41" selection-start-column="32" selection-end-line="41" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PreHomeFragment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PreHomeFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/fragment/PreHomeFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.83776593">
-              <caret line="221" column="2" selection-start-line="221" selection-start-column="2" selection-end-line="221" selection-end-column="2" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="278" column="42" selection-start-line="278" selection-start-column="42" selection-end-line="278" selection-end-column="42" />
               <folding>
-                <element signature="e#3663#4054#0" expanded="true" />
-                <element signature="e#4053#4054#0" expanded="true" />
-                <element signature="e#5230#6645#0" expanded="true" />
-                <element signature="e#6644#6645#0" expanded="true" />
-                <element signature="e#6697#7711#0" expanded="true" />
-                <element signature="e#7710#7711#0" expanded="true" />
-                <element signature="e#11102#11103#0" expanded="true" />
-                <element signature="e#11152#11153#0" expanded="true" />
+                <element signature="e#3830#4221#0" expanded="true" />
+                <element signature="e#4220#4221#0" expanded="true" />
+                <element signature="e#5397#6812#0" expanded="true" />
+                <element signature="e#6811#6812#0" expanded="true" />
+                <element signature="e#6864#7878#0" expanded="true" />
+                <element signature="e#7877#7878#0" expanded="true" />
+                <element signature="e#11685#11686#0" expanded="true" />
+                <element signature="e#11735#11736#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PullToRefreshBase.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/customViews/pullrefresh/PullToRefreshBase.java">
+      <file leaf-file-name="ProfileAround.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/entity/ProfileAround.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="303" column="22" selection-start-line="303" selection-start-column="22" selection-end-line="303" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.6306069">
+              <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PreHomeRecyclerAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/adapter/PreHomeRecyclerAdapter.java">
+      <file leaf-file-name="BaseFragmentActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/activity/BaseFragmentActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="46" column="73" selection-start-line="46" selection-start-column="73" selection-end-line="46" selection-end-column="73" />
+              <caret line="64" column="41" selection-start-line="64" selection-start-column="41" selection-end-line="64" selection-end-column="41" />
               <folding>
-                <element signature="e#1170#1171#0" expanded="true" />
-                <element signature="e#1212#1213#0" expanded="true" />
+                <element signature="e#2266#2267#0" expanded="true" />
+                <element signature="e#2299#2300#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="prehome_gridview_profiles_layout.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/res/layout/prehome_gridview_profiles_layout.xml">
+      <file leaf-file-name="UpdateLocationService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/util/UpdateLocationService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.875">
-              <caret line="28" column="47" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="47" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
               <folding />
             </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fragment_pre_home.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/res/layout/fragment_pre_home.xml">
+      <file leaf-file-name="LocationService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/services/LocationService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.53125">
-              <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
               <folding />
             </state>
           </provider>
-          <provider editor-type-id="android-designer">
-            <state />
+        </entry>
+      </file>
+      <file leaf-file-name="GPSTracker.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/services/GPSTracker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="113" column="16" selection-start-line="113" selection-start-column="16" selection-end-line="113" selection-end-column="16" />
+              <folding>
+                <element signature="e#3126#3161#0" expanded="true" />
+                <element signature="e#3288#3327#0" expanded="true" />
+                <element signature="e#3438#3463#0" expanded="true" />
+                <element signature="e#3567#3602#0" expanded="true" />
+                <element signature="e#3940#3978#0" expanded="true" />
+                <element signature="e#4095#4124#0" expanded="true" />
+                <element signature="e#4290#4319#0" expanded="true" />
+                <element signature="e#4489#4523#0" expanded="true" />
+              </folding>
+            </state>
           </provider>
         </entry>
       </file>
@@ -1771,7 +1768,6 @@
       <list>
         <option value="$PROJECT_DIR$/../build.gradle" />
         <option value="$PROJECT_DIR$/src/main/res/layout/splash.xml" />
-        <option value="$PROJECT_DIR$/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/activity/ActivityMain.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/activity/SplashActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/util/SharedPreferenceUtil.java" />
@@ -1779,15 +1775,18 @@
         <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/activity/SettingsActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/activity/SignupActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/MyApplication.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/activity/BaseFragmentActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/customViews/app/SlidingActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/customViews/app/SlidingFragmentActivity.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/activity/MainActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/net/Contract.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/fragment/PreHomeFragment.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/net/WebApiImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/net/WebApi.java" />
+        <option value="$PROJECT_DIR$/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/services/GPSTracker.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/activity/BaseFragmentActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/fragment/PreHomeFragment.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/entity/ProfileAround.java" />
       </list>
     </option>
   </component>
@@ -1945,6 +1944,50 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="prototyping" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="prototyping" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="prototyping" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="prototyping" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="net" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -2002,6 +2045,10 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="manifests" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidManifestsGroupNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -2031,6 +2078,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.swishlabs.prototyping.services" />
       <recent name="com.swishlabs.prototyping.activity" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -2225,11 +2273,11 @@
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Fabric" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39528024" sideWeight="0.4350074" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39528024" sideWeight="0.42909896" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39970502" sideWeight="0.4763663" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39970502" sideWeight="0.47341213" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39970502" sideWeight="0.52363366" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39528024" sideWeight="0.57090104" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -2240,7 +2288,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1971935" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28286558" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32890856" sideWeight="0.47932053" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -2333,82 +2381,58 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/fragment/PreHomeFragment.java</url>
-          <line>221</line>
+          <line>236</line>
           <properties />
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/fragment/PreHomeFragment.java</url>
-          <line>233</line>
+          <line>248</line>
           <properties />
           <option name="timeStamp" value="26" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/fragment/PreHomeFragment.java</url>
+          <line>225</line>
+          <properties />
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/fragment/PreHomeFragment.java</url>
+          <line>243</line>
+          <properties />
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/fragment/PreHomeFragment.java</url>
+          <line>230</line>
+          <properties />
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/fragment/PreHomeFragment.java</url>
+          <line>270</line>
+          <properties />
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/fragment/PreHomeFragment.java</url>
+          <line>277</line>
+          <properties />
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/fragment/PreHomeFragment.java</url>
+          <line>229</line>
+          <properties />
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="27" />
+      <option name="time" value="35" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../settings.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/activity/LoginActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#logInOld#0;class#LoginActivity#0" expanded="false" />
-            <element signature="e#10850#10875#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/util/GsonUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="37" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#336#337#0" expanded="false" />
-            <element signature="e#366#367#0" expanded="false" />
-            <element signature="e#430#431#0" expanded="false" />
-            <element signature="e#468#469#0" expanded="false" />
-            <element signature="e#533#534#0" expanded="false" />
-            <element signature="e#572#573#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/services/RequestCheckService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="method#onStartCommand#0;class#RequestCheckService#0" expanded="false" />
-            <element signature="method#checkRequest#0;class#RequestCheckService#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/services/RequestCheckService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="42" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="method#onStartCommand#0;class#RequestCheckService#0" expanded="false" />
-            <element signature="method#checkRequest#0;class#RequestCheckService#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2645,23 +2669,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="5.263852">
-          <caret line="105" column="49" selection-start-line="105" selection-start-column="49" selection-end-line="105" selection-end-column="49" />
-          <folding>
-            <element signature="e#3126#3161#0" expanded="true" />
-            <element signature="e#3288#3327#0" expanded="true" />
-            <element signature="e#3438#3463#0" expanded="true" />
-            <element signature="e#3567#3602#0" expanded="true" />
-            <element signature="e#3940#3978#0" expanded="true" />
-            <element signature="e#4095#4124#0" expanded="true" />
-            <element signature="e#4290#4319#0" expanded="true" />
-            <element signature="e#4489#4523#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_main1.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2852,14 +2859,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/activity/BaseFragmentActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/util/SharedPreferenceUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2966,6 +2965,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/util/UpdateLocationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/services/LocationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="113" column="16" selection-start-line="113" selection-start-column="16" selection-end-line="113" selection-end-column="16" />
+          <folding>
+            <element signature="e#3126#3161#0" expanded="true" />
+            <element signature="e#3288#3327#0" expanded="true" />
+            <element signature="e#3438#3463#0" expanded="true" />
+            <element signature="e#3567#3602#0" expanded="true" />
+            <element signature="e#3940#3978#0" expanded="true" />
+            <element signature="e#4095#4124#0" expanded="true" />
+            <element signature="e#4290#4319#0" expanded="true" />
+            <element signature="e#4489#4523#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/services/GPSTracker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/jars/classes.jar!/com/google/android/gms/maps/model/LatLng.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.064516">
+          <caret line="30" column="11" selection-start-line="30" selection-start-column="11" selection-end-line="30" selection-end-column="11" />
+          <folding>
+            <element signature="e#1020#1021#0" expanded="true" />
+            <element signature="e#1064#1065#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/net/WebApi.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2974,28 +3025,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/activity/BaseFragmentActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="64" column="41" selection-start-line="64" selection-start-column="41" selection-end-line="64" selection-end-column="41" />
+          <folding>
+            <element signature="e#2266#2267#0" expanded="true" />
+            <element signature="e#2299#2300#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/net/WebApiImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.451613">
-          <caret line="340" column="49" selection-start-line="340" selection-start-column="49" selection-end-line="340" selection-end-column="49" />
+        <state vertical-scroll-proportion="-3.7096775">
+          <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/fragment/PreHomeFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.83776593">
-          <caret line="221" column="2" selection-start-line="221" selection-start-column="2" selection-end-line="221" selection-end-column="2" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="278" column="42" selection-start-line="278" selection-start-column="42" selection-end-line="278" selection-end-column="42" />
           <folding>
-            <element signature="e#3663#4054#0" expanded="true" />
-            <element signature="e#4053#4054#0" expanded="true" />
-            <element signature="e#5230#6645#0" expanded="true" />
-            <element signature="e#6644#6645#0" expanded="true" />
-            <element signature="e#6697#7711#0" expanded="true" />
-            <element signature="e#7710#7711#0" expanded="true" />
-            <element signature="e#11102#11103#0" expanded="true" />
-            <element signature="e#11152#11153#0" expanded="true" />
+            <element signature="e#3830#4221#0" expanded="true" />
+            <element signature="e#4220#4221#0" expanded="true" />
+            <element signature="e#5397#6812#0" expanded="true" />
+            <element signature="e#6811#6812#0" expanded="true" />
+            <element signature="e#6864#7878#0" expanded="true" />
+            <element signature="e#7877#7878#0" expanded="true" />
+            <element signature="e#11685#11686#0" expanded="true" />
+            <element signature="e#11735#11736#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/swishlabs/prototyping/entity/ProfileAround.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6306069">
+          <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>

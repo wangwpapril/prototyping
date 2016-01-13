@@ -24,7 +24,7 @@ public class ProfileAround implements Serializable{
 
     @Expose
     @SerializedName("distance")
-    private int distance;
+    private double distance;
 
     public int getSessionId() {
         return sessionId;
@@ -34,11 +34,11 @@ public class ProfileAround implements Serializable{
         this.sessionId = sessionId;
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 

@@ -12,8 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.reflect.TypeToken;
 import com.swishlabs.prototyping.R;
+import com.swishlabs.prototyping.activity.BaseFragmentActivity;
 import com.swishlabs.prototyping.activity.MainActivity;
 import com.swishlabs.prototyping.adapter.PreHomeRecyclerAdapter;
 import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshBase;
@@ -22,6 +24,7 @@ import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.entity.ProfileAround;
 import com.swishlabs.prototyping.helper.SimpleItemTouchHelperCallback;
 import com.swishlabs.prototyping.net.IResponse;
+import com.swishlabs.prototyping.services.GPSTracker;
 import com.swishlabs.prototyping.util.GsonUtil;
 
 import org.json.JSONException;
@@ -208,7 +211,19 @@ public class PreHomeFragment extends BaseFragment {
 
     private void getProfiles(String id, int offset) {
 
-        mWebApi.getProfiles(id, 5.0, 0.0,0.0, offset, new IResponse<List<ProfileAround>>() {
+        GPSTracker gpsTracker = ((BaseFragmentActivity) getActivity()).getGpsTracker();
+        LatLng mCurrLocation;
+
+        if(gpsTracker.canGetLocation()) {
+
+            mCurrLocation = new LatLng(gpsTracker.getLatitude(),gpsTracker.getLongitude());
+
+        }else {
+//            gpsTracker.showSettingsAlert();
+            mCurrLocation = new LatLng(0.0, 0.0);
+        }
+
+       mWebApi.getProfiles(id, 5.0, mCurrLocation.longitude,mCurrLocation.latitude, offset, new IResponse<List<ProfileAround>>() {
 
             @Override
             public void onSucceed(List<ProfileAround> result) {
