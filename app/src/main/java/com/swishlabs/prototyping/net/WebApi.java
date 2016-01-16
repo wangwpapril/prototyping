@@ -64,6 +64,8 @@ public abstract class WebApi {
 	public abstract <T> void getConnections(String id, IResponse<T> listener);
 
 	public abstract <T> void getService(String id, IResponse<T> listener);
+
+	public abstract <T> void getTradeOpp(String id, String userid, IResponse<T> listener);
 	
 	/**
 	 * Login for third authroized.

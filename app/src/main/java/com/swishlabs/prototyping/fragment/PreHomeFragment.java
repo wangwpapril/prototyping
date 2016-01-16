@@ -22,6 +22,7 @@ import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshBase;
 import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshRecyclerView;
 import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.entity.ProfileAround;
+import com.swishlabs.prototyping.entity.ProfilesAroundManager;
 import com.swishlabs.prototyping.helper.SimpleItemTouchHelperCallback;
 import com.swishlabs.prototyping.net.IResponse;
 import com.swishlabs.prototyping.services.GPSTracker;
@@ -58,6 +59,7 @@ public class PreHomeFragment extends BaseFragment {
     private PullToRefreshRecyclerView mPullToRefreshRV;
     private PreHomeRecyclerAdapter mAdapter;
     private List<Profile> mListProfile;
+    private ProfilesAroundManager profilesAroundManager;
 
     /**
      * Use this factory method to create a new instance of
@@ -90,6 +92,15 @@ public class PreHomeFragment extends BaseFragment {
         }
 
         mListProfile = new ArrayList<Profile>();
+        profilesAroundManager = new ProfilesAroundManager(getContext()) {
+            @Override
+            public void onDataLoaded(List data) {
+                mListProfile.addAll(data);
+                ((PreHomeRecyclerAdapter)mRecyclerView.getAdapter()).setData(mListProfile);
+                mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
+                mPullToRefreshRV.onRefreshComplete();
+            }
+        };
     }
 
     @Override
@@ -167,14 +178,23 @@ public class PreHomeFragment extends BaseFragment {
 
                 if(state == PullToRefreshBase.State.REFRESHING && direction == PullToRefreshBase.Mode.PULL_FROM_END) {
 
-                    getProfiles("153", mListProfile.size()-1);
+//                    getProfiles("153", mListProfile.size()-1);
+                    if (!profilesAroundManager.getMoreData()) {
+                        profilesAroundManager.loadData();
+                    }else {
+                        mPullToRefreshRV.onRefreshComplete();
+                    }
 
                 }else if(state == PullToRefreshBase.State.MANUAL_REFRESHING) {
                     mListProfile.clear();
-                    getProfiles("153", 0);
+//                    getProfiles("153", 0);
+                    profilesAroundManager.initialize();
+                    profilesAroundManager.loadData();
                 }else if(state == PullToRefreshBase.State.REFRESHING && direction == PullToRefreshBase.Mode.PULL_FROM_START) {
                     mListProfile.clear();
-                    getProfiles("153", 0);
+//                    getProfiles("153", 0);
+                    profilesAroundManager.initialize();
+                    profilesAroundManager.loadData();
                 }else if(state == PullToRefreshBase.State.RESET && direction == PullToRefreshBase.Mode.PULL_FROM_START) {
 //                    mPullToRefreshRV.setRefreshing(true);
                 }
@@ -189,7 +209,7 @@ public class PreHomeFragment extends BaseFragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         mPullToRefreshRV.setRefreshing(true);

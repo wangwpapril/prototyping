@@ -359,6 +359,11 @@ class WebApiImpl extends WebApi {
 		get(Contract.FuncUrls.PROFILE_URL + id +"/services?offset=0", buildHeader(), null, listener);
 	}
 
+	@Override
+	public <T> void getTradeOpp(String id, String userid, IResponse<T> listener) {
+		get(Contract.FuncUrls.PROFILE_URL + id + "/tradeopps/" + userid + "&format=json", buildHeader(), null, listener);
+	}
+
 
 	/*	@Override
         public <T> void sendCode(String phoneNum, IResponse<T> listener) {
