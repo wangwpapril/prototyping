@@ -72,6 +72,8 @@ public class Profile implements Serializable {
     @SerializedName("trusted")
     private boolean trusted;
 
+    private int oppNum;
+
     public Profile(int sessionId, String userName, String avatarUrl) {
         this.sessionId = sessionId;
         this.userName = userName;
@@ -181,6 +183,14 @@ public class Profile implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getOppNum() {
+        return oppNum;
+    }
+
+    public void setOppNum(int oppNum) {
+        this.oppNum = oppNum;
     }
 
     public static class Builder {

@@ -53,6 +53,7 @@ public class PreHomeRecyclerAdapter extends RecyclerView.Adapter<PreHomeRecycler
 
         holder.profileNameV.setText( mListProfile.get(position).getUserName());
         holder.profileOccuV.setText( mListProfile.get(position).getOccupation());
+        holder.profileOppN.setText(String.valueOf(mListProfile.get(position).getOppNum()));
         if(mListProfile.get(position).getAvatarUrl() != null)
             Picasso.with(mContext).load(mListProfile.get(position).getAvatarUrl()).transform(new CircleTransform())
                 .fit().into(holder.profileImageV);
@@ -91,6 +92,7 @@ public class PreHomeRecyclerAdapter extends RecyclerView.Adapter<PreHomeRecycler
         private TextView profileNameV;
         private TextView profileOccuV;
         private TextView profileDisV;
+        private TextView profileOppN;
         protected OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
         public ItemViewHolder(View itemView, OnRecyclerViewItemClickListener listener) {
@@ -100,6 +102,7 @@ public class PreHomeRecyclerAdapter extends RecyclerView.Adapter<PreHomeRecycler
             profileNameV = (TextView) itemView.findViewById(R.id.profile_user_name);
             profileOccuV = (TextView) itemView.findViewById(R.id.profile_occupation);
             profileDisV = (TextView) itemView.findViewById(R.id.profile_distance);
+            profileOppN = (TextView) itemView.findViewById(R.id.opportunity_number);
             itemView.setOnClickListener(this);
 
         }
