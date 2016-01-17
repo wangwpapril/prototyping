@@ -166,6 +166,8 @@ public class SwipeFragment extends BaseFragment {
 //        mProfileFrameLayout.addView(profileView,0,params);
 //        mProfileFrameLayout.addView(profileView1,0,params);
 
+        mProfileFrameLayout.addView(mListView.get(0));
+//        mProfileFrameLayout.addView(mListView.get(1));
         mSwipeList.setPosition(0, params);
 //        mSwipeList.setInitialPos(300,300);
 
