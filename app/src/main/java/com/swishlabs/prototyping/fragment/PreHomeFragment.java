@@ -115,8 +115,11 @@ public class PreHomeFragment extends BaseFragment {
             @Override
             public void OnItemClick(View view, int position) {
 
-                ((SwipeFragment)((MainActivity) getActivity()).mSwipeFragment).setProfileList(mListProfile);
-                ((MainActivity) getActivity()).switchFragment(((MainActivity) getActivity()).mSwipeFragment);
+//                ((SwipeFragment)((MainActivity) getActivity()).mSwipeFragment).setProfileList(mListProfile);
+//                ((MainActivity) getActivity()).switchFragment(((MainActivity) getActivity()).mSwipeFragment);
+
+                ((CardStackFragment)((MainActivity) getActivity()).mCardStackFragment).setData(mListProfile);
+                ((MainActivity) getActivity()).switchFragment(((MainActivity) getActivity()).mCardStackFragment);
             }
         });
 

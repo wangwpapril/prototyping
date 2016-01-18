@@ -1,9 +1,9 @@
 package com.swishlabs.prototyping;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
@@ -31,7 +31,7 @@ import io.fabric.sdk.android.Fabric;
 import static com.lidroid.xutils.DbUtils.DbUpgradeListener;
 
 
-public class MyApplication extends Application implements UncaughtExceptionHandler{
+public class MyApplication extends MultiDexApplication implements UncaughtExceptionHandler{
     
 	public static String TAG="MyApplication";
 //	public User currentUserInfo = null;

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.fragment.BaseFragment;
+import com.swishlabs.prototyping.fragment.CardStackFragment;
 import com.swishlabs.prototyping.fragment.MyProfileFragment;
 import com.swishlabs.prototyping.fragment.PreHomeFragment;
 import com.swishlabs.prototyping.fragment.SwipeFragment;
@@ -28,6 +29,7 @@ public class MainActivity extends BaseFragmentActivity {
     private BaseFragment mCurrFragment;
     public BaseFragment mSwipeFragment;
     private BaseFragment mMyProfileFragment;
+    public BaseFragment mCardStackFragment;
     private ImageView mDrawerImage;
     private MyApplication mApp;
 
@@ -59,6 +61,7 @@ public class MainActivity extends BaseFragmentActivity {
         mPreHomeFragment = PreHomeFragment.newInstance(null, null);
         mSwipeFragment = SwipeFragment.newInstance(null,null);
         mMyProfileFragment = MyProfileFragment.newInstance(null,null);
+        mCardStackFragment = CardStackFragment.newInstance(null,null);
 
         switchFragment(mPreHomeFragment);
 
