@@ -19,6 +19,7 @@ import com.swishlabs.prototyping.fragment.BaseFragment;
 import com.swishlabs.prototyping.fragment.CardStackFragment;
 import com.swishlabs.prototyping.fragment.MyProfileFragment;
 import com.swishlabs.prototyping.fragment.PreHomeFragment;
+import com.swishlabs.prototyping.fragment.SettingFragment;
 import com.swishlabs.prototyping.fragment.SwipeFragment;
 import com.swishlabs.prototyping.services.RequestCheckService;
 
@@ -30,6 +31,7 @@ public class MainActivity extends BaseFragmentActivity {
     public BaseFragment mSwipeFragment;
     private BaseFragment mMyProfileFragment;
     public BaseFragment mCardStackFragment;
+    private BaseFragment mSettingFragment;
     private ImageView mDrawerImage;
     private MyApplication mApp;
 
@@ -62,6 +64,7 @@ public class MainActivity extends BaseFragmentActivity {
         mSwipeFragment = SwipeFragment.newInstance(null,null);
         mMyProfileFragment = MyProfileFragment.newInstance(null,null);
         mCardStackFragment = CardStackFragment.newInstance(null,null);
+        mSettingFragment = SettingFragment.newInstance(null,null);
 
         switchFragment(mPreHomeFragment);
 
@@ -96,7 +99,7 @@ public class MainActivity extends BaseFragmentActivity {
                     }
 
                     if (position == DEFAULTSETTING) {
-                        switchFragment(mSwipeFragment);
+                        switchFragment(mSettingFragment);
 /*                        Intent defaultSettingIntent = new Intent(getBaseContext(), ActivityDefaultSetting.class);
                         startActivityForResult(defaultSettingIntent, DEFAULT_SETTING);*/
                     }

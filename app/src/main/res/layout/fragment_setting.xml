@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toggle="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+     <RelativeLayout
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/gray"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:background="@drawable/icon_titlebar_return"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="35dp"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Default Setting"
+            android:textSize="23sp"
+            />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titleBar"
+        android:paddingLeft="30dp"
+        android:paddingTop="20dp"
+        android:paddingRight="30dp">
+
+        <RelativeLayout
+            android:id="@+id/switch_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            >
+
+            <TextView
+                android:id="@+id/switchText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show Notification"
+                android:layout_centerHorizontal="true"
+                android:textSize="23sp"
+                android:layout_marginLeft="40dp"
+                />
+
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/switchText"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/gray"
+                />
+
+            <com.swishlabs.prototyping.customViews.ToggleButton
+                android:id="@+id/showNotification_switch"
+                android:layout_below="@+id/divider"
+                android:layout_marginTop="24dp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="64dp"
+                android:layout_height="36dp"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/distanceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/switch_id"
+            android:layout_marginTop="40dp"
+            android:text="Distance (Kilometers)"
+            android:textSize="23sp"
+            android:layout_centerHorizontal="true"/>
+
+        <RelativeLayout
+            android:id="@+id/distanceSliderLayout"
+            android:layout_below="@+id/distanceText"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/white">
+
+            <TextView
+                android:id="@+id/distanceAmountText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="40"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/distanceSlider"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_centerHorizontal="true"/>
+
+            <SeekBar
+                android:id="@+id/distanceSlider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="8dp"
+                android:minHeight="8dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:max="100"
+                android:progressDrawable="@drawable/bg_bar"
+                android:thumbOffset="0dp"
+                android:thumb="@drawable/thumb_bar" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/bottom_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancel_button_defaultsetting"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:background="@drawable/rounded_border_blue"/>
+
+        <Button
+            android:id="@+id/save_button_defaultsetting"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="25dp"
+            android:layout_weight="1"
+            android:text="Save"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_border_blue"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
