@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
-import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
 import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
@@ -20,6 +19,7 @@ import com.swishlabs.prototyping.data.api.callback.IControllerContentCallback;
 import com.swishlabs.prototyping.data.api.model.Constants;
 import com.swishlabs.prototyping.data.api.model.User;
 import com.swishlabs.prototyping.data.store.beans.UserTable;
+import com.swishlabs.prototyping.entity.ConnectionsManager;
 import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.entity.Service;
 import com.swishlabs.prototyping.net.IResponse;
@@ -400,49 +400,58 @@ public class LoginActivity extends BaseActivity {
 
     private void getConnections(String id) {
 
-        mWebApi.getConnections(id, new IResponse<List<Profile>>() {
-
+        ConnectionsManager connectionsManager = new ConnectionsManager(this) {
             @Override
-            public void onSucceed(List<Profile> result) {
-//                mFinalDb.deleteAll(Profile.class);
-                try {
-                    mFinalDb.saveAll(result);
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    List<Profile> profileList = mFinalDb.findAll(Profile.class);
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
-//                List<Profile> profile = mFinalDb.findAllByWhere(Profile.class, "sessionId == \"117\"");
-                try {
-                   Profile profile = mFinalDb.findFirst(Selector.from(Profile.class).where( "sessionId", "=", "117"));
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
+            public void onDataLoaded(List data) {
 
             }
+        };
 
-            @Override
-            public void onFailed(String code, String errMsg) {
-//                dismissProgressDlg();
-//                ToastUtil.showToast(getBaseContext(), errMsg);
-            }
+        connectionsManager.loadData();
 
-            @Override
-            public List<Profile> asObject(String rspStr) throws JSONException {
-
-                if (!TextUtils.isEmpty(rspStr)) {
-                    TypeToken<List<Profile>> type = new TypeToken<List<Profile>>() {
-                    };
-                    return GsonUtil.jsonToList(type.getType(), rspStr);
-                }
-                return new ArrayList<Profile>();
-
-            }
-        });
+//        mWebApi.getConnections(id, new IResponse<List<Profile>>() {
+//
+//            @Override
+//            public void onSucceed(List<Profile> result) {
+////                mFinalDb.deleteAll(Profile.class);
+//                try {
+//                    mFinalDb.saveAll(result);
+//                } catch (DbException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                try {
+//                    List<Profile> profileList = mFinalDb.findAll(Profile.class);
+//                } catch (DbException e) {
+//                    e.printStackTrace();
+//                }
+////                List<Profile> profile = mFinalDb.findAllByWhere(Profile.class, "sessionId == \"117\"");
+//                try {
+//                   Profile profile = mFinalDb.findFirst(Selector.from(Profile.class).where( "sessionId", "=", "117"));
+//                } catch (DbException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailed(String code, String errMsg) {
+////                dismissProgressDlg();
+////                ToastUtil.showToast(getBaseContext(), errMsg);
+//            }
+//
+//            @Override
+//            public List<Profile> asObject(String rspStr) throws JSONException {
+//
+//                if (!TextUtils.isEmpty(rspStr)) {
+//                    TypeToken<List<Profile>> type = new TypeToken<List<Profile>>() {
+//                    };
+//                    return GsonUtil.jsonToList(type.getType(), rspStr);
+//                }
+//                return new ArrayList<Profile>();
+//
+//            }
+//        });
     }
 
     private void getService(String id) {

@@ -183,7 +183,13 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     public void onResume() {
         super.onResume();
-//        startCheckService();
+        startCheckService();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopCheckService();
     }
 
     public void startCheckService(){
@@ -191,7 +197,12 @@ public class MainActivity extends BaseFragmentActivity {
         Intent intent = new Intent(this, RequestCheckService.class);
         intent.setAction(RequestCheckService.ACTION_CHECK_REQUEST);
         pendingIntent = PendingIntent.getService(this, 1, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, 10*1000, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, 10 * 1000, pendingIntent);
+    }
+
+    public void stopCheckService(){
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(this.pendingIntent);
     }
 
 }

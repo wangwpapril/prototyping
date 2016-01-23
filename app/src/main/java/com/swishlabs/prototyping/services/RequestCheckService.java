@@ -6,7 +6,9 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.text.TextUtils;
 
+import com.google.gson.reflect.TypeToken;
 import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.net.IResponse;
 import com.swishlabs.prototyping.net.WebApi;
@@ -14,8 +16,8 @@ import com.swishlabs.prototyping.util.Enums;
 import com.swishlabs.prototyping.util.GsonUtil;
 import com.swishlabs.prototyping.util.SharedPreferenceUtil;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RequestCheckService extends Service {
     private static final int BACKBROUND_CHECK_REQUEST = 1;
@@ -60,30 +62,31 @@ public class RequestCheckService extends Service {
     }
 
     private boolean checkRequest() {
-        String sessionId = SharedPreferenceUtil.getString(Enums.PreferenceKeys.sessionId.toString(), null);
+        String sessionId = SharedPreferenceUtil.getString(Enums.PreferenceKeys.sessionId.toString(), "153");
         if(sessionId != null)
-            getProfile(sessionId);
+            getRequest(sessionId);
         return false;
     }
 
-    private void getProfile(String id) {
+    private void getRequest(String id) {
 
-        mWebApi.getProfile(id, new IResponse<Profile>() {
+        mWebApi.getConnectionRequest(id, new IResponse<List<Profile>>() {
 
             @Override
-            public void onSucceed(Profile result) {
+            public void onSucceed(List<Profile> result) {
 
-                Notification.Builder builder = new Notification.Builder(getApplicationContext())
-                        .setSmallIcon(android.support.design.R.drawable.notification_template_icon_bg)
-                        .setContentTitle("grabop test")
-                        .setContentText("content")
-                        .setAutoCancel(true)
-                        .setOngoing(false);
+                if (result.size()>0) {
+                    Notification.Builder builder = new Notification.Builder(getApplicationContext())
+                            .setSmallIcon(android.support.design.R.drawable.notification_template_icon_bg)
+                            .setContentTitle("grabop test")
+                            .setContentText("content")
+                            .setAutoCancel(true)
+                            .setOngoing(false);
 
-                notification = builder.build();
+                    notification = builder.build();
 
-                mNM.notify(1, notification);
-
+                    mNM.notify(1, notification);
+                }
 //                mFinalDb.deleteAll(Profile.class);
                 //               List<Profile> profile = mFinalDb.findAll(Profile.class);
             }
@@ -95,19 +98,14 @@ public class RequestCheckService extends Service {
             }
 
             @Override
-            public Profile asObject(String rspStr) {
-                try {
-                    JSONObject json = new JSONObject(rspStr);
-
-                    Profile profile = GsonUtil.jsonToObject(Profile.class, rspStr);
-
-                    return profile;
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+            public List<Profile> asObject(String rspStr) {
+                if (!TextUtils.isEmpty(rspStr)) {
+                    TypeToken<List<Profile>> type = new TypeToken<List<Profile>>() {
+                    };
+                    return GsonUtil.jsonToList(type.getType(), rspStr);
                 }
+                return new ArrayList<Profile>();
 
-                return null;
             }
         });
     }

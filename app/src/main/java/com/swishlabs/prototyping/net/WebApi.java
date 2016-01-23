@@ -61,7 +61,9 @@ public abstract class WebApi {
 
 	public abstract <T> void getProfiles(String id, double distance, double longtitude, double latitude, int offset, IResponse<T> listener);
 
-	public abstract <T> void getConnections(String id, IResponse<T> listener);
+	public abstract <T> void getConnections(String id, int offset, IResponse<T> listener);
+
+	public abstract <T> void getConnectionRequest(String id, IResponse<T> listener);
 
 	public abstract <T> void getService(String id, IResponse<T> listener);
 

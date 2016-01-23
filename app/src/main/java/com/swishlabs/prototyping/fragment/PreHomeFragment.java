@@ -20,6 +20,7 @@ import com.swishlabs.prototyping.activity.MainActivity;
 import com.swishlabs.prototyping.adapter.PreHomeRecyclerAdapter;
 import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshBase;
 import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshRecyclerView;
+import com.swishlabs.prototyping.entity.ConnectionsManager;
 import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.entity.ProfileAround;
 import com.swishlabs.prototyping.entity.ProfilesAroundManager;
@@ -101,6 +102,16 @@ public class PreHomeFragment extends BaseFragment {
                 mPullToRefreshRV.onRefreshComplete();
             }
         };
+
+        ConnectionsManager connectionsManager = new ConnectionsManager(getContext()) {
+            @Override
+            public void onDataLoaded(List data) {
+
+            }
+        };
+
+        connectionsManager.initialize();
+        connectionsManager.loadData();
     }
 
     @Override

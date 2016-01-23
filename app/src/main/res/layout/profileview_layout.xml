@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         card_view:cardBackgroundColor="@color/white"
-        android:elevation="4dp"
-        android:translationZ="4dp"
+        card_view:cardCornerRadius="5dp"
+        android:gravity="center_horizontal"
         >
 
     <RelativeLayout
