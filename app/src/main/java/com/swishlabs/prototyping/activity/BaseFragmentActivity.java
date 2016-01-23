@@ -32,11 +32,11 @@ public class BaseFragmentActivity extends SlidingFragmentActivity implements Bas
     protected DbUtils mFinalDb;
 
 
-    public static int MYPROFILE = 0;
-    public static int DEFAULTSETTING = 1;
-    public static int MYCONTACTS = 2;
-    public static int SIGNOUT = 3;
-    public static int HELP = 4;
+    public static int MYHOME = 0;
+    public static int MYPROFILE = 1;
+    public static int DEFAULTSETTING = 2;
+    public static int MYCONTACTS = 3;
+    public static int SIGNOUT = 4;
     public static int HOWITWORKS = 5;
     public static int ABOUTGRABOP = 6;
     public static int TERMSOFUSE = 7;

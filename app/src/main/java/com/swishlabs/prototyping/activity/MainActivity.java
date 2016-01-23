@@ -118,6 +118,10 @@ public class MainActivity extends BaseFragmentActivity {
                         finish();*/
                     }
 
+                    if (position == MYHOME) {
+                        switchFragment(mPreHomeFragment);
+                    }
+
 //                    GrabOpRestful.AddedNotifyId.clear();
                     //                  BackgroundTask.GetInstance(mActivity).destroy();
 
