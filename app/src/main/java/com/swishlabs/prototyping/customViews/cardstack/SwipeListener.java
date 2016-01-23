@@ -8,7 +8,7 @@ import android.view.ViewPropertyAnimator;
 import android.view.animation.OvershootInterpolator;
 
 /**
- * Created by aaron on 4/12/2015.
+ * Created by WillWang on 1/12/2016.
  */
 public class SwipeListener implements View.OnTouchListener, View.OnClickListener {
 

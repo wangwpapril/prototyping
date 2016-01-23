@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 /**
- * Created by aaron on 23/12/2015.
+ * Created by WillWang on 1/12/2016.
  */
 public class SwipeFrameLayout extends FrameLayout {
     public SwipeFrameLayout(Context context) {

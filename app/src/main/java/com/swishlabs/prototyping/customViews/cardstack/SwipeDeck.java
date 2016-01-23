@@ -15,7 +15,7 @@ import android.widget.FrameLayout;
 import com.swishlabs.prototyping.R;
 
 /**
- * Created by aaron on 4/12/2015.
+ * Created by WillWang on 1/12/2016.
  */
 public class SwipeDeck extends FrameLayout {
 
@@ -155,7 +155,7 @@ public class SwipeDeck extends FrameLayout {
     }
 
     private void removeTopCard() {
-        View child = getChildAt(0);
+        View child = getChildAt(getChildCount()-1);
         child.setOnTouchListener(null);
         child.setX(0);
         child.setY(0);
@@ -190,7 +190,7 @@ public class SwipeDeck extends FrameLayout {
     private void setZTranslations() {
         int count = getChildCount();
         for (int i = 0; i < count; ++i) {
-            ViewCompat.setTranslationZ(getChildAt(i), 10 - i);
+            ViewCompat.setTranslationZ(getChildAt(i), i);
         }
     }
 
@@ -205,7 +205,7 @@ public class SwipeDeck extends FrameLayout {
         if (params == null) {
             params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         }
-        addViewInLayout(child, -1, params, true);
+        addViewInLayout(child, 0, params, true);
         int itemWidth = getWidth() - (paddingLeft + paddingRight);
         int itemHeight = getHeight() - (paddingTop + paddingBottom);
         child.measure(MeasureSpec.EXACTLY | itemWidth, MeasureSpec.EXACTLY | itemHeight); //MeasureSpec.UNSPECIFIED
@@ -230,7 +230,7 @@ public class SwipeDeck extends FrameLayout {
         //layout each child slightly above the previous child (we start with the bottom)
         child.animate()
                 .setDuration(200)
-                .y(paddingTop + index * CARD_SPACING);
+                .y(paddingTop + (getChildCount()-1-index) * CARD_SPACING);
     }
 
     @Override
@@ -271,7 +271,7 @@ public class SwipeDeck extends FrameLayout {
 
 
     private void setupTopCard() {
-        final View child = getChildAt(0);
+        final View child = getChildAt(getChildCount()-1);
 
         int initialX = paddingLeft;
         int initialY = paddingTop;
