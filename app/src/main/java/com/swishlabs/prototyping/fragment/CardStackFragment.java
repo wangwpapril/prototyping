@@ -83,6 +83,10 @@ public class CardStackFragment extends BaseFragment {
 
         cardStack.setAdapter(adapter);
 
+        cardStack.setLeftImage(R.id.accept_image);
+
+        cardStack.setRightImage(R.id.reject_image);
+
         cardStack.setEventCallback(new SwipeDeck.SwipeEventCallback() {
             @Override
             public void cardSwipedLeft() {

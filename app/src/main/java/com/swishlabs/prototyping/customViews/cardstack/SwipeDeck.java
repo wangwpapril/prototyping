@@ -212,8 +212,14 @@ public class SwipeDeck extends FrameLayout {
 
         //ensure that if there's a left and right image set their alpha to 0 initially
         //alpha animation is handled in the swipe listener
-        if(leftImageResource != 0) child.findViewById(leftImageResource).setAlpha(0);
-        if(rightImageResource != 0) child.findViewById(rightImageResource).setAlpha(0);
+        if(leftImageResource != 0) {
+            child.findViewById(leftImageResource).setAlpha(0);
+            child.findViewById(leftImageResource).setRotation(-15.0f);
+        }
+        if(rightImageResource != 0) {
+            child.findViewById(rightImageResource).setAlpha(0);
+            child.findViewById(rightImageResource).setRotation(15.0f);
+        }
     }
 
     /**
