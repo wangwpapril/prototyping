@@ -1,6 +1,7 @@
 package com.swishlabs.prototyping.customViews.cardstack;
 
 import android.animation.Animator;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,7 @@ import android.view.animation.OvershootInterpolator;
 /**
  * Created by WillWang on 1/12/2016.
  */
-public class SwipeListener implements View.OnTouchListener, View.OnClickListener {
+public class SwipeListener implements View.OnTouchListener {
 
     private float ROTATION_DEGREES = 15f;
     float OPACITY_END = 0.33f;
@@ -38,7 +39,6 @@ public class SwipeListener implements View.OnTouchListener, View.OnClickListener
         this.callback = callback;
         this.parent = (ViewGroup) card.getParent();
         this.parentWidth = parent.getWidth();
-        this.card.setOnClickListener(this);
     }
 
 
@@ -50,7 +50,6 @@ public class SwipeListener implements View.OnTouchListener, View.OnClickListener
         this.parent = (ViewGroup) card.getParent();
         this.parentWidth = parent.getWidth();
         this.ROTATION_DEGREES = rotation;
-        this.card.setOnClickListener(this);
         this.OPACITY_END = opacityEnd;
         this.paddingLeft = ((ViewGroup) card.getParent()).getPaddingLeft();
     }
@@ -80,8 +79,14 @@ public class SwipeListener implements View.OnTouchListener, View.OnClickListener
 
             case MotionEvent.ACTION_MOVE:
                 //gesture is in progress
-                click = false;
+
                 final int pointerIndex = event.findPointerIndex(mActivePointerId);
+                //TODO figure out what causes this multitouch problem and implement a proper fix // FIXME: 20/01/2016
+                //Log.i("pointer index: " , Integer.toString(pointerIndex));
+                if(pointerIndex < 0 || pointerIndex > 0 ){
+                    break;
+                }
+
                 final float xMove = event.getX(pointerIndex);
                 final float yMove = event.getY(pointerIndex);
 
@@ -89,10 +94,22 @@ public class SwipeListener implements View.OnTouchListener, View.OnClickListener
                 final float dx = xMove - initialXPress;
                 final float dy = yMove - initialYPress;
 
-                //calc rotation here
+                //throw away the move in this case as it seems to be wrong
+                //TODO: figure out why this is the case
+                if((int)initialXPress == 0 && (int) initialYPress == 0){
+                    //makes sure the pointer is valid
+                    break;
+                }
 
+                Log.d("initialX: ", "" + initialXPress);
+                Log.d("initialY: ", "" + initialYPress);
+
+                //calc rotation here
                 float posX = card.getX() + dx;
                 float posY = card.getY() + dy;
+
+                //in this circumstance consider the motion a click
+                if (dx + dy > 5) click = false;
 
                 card.setX(posX);
                 card.setY(posY);
@@ -120,7 +137,10 @@ public class SwipeListener implements View.OnTouchListener, View.OnClickListener
                 checkCardForEvent();
                 //check if this is a click event and then perform a click
                 //this is a workaround, android doesn't play well with multiple listeners
+
                 if (click) v.performClick();
+                //if(click) return false;
+
                 break;
 
             default:
@@ -129,10 +149,10 @@ public class SwipeListener implements View.OnTouchListener, View.OnClickListener
         return true;
     }
 
-    private void checkCardForEvent() {
+    public void checkCardForEvent() {
 
         if (cardBeyondLeftBorder()) {
-            animateOffScreenLeft()
+            animateOffScreenLeft(160)
                     .setListener(new Animator.AnimatorListener() {
 
                         @Override
@@ -142,7 +162,8 @@ public class SwipeListener implements View.OnTouchListener, View.OnClickListener
 
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            callback.cardSwipedLeft();
+
+                            callback.cardOffScreen();
                         }
 
                         @Override
@@ -154,9 +175,10 @@ public class SwipeListener implements View.OnTouchListener, View.OnClickListener
                         public void onAnimationRepeat(Animator animation) {
                         }
                     });
+            callback.cardSwipedLeft();
             this.deactivated = true;
         } else if (cardBeyondRightBorder()) {
-            animateOffScreenRight()
+            animateOffScreenRight(160)
                     .setListener(new Animator.AnimatorListener() {
 
                         @Override
@@ -166,7 +188,7 @@ public class SwipeListener implements View.OnTouchListener, View.OnClickListener
 
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            callback.cardSwipedRight();
+                            callback.cardOffScreen();
                         }
 
                         @Override
@@ -179,6 +201,7 @@ public class SwipeListener implements View.OnTouchListener, View.OnClickListener
 
                         }
                     });
+            callback.cardSwipedRight();
             this.deactivated = true;
         } else {
             resetCardPosition();
@@ -206,25 +229,20 @@ public class SwipeListener implements View.OnTouchListener, View.OnClickListener
                 .rotation(0);
     }
 
-    private ViewPropertyAnimator animateOffScreenLeft() {
+    public ViewPropertyAnimator animateOffScreenLeft(int duration) {
         return card.animate()
-                .setDuration(150)
+                .setDuration(duration)
                 .x(-(parent.getWidth()))
                 .y(0)
                 .rotation(-30);
     }
 
-    private ViewPropertyAnimator animateOffScreenRight() {
+    public ViewPropertyAnimator animateOffScreenRight(int duration) {
         return card.animate()
-                .setDuration(150)
-                .x(parent.getWidth())
+                .setDuration(duration)
+                .x(parent.getWidth() * 2)
                 .y(0)
                 .rotation(30);
-    }
-
-    @Override
-    public void onClick(View v) {
-        callback.cardClicked();
     }
 
     public void setRightView(View image) {
@@ -237,9 +255,7 @@ public class SwipeListener implements View.OnTouchListener, View.OnClickListener
 
     public interface SwipeCallback {
         void cardSwipedLeft();
-
         void cardSwipedRight();
-
-        void cardClicked();
+        void cardOffScreen();
     }
 }

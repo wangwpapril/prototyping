@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.swishlabs.prototyping.R;
@@ -79,27 +80,20 @@ public class CardStackFragment extends BaseFragment {
 
         cardStack = (SwipeDeck) view.findViewById(R.id.swipe_deck);
 
+        cardStack.setHardwareAccelerationEnabled(true);
+
         final SwipeDeckAdapter adapter = new SwipeDeckAdapter(mListProfile, inflater);
 
         cardStack.setAdapter(adapter);
 
-        cardStack.setLeftImage(R.id.accept_image);
-
-        cardStack.setRightImage(R.id.reject_image);
-
         cardStack.setEventCallback(new SwipeDeck.SwipeEventCallback() {
             @Override
-            public void cardSwipedLeft() {
+            public void cardSwipedLeft(int position) {
 
             }
 
             @Override
-            public void cardSwipedRight() {
-
-            }
-
-            @Override
-            public void cardClicked() {
+            public void cardSwipedRight(int position) {
 
             }
 
@@ -108,6 +102,43 @@ public class CardStackFragment extends BaseFragment {
 
             }
         });
+
+        cardStack.setLeftImage(R.id.accept_image);
+
+        cardStack.setRightImage(R.id.reject_image);
+
+        Button btn = (Button) view.findViewById(R.id.pass_button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardStack.swipeTopCardLeft(180);
+
+            }
+        });
+        Button btn2 = (Button) view.findViewById(R.id.reject_button);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardStack.swipeTopCardRight(180);
+            }
+        });
+
+//        Button btn3 = (Button) findViewById(R.id.button3);
+//        btn3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                testData.add("a sample string.");
+////                ArrayList<String> newData = new ArrayList<>();
+////                newData.add("some new data");
+////                newData.add("some new data");
+////                newData.add("some new data");
+////                newData.add("some new data");
+////
+////                SwipeDeckAdapter adapter = new SwipeDeckAdapter(newData, context);
+////                cardStack.setAdapter(adapter);
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
 
         return view;
     }
