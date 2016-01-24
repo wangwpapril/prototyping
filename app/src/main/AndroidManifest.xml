@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.swishlabs.prototyping" >
+    package="com.swishlabs.prototyping">
 
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.SET_DEBUG_APP" />
@@ -38,11 +38,11 @@
         android:icon="@drawable/ic_launcher"
         android:label="Travel Smart"
         android:largeHeap="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".activity.SplashActivity"
             android:label="Grab"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,27 +52,22 @@
         <activity
             android:name=".activity.LoginActivity"
             android:label="Login"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.SignupActivity"
             android:label="Signup"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.LegalActivity"
             android:label="Legal"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.SettingsActivity"
             android:label="Legal"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.AssistanceActivity"
-            android:label="@string/title_activity_assistance" >
-        </activity>
+            android:label="@string/title_activity_assistance"></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -84,33 +79,28 @@
         <activity
             android:name=".activity.LearnMoreActivity"
             android:label="@string/title_activity_learn_more"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <service
             android:name=".services.LocationService"
             android:enabled="true"
-            android:exported="true" >
-        </service>
+            android:exported="true"></service>
 
         <activity
             android:name=".activity.BaseFragmentActivity"
-            android:label="@string/title_activity_base_fragment" >
-        </activity>
+            android:label="@string/title_activity_base_fragment"></activity>
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_main"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.ActivityMain"
             android:label="@string/title_activity_main"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.MainHomeActivity"
-            android:label="@string/title_activity_main_home" >
-        </activity>
+            android:label="@string/title_activity_main_home"></activity>
+
         <service
             android:name=".services.GPSTracker"
             android:enabled="true"
@@ -118,11 +108,13 @@
         <service
             android:name=".services.RequestCheckService"
             android:enabled="true"
-            android:exported="true" >
-        </service>
+            android:exported="true"></service>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="451a0e6eef92a40b6aa745a02d0707b38c107ff1" />
+
+        <activity android:name=".activity.LoginLoadingActivity"></activity>
     </application>
 
 </manifest>

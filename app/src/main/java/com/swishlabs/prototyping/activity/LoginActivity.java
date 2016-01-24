@@ -94,6 +94,31 @@ public class LoginActivity extends BaseActivity {
             String email = emailTextField.getText().toString();
             String password = passwordTextField.getText().toString();
 
+            if (TextUtils.isEmpty(email)) {
+                StringUtil.showAlertDialog(getResources().getString(
+                        R.string.login_title_name), getResources()
+                        .getString(R.string.login_email_input_error), this);
+                return;
+            } else if (!StringUtil.isEmail(email)) {
+//                StringUtil.showAlertDialog(getResources().getString(R.string.login_title_name),
+//                        getResources().getString(R.string.email_format_error), this);
+//                return;
+            }
+
+            if (TextUtils.isEmpty(password)) {
+                StringUtil.showAlertDialog(getResources().getString(
+                        R.string.login_title_name), getResources()
+                        .getString(R.string.login_password_null), this);
+                return;
+            }
+
+            SharedPreferenceUtil.setString(Enums.PreferenceKeys.username.toString(), email);
+            SharedPreferenceUtil.setString(Enums.PreferenceKeys.password.toString(), password);
+
+            Intent mIntent = new Intent(this,LoginLoadingActivity.class);
+            startActivity(mIntent);
+            this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
             doLogin(email, password);
             return;
 
