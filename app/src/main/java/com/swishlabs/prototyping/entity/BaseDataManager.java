@@ -67,12 +67,20 @@ public abstract class BaseDataManager <T>  {
         this.offset += offset;
     }
 
-    protected int getOffset() {
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    public int getOffset() {
         return this.offset;
     }
 
     public boolean getMoreData() {
         return noMoreData;
+    }
+
+    public void setNoMoreData(boolean bool) {
+        this.noMoreData = bool;
     }
 
     public void initialize() {

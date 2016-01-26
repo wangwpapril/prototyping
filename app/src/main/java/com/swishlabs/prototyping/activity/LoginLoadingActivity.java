@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.entity.Profile;
+import com.swishlabs.prototyping.entity.ProfilesAroundManager;
 import com.swishlabs.prototyping.net.IResponse;
 import com.swishlabs.prototyping.net.WebApi;
 import com.swishlabs.prototyping.util.AnimationLoader;
@@ -21,11 +22,21 @@ import com.swishlabs.prototyping.util.SharedPreferenceUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 public class LoginLoadingActivity extends AppCompatActivity {
+    public static final String PROFILE_LIST = "profile_list";
+    public static final String PROFILE_OFFSET = "profile_offset";
+    public static final String NO_MORE_DATA = "no_more_data";
+
     private TextView textStatus;
     private ImageView imageLogin;
     private ImageView profileImage;
     private AnimationLoader mAnimLogo;
+    private List<Profile> mListProfile;
+    private ProfilesAroundManager profilesAroundManager;
 
     protected WebApi mWebApi;
 
@@ -42,7 +53,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
         AnimationLoader.Builder builder = new AnimationLoader.Builder(this);
         builder.setPath("anim/anim_grabop_logo");
         builder.setView(imageLogin);
-        builder.setTotalTask(10);
+        builder.setTotalTask(5);
         builder.setDuration(10);
 
         mAnimLogo = builder.build();
@@ -51,6 +62,30 @@ public class LoginLoadingActivity extends AppCompatActivity {
         textStatus = (TextView)findViewById(R.id.textSend);
 
         doLogin();
+
+        mListProfile = new ArrayList<Profile>();
+        profilesAroundManager = new ProfilesAroundManager(this) {
+            @Override
+            public void onDataLoaded(List data) {
+                mListProfile.addAll(data);
+//                ((PreHomeRecyclerAdapter)mRecyclerView.getAdapter()).setData(mListProfile);
+//                mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
+//                mPullToRefreshRV.onRefreshComplete();
+                mAnimLogo.stop();
+                Intent intent = new Intent(LoginLoadingActivity.this, MainActivity.class);
+                intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(PROFILE_LIST, (Serializable) mListProfile);
+                bundle.putInt(PROFILE_OFFSET, profilesAroundManager.getOffset());
+                bundle.putBoolean(NO_MORE_DATA, profilesAroundManager.getMoreData());
+                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
+
+            }
+        };
+
+
 
     }
 
@@ -71,11 +106,9 @@ public class LoginLoadingActivity extends AppCompatActivity {
 //                getConnections(sessionId);
 //                getService(sessionId);
 //
-                mAnimLogo.nextTask(14);
+                mAnimLogo.nextTask(5);
 
                 textStatus.setText("Login Successful..\nRetrieving your profile from server.. please wait");
-
-
 
                 return;
             }
@@ -92,8 +125,8 @@ public class LoginLoadingActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreferenceUtil.setBoolean(Enums.PreferenceKeys.loginStatus.toString(), false);
 
-//                        Intent signinIntent = new Intent(getBaseContext(), LoginActivity.class);
-//                        startActivity(signinIntent);
+                        Intent signinIntent = new Intent(getBaseContext(), LoginActivity.class);
+                        startActivity(signinIntent);
                         finish();
                     }
                 });
@@ -136,11 +169,18 @@ public class LoginLoadingActivity extends AppCompatActivity {
 //                }
 
                 //               List<Profile> profile = mFinalDb.findAll(Profile.class);
-                mAnimLogo.stop();
-                Intent intent = new Intent(LoginLoadingActivity.this, MainActivity.class);
-                intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent );
-                finish();
+                mAnimLogo.nextTask(19);
+
+                textStatus.setText("Retrieving users near you.. please wait");
+
+                profilesAroundManager.initialize();
+                profilesAroundManager.loadData();
+
+//                mAnimLogo.stop();
+//                Intent intent = new Intent(LoginLoadingActivity.this, MainActivity.class);
+//                intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent );
+//                finish();
             }
 
             @Override

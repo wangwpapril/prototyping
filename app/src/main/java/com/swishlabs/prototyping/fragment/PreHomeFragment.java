@@ -219,6 +219,17 @@ public class PreHomeFragment extends BaseFragment {
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
 
+        if (((MainActivity)getActivity()).getInitialData()) {
+            mListProfile = ((MainActivity)getActivity()).getProfileList();
+            profilesAroundManager.setOffset(((MainActivity)getActivity()).getProfileOffset());
+            profilesAroundManager.setNoMoreData(((MainActivity)getActivity()).getNoMoreData());
+            ((PreHomeRecyclerAdapter)mRecyclerView.getAdapter()).setData(mListProfile);
+            mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
+            mPullToRefreshRV.onRefreshComplete();
+
+        }
+
+
         return view;
     }
 
@@ -226,7 +237,9 @@ public class PreHomeFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mPullToRefreshRV.setRefreshing(true);
+        if (!((MainActivity)getActivity()).getInitialData()) {
+            mPullToRefreshRV.setRefreshing(true);
+        }
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
 //            public void run() {

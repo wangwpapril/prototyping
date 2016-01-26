@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
+import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.fragment.BaseFragment;
 import com.swishlabs.prototyping.fragment.CardStackFragment;
 import com.swishlabs.prototyping.fragment.MyProfileFragment;
@@ -22,6 +23,8 @@ import com.swishlabs.prototyping.fragment.PreHomeFragment;
 import com.swishlabs.prototyping.fragment.SettingFragment;
 import com.swishlabs.prototyping.fragment.SwipeFragment;
 import com.swishlabs.prototyping.services.RequestCheckService;
+
+import java.util.List;
 
 public class MainActivity extends BaseFragmentActivity {
 
@@ -39,11 +42,29 @@ public class MainActivity extends BaseFragmentActivity {
 
     private MainActivity instance;
 
+    private List<Profile> profileList;
+    private int profileOffset;
+    private boolean noMoreData;
+    private boolean initialData;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null){
+            profileList = (List<Profile>) bundle.getSerializable(LoginLoadingActivity.PROFILE_LIST);
+            profileOffset = bundle.getInt(LoginLoadingActivity.PROFILE_OFFSET);
+            noMoreData = bundle.getBoolean(LoginLoadingActivity.NO_MORE_DATA);
+            initialData = true;
+        }else {
+            profileList = null;
+            profileOffset = -1;
+            noMoreData = false;
+            initialData = false;
+        }
 
         instance = this;
 
@@ -163,7 +184,21 @@ public class MainActivity extends BaseFragmentActivity {
         mCurrFragment = fragment;
     }
 
+    public List<Profile> getProfileList() {
+        return profileList;
+    }
 
+    public int getProfileOffset() {
+        return profileOffset;
+    }
+
+    public boolean getNoMoreData() {
+        return noMoreData;
+    }
+
+    public boolean getInitialData() {
+        return initialData;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

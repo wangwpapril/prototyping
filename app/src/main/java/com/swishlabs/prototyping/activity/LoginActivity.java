@@ -119,8 +119,9 @@ public class LoginActivity extends BaseActivity {
             startActivity(mIntent);
             this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
-            doLogin(email, password);
-            return;
+            finish();
+//            doLogin(email, password);
+//            return;
 
         } else if (v == signUp) {
             Intent mIntent = new Intent(LoginActivity.this, SignupActivity.class);
