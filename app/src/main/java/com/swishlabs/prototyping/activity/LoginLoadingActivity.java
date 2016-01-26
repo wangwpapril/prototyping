@@ -71,7 +71,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
 //                ((PreHomeRecyclerAdapter)mRecyclerView.getAdapter()).setData(mListProfile);
 //                mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
 //                mPullToRefreshRV.onRefreshComplete();
-                mAnimLogo.stop();
+                mAnimLogo.lastTask();
                 Intent intent = new Intent(LoginLoadingActivity.this, MainActivity.class);
                 intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 Bundle bundle = new Bundle();
@@ -106,7 +106,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
 //                getConnections(sessionId);
 //                getService(sessionId);
 //
-                mAnimLogo.nextTask(5);
+                mAnimLogo.nextTask(10);
 
                 textStatus.setText("Login Successful..\nRetrieving your profile from server.. please wait");
 
@@ -169,7 +169,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
 //                }
 
                 //               List<Profile> profile = mFinalDb.findAll(Profile.class);
-                mAnimLogo.nextTask(19);
+                mAnimLogo.nextTask(10);
 
                 textStatus.setText("Retrieving users near you.. please wait");
 
