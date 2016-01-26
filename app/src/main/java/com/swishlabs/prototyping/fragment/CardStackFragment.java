@@ -5,10 +5,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.customViews.cardstack.SwipeDeck;
 import com.swishlabs.prototyping.entity.Profile;
@@ -232,6 +234,16 @@ public class CardStackFragment extends BaseFragment {
             holder.user_name.setText(mListProfile.get(position).getUserName());
             holder.title.setText(mListProfile.get(position).getOccupation());
             convertView.setTag(holder);
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ViewPropertyAnimator.animate(v).rotationY(90)
+                            .setDuration(300).setListener(null)
+                            .setInterpolator(new AccelerateInterpolator());
+
+
+                }
+            });
             return convertView;
         }
 
