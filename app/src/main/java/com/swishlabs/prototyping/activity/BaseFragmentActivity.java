@@ -13,12 +13,15 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.lidroid.xutils.DbUtils;
+import com.squareup.picasso.Picasso;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.adapter.SlideMenuAdapter;
 import com.swishlabs.prototyping.customViews.app.SlidingFragmentActivity;
 import com.swishlabs.prototyping.customViews.app.SlidingMenu;
+import com.swishlabs.prototyping.entity.UserProfilePrefs;
 import com.swishlabs.prototyping.fragment.BaseFragment;
 import com.swishlabs.prototyping.services.GPSTracker;
+import com.swishlabs.prototyping.util.CircleTransform;
 
 public class BaseFragmentActivity extends SlidingFragmentActivity implements BaseFragment.OnFragmentInteractionListener {
 
@@ -118,6 +121,8 @@ public class BaseFragmentActivity extends SlidingFragmentActivity implements Bas
         mTxtViewLoginState = (TextView) mBehindMenu.findViewById(R.id.txtViewLoginState);
 
         mImgViewAvata = (ImageView) mBehindMenu.findViewById(R.id.imgViewAvata);
+
+        Picasso.with(this).load(UserProfilePrefs.get(this).getUserAvatar()).transform(new CircleTransform()).fit().into(mImgViewAvata);
 
 
 /*        mBackgroundAvata = (ImageView)mBehindMenu.findViewById(R.id.imgBackground);

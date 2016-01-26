@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.entity.ProfilesAroundManager;
+import com.swishlabs.prototyping.entity.UserProfilePrefs;
 import com.swishlabs.prototyping.net.IResponse;
 import com.swishlabs.prototyping.net.WebApi;
 import com.swishlabs.prototyping.util.AnimationLoader;
@@ -161,14 +162,8 @@ public class LoginLoadingActivity extends AppCompatActivity {
             @Override
             public void onSucceed(Profile result) {
 
-////                mFinalDb.deleteAll(Profile.class);
-//                try {
-////                    mFinalDb.save(result);
-//                } catch (DbException e) {
-//                    e.printStackTrace();
-//                }
+                UserProfilePrefs.get(LoginLoadingActivity.this).setLoggedInUser(result);
 
-                //               List<Profile> profile = mFinalDb.findAll(Profile.class);
                 mAnimLogo.nextTask(10);
 
                 textStatus.setText("Retrieving users near you.. please wait");

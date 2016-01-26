@@ -87,7 +87,7 @@ public class Enums {
         currencyCode("currency code"),
         virtualWalletPdf("virtual wallet pdf"),
         assistanceList("assistance list"),
-		currentPage("current page"),
+		userAvatar("user avatar"),
 		userId("user id") ;
 	
 		private final String svalue;
