@@ -74,7 +74,7 @@ public class Enums {
 	public enum PreferenceKeys{
 		currentUser("current user"),
 		sessionId("session id"),
-        currentCountryId("current country id"),
+        distance("distance"),
 		netStatus("network status̬"),
         firstname("first name"),
         lastname("last name"),
@@ -86,7 +86,7 @@ public class Enums {
         countryCode("country code"),
         currencyCode("currency code"),
         virtualWalletPdf("virtual wallet pdf"),
-        assistanceList("assistance list"),
+        showNotification("show notification"),
 		userAvatar("user avatar"),
 		userId("user id") ;
 	
