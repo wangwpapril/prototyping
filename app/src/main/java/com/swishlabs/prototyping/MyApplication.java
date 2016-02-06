@@ -9,6 +9,7 @@ import android.util.Log;
 import com.crashlytics.android.Crashlytics;
 import com.lidroid.xutils.DbUtils;
 import com.swishlabs.prototyping.activity.MainActivity;
+import com.swishlabs.prototyping.data.DataManager;
 import com.swishlabs.prototyping.data.ServiceManager;
 import com.swishlabs.prototyping.data.store.Database;
 import com.swishlabs.prototyping.data.store.DatabaseManager;
@@ -197,6 +198,7 @@ public class MyApplication extends MultiDexApplication implements UncaughtExcept
 		});
 
 
+		DataManager.getInstance().initialize();
 //		Thread.setDefaultUncaughtExceptionHandler(this);
 //	    loadDatabase();
 	}

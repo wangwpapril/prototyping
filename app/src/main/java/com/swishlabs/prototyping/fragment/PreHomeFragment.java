@@ -20,6 +20,7 @@ import com.swishlabs.prototyping.activity.MainActivity;
 import com.swishlabs.prototyping.adapter.PreHomeRecyclerAdapter;
 import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshBase;
 import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshRecyclerView;
+import com.swishlabs.prototyping.data.DataManager;
 import com.swishlabs.prototyping.entity.ConnectionsManager;
 import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.entity.ProfileAround;
@@ -219,15 +220,16 @@ public class PreHomeFragment extends BaseFragment {
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
 
-        if (((MainActivity)getActivity()).getInitialData()) {
-            mListProfile = ((MainActivity)getActivity()).getProfileList();
-            profilesAroundManager.setOffset(((MainActivity)getActivity()).getProfileOffset());
-            profilesAroundManager.setNoMoreData(((MainActivity)getActivity()).getNoMoreData());
-            ((PreHomeRecyclerAdapter)mRecyclerView.getAdapter()).setData(mListProfile);
-            mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
-            mPullToRefreshRV.onRefreshComplete();
+//        if (((MainActivity)getActivity()).getInitialData()) {
+//            mListProfile = ((MainActivity)getActivity()).getProfileList();
+        mListProfile = DataManager.getInstance().getProfileAroundList();
+        profilesAroundManager.setOffset(DataManager.getInstance().getProfileAroundOffset());
+        profilesAroundManager.setNoMoreData(DataManager.getInstance().getProfileAroundMoreData());
+        ((PreHomeRecyclerAdapter)mRecyclerView.getAdapter()).setData(mListProfile);
+        mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
+        mPullToRefreshRV.onRefreshComplete();
 
-        }
+//        }
 
 
         return view;
@@ -237,9 +239,9 @@ public class PreHomeFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (!((MainActivity)getActivity()).getInitialData()) {
-            mPullToRefreshRV.setRefreshing(true);
-        }
+//        if (!((MainActivity)getActivity()).getInitialData()) {
+//            mPullToRefreshRV.setRefreshing(true);
+//        }
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
@@ -356,6 +358,5 @@ public class PreHomeFragment extends BaseFragment {
             outRect.right = halfSpace;
         }
     }
-
 
 }

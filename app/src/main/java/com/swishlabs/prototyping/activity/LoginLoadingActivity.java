@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.swishlabs.prototyping.R;
+import com.swishlabs.prototyping.data.DataManager;
+import com.swishlabs.prototyping.entity.ConnectionsManager;
 import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.entity.ProfilesAroundManager;
 import com.swishlabs.prototyping.entity.UserProfilePrefs;
@@ -23,7 +25,6 @@ import com.swishlabs.prototyping.util.SharedPreferenceUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
     private AnimationLoader mAnimLogo;
     private List<Profile> mListProfile;
     private ProfilesAroundManager profilesAroundManager;
+    private ConnectionsManager connectionsManager;
 
     protected WebApi mWebApi;
 
@@ -69,23 +71,42 @@ public class LoginLoadingActivity extends AppCompatActivity {
             @Override
             public void onDataLoaded(List data) {
                 mListProfile.addAll(data);
+                DataManager.getInstance().setProfileAroundList(mListProfile);
+                DataManager.getInstance().setProfileAroundOffset(profilesAroundManager.getOffset());
+                DataManager.getInstance().setProfileAroundMoreData(profilesAroundManager.getMoreData());
 //                ((PreHomeRecyclerAdapter)mRecyclerView.getAdapter()).setData(mListProfile);
 //                mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
 //                mPullToRefreshRV.onRefreshComplete();
-                mAnimLogo.lastTask();
+                mAnimLogo.nextTask(10);
+                textStatus.setText("Retrieving your connections.. please wait");
+                connectionsManager.initialize();
+                connectionsManager.loadData();
+
+
                 Intent intent = new Intent(LoginLoadingActivity.this, MainActivity.class);
                 intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(PROFILE_LIST, (Serializable) mListProfile);
-                bundle.putInt(PROFILE_OFFSET, profilesAroundManager.getOffset());
-                bundle.putBoolean(NO_MORE_DATA, profilesAroundManager.getMoreData());
-                intent.putExtras(bundle);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable(PROFILE_LIST, (Serializable) mListProfile);
+//                bundle.putInt(PROFILE_OFFSET, profilesAroundManager.getOffset());
+//                bundle.putBoolean(NO_MORE_DATA, profilesAroundManager.getMoreData());
+//                intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
 
             }
         };
 
+        connectionsManager = new ConnectionsManager(this) {
+            @Override
+            public void onDataLoaded(List data) {
+                mAnimLogo.lastTask();
+                textStatus.setText("Data Retrieving Successfully");
+                DataManager.getInstance().setConnectionList(data);
+                DataManager.getInstance().setConnectionOffset(getOffset());
+                DataManager.getInstance().setConnectionMoreData(getMoreData());
+
+            }
+        };
 
 
     }
@@ -107,7 +128,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
 //                getConnections(sessionId);
 //                getService(sessionId);
 //
-                mAnimLogo.nextTask(10);
+                mAnimLogo.nextTask(5);
 
                 textStatus.setText("Login Successful..\nRetrieving your profile from server.. please wait");
 
@@ -164,7 +185,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
 
                 UserProfilePrefs.get(LoginLoadingActivity.this).setLoggedInUser(result);
 
-                mAnimLogo.nextTask(10);
+                mAnimLogo.nextTask(8);
 
                 textStatus.setText("Retrieving users near you.. please wait");
 
