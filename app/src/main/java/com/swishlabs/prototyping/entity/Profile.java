@@ -69,8 +69,16 @@ public class Profile implements Serializable {
     private String skillSet;
 
     @Expose
+    @SerializedName("post")
+    private String post;
+
+    @Expose
     @SerializedName("trusted")
     private boolean trusted;
+
+    @Expose
+    @SerializedName("city")
+    private int city;
 
     private int oppNum;
 
@@ -191,6 +199,22 @@ public class Profile implements Serializable {
 
     public void setOppNum(int oppNum) {
         this.oppNum = oppNum;
+    }
+
+    public String getPost() {
+        return post;
+    }
+
+    public void setPost(String post) {
+        this.post = post;
+    }
+
+    public int getCity() {
+        return city;
+    }
+
+    public void setCity(int city) {
+        this.city = city;
     }
 
     public static class Builder {

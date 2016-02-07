@@ -56,8 +56,8 @@ public class LoginLoadingActivity extends AppCompatActivity {
         AnimationLoader.Builder builder = new AnimationLoader.Builder(this);
         builder.setPath("anim/anim_grabop_logo");
         builder.setView(imageLogin);
-        builder.setTotalTask(5);
-        builder.setDuration(10);
+        builder.setTotalTask(8);
+        builder.setDuration(2);
 
         mAnimLogo = builder.build();
         mAnimLogo.start();
@@ -82,17 +82,6 @@ public class LoginLoadingActivity extends AppCompatActivity {
                 connectionsManager.initialize();
                 connectionsManager.loadData();
 
-
-                Intent intent = new Intent(LoginLoadingActivity.this, MainActivity.class);
-                intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable(PROFILE_LIST, (Serializable) mListProfile);
-//                bundle.putInt(PROFILE_OFFSET, profilesAroundManager.getOffset());
-//                bundle.putBoolean(NO_MORE_DATA, profilesAroundManager.getMoreData());
-//                intent.putExtras(bundle);
-                startActivity(intent);
-                finish();
-
             }
         };
 
@@ -104,6 +93,16 @@ public class LoginLoadingActivity extends AppCompatActivity {
                 DataManager.getInstance().setConnectionList(data);
                 DataManager.getInstance().setConnectionOffset(getOffset());
                 DataManager.getInstance().setConnectionMoreData(getMoreData());
+
+                Intent intent = new Intent(LoginLoadingActivity.this, MainActivity.class);
+                intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable(PROFILE_LIST, (Serializable) mListProfile);
+//                bundle.putInt(PROFILE_OFFSET, profilesAroundManager.getOffset());
+//                bundle.putBoolean(NO_MORE_DATA, profilesAroundManager.getMoreData());
+//                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
 
             }
         };
@@ -128,7 +127,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
 //                getConnections(sessionId);
 //                getService(sessionId);
 //
-                mAnimLogo.nextTask(5);
+                mAnimLogo.nextTask(4);
 
                 textStatus.setText("Login Successful..\nRetrieving your profile from server.. please wait");
 
@@ -185,7 +184,8 @@ public class LoginLoadingActivity extends AppCompatActivity {
 
                 UserProfilePrefs.get(LoginLoadingActivity.this).setLoggedInUser(result);
 
-                mAnimLogo.nextTask(8);
+                mAnimLogo.nextTask(10
+                );
 
                 textStatus.setText("Retrieving users near you.. please wait");
 
