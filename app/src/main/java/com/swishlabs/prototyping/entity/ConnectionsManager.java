@@ -35,7 +35,7 @@ import java.util.List;
  * Responsible for loading data from the various sources. Instantiating classes are responsible for
  * providing the {code onDataLoaded} method to do something with the data.
  */
-public abstract class ConnectionsManager<T> extends BaseDataManager
+public abstract class ConnectionsManager extends BaseDataManager
         implements DataLoadingSubject {
 
     private List<Profile> mListProfile;

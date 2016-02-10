@@ -351,13 +351,19 @@ class WebApiImpl extends WebApi {
 
 	@Override
 	public <T> void getConnections(String id, int offset, IResponse<T> listener) {
-		get(Contract.FuncUrls.PROFILE_URL + id +"/connections" + "?" + Contract.CommonKeys.OFFSET + offset + "&format=json",
+		get(Contract.FuncUrls.PROFILE_URL + id +"/connections?status=confirmed" + "&" + Contract.CommonKeys.OFFSET + offset + "&format=json",
 				buildHeader(), null, listener);
 	}
 
 	@Override
-	public <T> void getConnectionRequest(String id, IResponse<T> listener) {
-		get(Contract.FuncUrls.PROFILE_URL + id + "/connections?status=sent"+"&format=json", buildHeader(), null, listener);
+	public <T> void getConnectionRequestReceived(String id, int offset, IResponse<T> listener) {
+		get(Contract.FuncUrls.PROFILE_URL + id + "/connections?status=received" + "&" + Contract.CommonKeys.OFFSET + offset + "&format=json", buildHeader(), null, listener);
+	}
+
+	@Override
+	public <T> void getConnectionRequestSent(String id, int offset, IResponse<T> listener) {
+		get(Contract.FuncUrls.PROFILE_URL + id + "/connections?status=sent" + "&" + Contract.CommonKeys.OFFSET + offset + "&format=json", buildHeader(), null, listener);
+
 	}
 
 	@Override

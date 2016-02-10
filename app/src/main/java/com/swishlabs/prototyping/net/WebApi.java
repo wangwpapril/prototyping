@@ -63,7 +63,9 @@ public abstract class WebApi {
 
 	public abstract <T> void getConnections(String id, int offset, IResponse<T> listener);
 
-	public abstract <T> void getConnectionRequest(String id, IResponse<T> listener);
+	public abstract <T> void getConnectionRequestReceived(String id, int offset, IResponse<T> listener);
+
+	public abstract <T> void getConnectionRequestSent(String id, int offset, IResponse<T> listener);
 
 	public abstract <T> void getService(String id, IResponse<T> listener);
 

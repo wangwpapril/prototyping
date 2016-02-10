@@ -70,12 +70,12 @@ public class RequestCheckService extends Service {
 
     private void getRequest(String id) {
 
-        mWebApi.getConnectionRequest(id, new IResponse<List<Profile>>() {
+        mWebApi.getConnectionRequestReceived(id, 0, new IResponse<List<Profile>>() {
 
             @Override
             public void onSucceed(List<Profile> result) {
 
-                if (result.size()>0) {
+                if (result.size() > 0) {
                     Notification.Builder builder = new Notification.Builder(getApplicationContext())
                             .setSmallIcon(android.support.design.R.drawable.notification_template_icon_bg)
                             .setContentTitle("grabop test")
