@@ -16,6 +16,12 @@ public class DataManager {
     private List<Profile> connectionList;
     private int connectionOffset;
     private boolean connectionMoreData;
+    private List<Profile> receivedRequestList;
+    private int receivedRequestOffset;
+    private boolean receivedRequestMoreData;
+    private List<Profile> sentRequestList;
+    private int sentRequestOffset;
+    private boolean sentRequestMoreData;
 
     public static DataManager getInstance() {
         if (instance == null) {
@@ -29,11 +35,15 @@ public class DataManager {
     private DataManager() {
         profileAroundList = new ArrayList<>();
         connectionList = new ArrayList<>();
+        receivedRequestList = new ArrayList<>();
+        sentRequestList = new ArrayList<>();
     }
 
     public void initialize() {
         profileAroundList.clear();
         connectionList.clear();
+        receivedRequestList.clear();
+        sentRequestList.clear();
     }
 
     public List<Profile> getProfileAroundList() {
@@ -82,5 +92,53 @@ public class DataManager {
 
     public void setConnectionMoreData(boolean connectionMoreData) {
         this.connectionMoreData = connectionMoreData;
+    }
+
+    public List<Profile> getReceivedRequestList() {
+        return receivedRequestList;
+    }
+
+    public void setReceivedRequestList(List<Profile> receivedRequestList) {
+        this.receivedRequestList = receivedRequestList;
+    }
+
+    public int getReceivedRequestOffset() {
+        return receivedRequestOffset;
+    }
+
+    public void setReceivedRequestOffset(int receivedRequestOffset) {
+        this.receivedRequestOffset = receivedRequestOffset;
+    }
+
+    public boolean isReceivedRequestMoreData() {
+        return receivedRequestMoreData;
+    }
+
+    public void setReceivedRequestMoreData(boolean receivedRequestMoreData) {
+        this.receivedRequestMoreData = receivedRequestMoreData;
+    }
+
+    public List<Profile> getSentRequestList() {
+        return sentRequestList;
+    }
+
+    public void setSentRequestList(List<Profile> sentRequestList) {
+        this.sentRequestList = sentRequestList;
+    }
+
+    public int getSentRequestOffset() {
+        return sentRequestOffset;
+    }
+
+    public void setSentRequestOffset(int sentRequestOffset) {
+        this.sentRequestOffset = sentRequestOffset;
+    }
+
+    public boolean isSentRequestMoreData() {
+        return sentRequestMoreData;
+    }
+
+    public void setSentRequestMoreData(boolean sentRequestMoreData) {
+        this.sentRequestMoreData = sentRequestMoreData;
     }
 }

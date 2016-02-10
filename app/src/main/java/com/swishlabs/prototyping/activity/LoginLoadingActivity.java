@@ -14,6 +14,8 @@ import com.swishlabs.prototyping.data.DataManager;
 import com.swishlabs.prototyping.entity.ConnectionsManager;
 import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.entity.ProfilesAroundManager;
+import com.swishlabs.prototyping.entity.ReceivedRequestManager;
+import com.swishlabs.prototyping.entity.SentRequestManager;
 import com.swishlabs.prototyping.entity.UserProfilePrefs;
 import com.swishlabs.prototyping.net.IResponse;
 import com.swishlabs.prototyping.net.WebApi;
@@ -40,6 +42,8 @@ public class LoginLoadingActivity extends AppCompatActivity {
     private List<Profile> mListProfile;
     private ProfilesAroundManager profilesAroundManager;
     private ConnectionsManager connectionsManager;
+    private ReceivedRequestManager receivedRequestManager;
+    private SentRequestManager sentRequestManager;
 
     protected WebApi mWebApi;
 
@@ -88,26 +92,47 @@ public class LoginLoadingActivity extends AppCompatActivity {
         connectionsManager = new ConnectionsManager(this) {
             @Override
             public void onDataLoaded(List data) {
-                mAnimLogo.lastTask();
-                textStatus.setText("Data Retrieving Successfully");
+                mAnimLogo.nextTask(5);
                 DataManager.getInstance().setConnectionList(data);
                 DataManager.getInstance().setConnectionOffset(getOffset());
                 DataManager.getInstance().setConnectionMoreData(getMoreData());
 
+                receivedRequestManager.initialize();
+                receivedRequestManager.loadData();
+
+            }
+        };
+
+        receivedRequestManager = new ReceivedRequestManager(this) {
+            @Override
+            public void onDataLoaded(List data) {
+                mAnimLogo.nextTask(5);
+                DataManager.getInstance().setReceivedRequestList(data);
+                DataManager.getInstance().setReceivedRequestOffset(getOffset());
+                DataManager.getInstance().setReceivedRequestMoreData(getMoreData());
+
+                sentRequestManager.initialize();
+                sentRequestManager.loadData();
+
+            }
+        };
+
+        sentRequestManager = new SentRequestManager(this) {
+            @Override
+            public void onDataLoaded(List data) {
+                DataManager.getInstance().setSentRequestList(data);
+                DataManager.getInstance().setSentRequestOffset(getOffset());
+                DataManager.getInstance().setSentRequestMoreData(getMoreData());
+                mAnimLogo.lastTask();
+                textStatus.setText("Data Retrieving Successfully");
+
                 Intent intent = new Intent(LoginLoadingActivity.this, MainActivity.class);
                 intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable(PROFILE_LIST, (Serializable) mListProfile);
-//                bundle.putInt(PROFILE_OFFSET, profilesAroundManager.getOffset());
-//                bundle.putBoolean(NO_MORE_DATA, profilesAroundManager.getMoreData());
-//                intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
 
             }
         };
-
-
     }
 
     private void doLogin() {

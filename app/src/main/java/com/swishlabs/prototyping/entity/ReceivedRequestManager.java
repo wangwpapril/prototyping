@@ -35,13 +35,13 @@ import java.util.List;
  * Responsible for loading data from the various sources. Instantiating classes are responsible for
  * providing the {code onDataLoaded} method to do something with the data.
  */
-public abstract class ConnectionsManager extends BaseDataManager
+public abstract class ReceivedRequestManager extends BaseDataManager
         implements DataLoadingSubject {
 
     private List<Profile> mListProfile;
     private String sessionId;
 
-    public ConnectionsManager(Context context) {
+    public ReceivedRequestManager(Context context) {
         super(context);
 
         sessionId = SharedPreferenceUtil.getString(Enums.PreferenceKeys.sessionId.toString(),"153");
@@ -62,7 +62,7 @@ public abstract class ConnectionsManager extends BaseDataManager
 
         mListProfile.clear();
 
-        mWebApi.getConnections(sessionId, getOffset(), new IResponse<List<Profile>>() {
+        mWebApi.getConnectionRequestReceived(sessionId, getOffset(), new IResponse<List<Profile>>() {
 
             @Override
             public void onSucceed(List<Profile> result) {
