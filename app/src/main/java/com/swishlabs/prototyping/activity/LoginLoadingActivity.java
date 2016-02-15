@@ -207,7 +207,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
             @Override
             public void onSucceed(Profile result) {
 
-                UserProfilePrefs.get(LoginLoadingActivity.this).setLoggedInUser(result);
+                UserProfilePrefs.getInstance().setLoggedInUser(result);
 
                 mAnimLogo.nextTask(10
                 );

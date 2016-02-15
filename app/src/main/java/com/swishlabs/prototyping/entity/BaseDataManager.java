@@ -44,12 +44,12 @@ public abstract class BaseDataManager <T>  {
 
     public BaseDataManager(Context context) {
         // setup the API access objects
-        userProfilePrefs = UserProfilePrefs.get(context);
+        userProfilePrefs = UserProfilePrefs.getInstance();
 
         initialize();
 //        createDesignerNewsApi();
         mWebApi = WebApi.getInstance(context);
-//        dribbblePrefs = DribbblePrefs.get(context);
+//        dribbblePrefs = DribbblePrefs.getInstance(context);
 //        createDribbbleApi();
 //        createProductHuntApi();
     }

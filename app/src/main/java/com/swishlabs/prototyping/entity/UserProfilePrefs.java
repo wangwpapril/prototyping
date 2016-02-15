@@ -16,7 +16,7 @@
 
 package com.swishlabs.prototyping.entity;
 
-import android.content.Context;
+import android.location.Location;
 
 import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.util.Enums;
@@ -44,18 +44,19 @@ public class UserProfilePrefs {
     private int userId;
     private String username;
     private String userAvatar;
+    private Location myLocation;
     private List<LoginStatusListener> loginStatusListeners;
 
-    public static UserProfilePrefs get(Context context) {
+    public static UserProfilePrefs getInstance() {
         if (singleton == null) {
             synchronized (UserProfilePrefs.class) {
-                singleton = new UserProfilePrefs(context);
+                singleton = new UserProfilePrefs();
             }
         }
         return singleton;
     }
 
-    private UserProfilePrefs(Context context) {
+    private UserProfilePrefs() {
         isLoggedIn = MyApplication.getLoginStatus();
         if (isLoggedIn) {
             sessionId = SharedPreferenceUtil.getString(Enums.PreferenceKeys.sessionId.toString(), null);
@@ -151,6 +152,14 @@ public class UserProfilePrefs {
                 listener.onLogout();
             }
         }
+    }
+
+    public Location getMyLocation() {
+        return myLocation;
+    }
+
+    public void setMyLocation(Location myLocation) {
+        this.myLocation = myLocation;
     }
 
     public interface LoginStatusListener {

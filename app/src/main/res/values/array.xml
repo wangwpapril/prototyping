@@ -2,12 +2,15 @@
 <resources>
 
     <string-array name="slide_menu_list">
-        <item>"My Home"</item>
-        <item>"My Profile"</item>
-        <item>"Default Setting"</item>
-        <item>"My Contacts"</item>
+        <item>"Home"</item>
+        <item>"Profile"</item>
+        <item>"Messages</item>
+        <item>"Connections"</item>
+        <item>"Requests"</item>
+        <item>"Settings</item>
+        <item>"How To GrabOp"</item>
+        <item>"About GrabOp"</item>
         <item>"Sign Out"</item>
-        <item>"How it Works"</item>
     </string-array>
     
     <string-array name="profile_moreinfo_list">

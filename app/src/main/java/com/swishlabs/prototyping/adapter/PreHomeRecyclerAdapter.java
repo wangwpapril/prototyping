@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.helper.ItemTouchHelperAdapter;
 import com.swishlabs.prototyping.helper.ItemTouchHelperViewHolder;
 import com.swishlabs.prototyping.util.CircleTransform;
+import com.swishlabs.prototyping.util.DistanceCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +55,16 @@ public class PreHomeRecyclerAdapter extends RecyclerView.Adapter<PreHomeRecycler
 
         holder.profileNameV.setText( mListProfile.get(position).getUserName());
         holder.profileOccuV.setText( mListProfile.get(position).getOccupation());
-        holder.profileOppN.setText(String.valueOf(mListProfile.get(position).getOppNum()));
+        LatLng latLng = new LatLng(mListProfile.get(position).getLatitude(),
+                mListProfile.get(position).getLongitude());
+        double distance = DistanceCalculator.distFromInKilometers(latLng);
+        holder.profileDisV.setText( distance + " km");
+        if (mListProfile.get(position).getOppNum() > 0) {
+            holder.profileOppN.setVisibility(View.VISIBLE);
+            holder.profileOppN.setText(String.valueOf(mListProfile.get(position).getOppNum()));
+        }else {
+            holder.profileOppN.setVisibility(View.GONE);
+        }
         if(mListProfile.get(position).getAvatarUrl() != null)
             Picasso.with(mContext).load(mListProfile.get(position).getAvatarUrl()).transform(new CircleTransform())
                 .fit().into(holder.profileImageV);
@@ -101,7 +112,7 @@ public class PreHomeRecyclerAdapter extends RecyclerView.Adapter<PreHomeRecycler
             profileImageV = (ImageView) itemView.findViewById(R.id.profile_image);
             profileNameV = (TextView) itemView.findViewById(R.id.profile_user_name);
             profileOccuV = (TextView) itemView.findViewById(R.id.profile_occupation);
-            profileDisV = (TextView) itemView.findViewById(R.id.profile_distance);
+            profileDisV = (TextView) itemView.findViewById(R.id.numOfDistanceText);
             profileOppN = (TextView) itemView.findViewById(R.id.opportunity_number);
             itemView.setOnClickListener(this);
 

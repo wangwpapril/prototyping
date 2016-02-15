@@ -27,7 +27,7 @@ public class BaseFragmentActivity extends SlidingFragmentActivity implements Bas
 
     protected SlideMenuAdapter mSlideMenuAdapter;
     private RelativeLayout mBehindMenu;
-    private TextView mTxtViewLoginState;
+    private TextView mTxtUsername;
     private ImageView mImgViewAvata;
     private int[] mSlidingMenuIds;
     protected ListView listView;
@@ -37,12 +37,13 @@ public class BaseFragmentActivity extends SlidingFragmentActivity implements Bas
 
     public static int MYHOME = 0;
     public static int MYPROFILE = 1;
-    public static int DEFAULTSETTING = 2;
-    public static int MYCONTACTS = 3;
-    public static int SIGNOUT = 4;
-    public static int HOWITWORKS = 5;
-    public static int ABOUTGRABOP = 6;
-    public static int TERMSOFUSE = 7;
+    public static int MESSAGES = 2;
+    public static int CONNECTIONS = 3;
+    public static int REQUESTS = 4;
+    public static int SETTINGS = 5;
+    public static int HOWTO = 6;
+    public static int ABOUT = 7;
+    public static int SIGNOUT = 8;
 
 
     protected GPSTracker gpsTracker;
@@ -118,11 +119,13 @@ public class BaseFragmentActivity extends SlidingFragmentActivity implements Bas
             }
         });
 
-        mTxtViewLoginState = (TextView) mBehindMenu.findViewById(R.id.txtViewLoginState);
+        mTxtUsername = (TextView) mBehindMenu.findViewById(R.id.txtUsername);
+        mTxtUsername.setText(UserProfilePrefs.getInstance().getUserName());
 
         mImgViewAvata = (ImageView) mBehindMenu.findViewById(R.id.imgViewAvata);
 
-        Picasso.with(this).load(UserProfilePrefs.get(this).getUserAvatar()).transform(new CircleTransform()).fit().into(mImgViewAvata);
+        Picasso.with(this).load(UserProfilePrefs.getInstance().getUserAvatar()).transform(new CircleTransform()).fit().into(mImgViewAvata);
+//        Picasso.with(this).load(UserProfilePrefs.getInstance(this).getUserAvatar()).transform(new PolygonTransform(60,6,true)).fit().into(mImgViewAvata);
 
 
 /*        mBackgroundAvata = (ImageView)mBehindMenu.findViewById(R.id.imgBackground);

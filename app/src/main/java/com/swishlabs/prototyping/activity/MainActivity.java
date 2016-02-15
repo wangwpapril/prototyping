@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
+import com.swishlabs.prototyping.entity.UserProfilePrefs;
 import com.swishlabs.prototyping.fragment.BaseFragment;
 import com.swishlabs.prototyping.fragment.CardStackFragment;
 import com.swishlabs.prototyping.fragment.MyProfileFragment;
@@ -64,6 +65,12 @@ public class MainActivity extends BaseFragmentActivity {
 //        }
 
         instance = this;
+
+        if (gpsTracker.canGetLocation()) {
+            UserProfilePrefs.getInstance().setMyLocation(gpsTracker.getLocation());
+        }else {
+            gpsTracker.showSettingsAlert();
+        }
 
         mDrawerImage = (ImageView)findViewById(R.id.drawerImage);
         mDrawerImage.setOnClickListener(new View.OnClickListener() {
@@ -116,13 +123,13 @@ public class MainActivity extends BaseFragmentActivity {
                         finish();*/
                     }
 
-                    if (position == DEFAULTSETTING) {
+                    if (position == SETTINGS) {
                         switchFragment(mSettingFragment);
 /*                        Intent defaultSettingIntent = new Intent(getBaseContext(), ActivityDefaultSetting.class);
                         startActivityForResult(defaultSettingIntent, DEFAULT_SETTING);*/
                     }
 
-                    if (position == MYCONTACTS) {
+                    if (position == CONNECTIONS) {
                         switchFragment(mPreHomeFragment);
  /*                       Intent mainIntent = new Intent(getBaseContext(), ActivityMyContacts.class);
                         startActivity(mainIntent);
