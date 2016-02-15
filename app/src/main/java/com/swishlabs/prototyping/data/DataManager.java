@@ -86,7 +86,7 @@ public class DataManager {
         this.connectionOffset = connectionOffset;
     }
 
-    public boolean isConnectionMoreData() {
+    public boolean getConnectionMoreData() {
         return connectionMoreData;
     }
 

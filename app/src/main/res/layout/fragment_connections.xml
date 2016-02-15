@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    tools:context="com.swishlabs.prototyping.fragment.ConnectionsFragment">
+
+    <TextView
+        android:id="@+id/connection_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Connections"
+        android:textColor="@color/blue"
+        android:textSize="22sp"
+        />
+
+    <SearchView
+        android:id="@+id/connection_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/connection_title"
+        android:layout_marginTop="10dp"
+        >
+
+    </SearchView>
+
+    <com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshRecyclerView
+        android:id="@+id/connection_card_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/connection_search"
+        android:layout_marginTop="10dp"
+        android:divider="#19000000"
+        android:dividerHeight="4dp"
+        ptr:ptrMode="both"
+        android:footerDividersEnabled="true"
+        android:headerDividersEnabled="true"/>
+
+</RelativeLayout>

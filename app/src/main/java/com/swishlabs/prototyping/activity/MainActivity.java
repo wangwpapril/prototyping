@@ -18,6 +18,7 @@ import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.entity.UserProfilePrefs;
 import com.swishlabs.prototyping.fragment.BaseFragment;
 import com.swishlabs.prototyping.fragment.CardStackFragment;
+import com.swishlabs.prototyping.fragment.ConnectionsFragment;
 import com.swishlabs.prototyping.fragment.MyProfileFragment;
 import com.swishlabs.prototyping.fragment.PreHomeFragment;
 import com.swishlabs.prototyping.fragment.SettingFragment;
@@ -33,6 +34,7 @@ public class MainActivity extends BaseFragmentActivity {
     private BaseFragment mMyProfileFragment;
     public BaseFragment mCardStackFragment;
     private BaseFragment mSettingFragment;
+    private BaseFragment mConnectionsFragment;
     private ImageView mDrawerImage;
     private MyApplication mApp;
 
@@ -90,6 +92,7 @@ public class MainActivity extends BaseFragmentActivity {
         mMyProfileFragment = MyProfileFragment.newInstance(null,null);
         mCardStackFragment = CardStackFragment.newInstance(null,null);
         mSettingFragment = SettingFragment.newInstance(null,null);
+        mConnectionsFragment = ConnectionsFragment.newInstance(null, null);
 
         switchFragment(mPreHomeFragment);
 
@@ -147,6 +150,9 @@ public class MainActivity extends BaseFragmentActivity {
                         switchFragment(mPreHomeFragment);
                     }
 
+                    if (position == CONNECTIONS) {
+                        switchFragment(mConnectionsFragment);
+                    }
 //                    GrabOpRestful.AddedNotifyId.clear();
                     //                  BackgroundTask.GetInstance(mActivity).destroy();
 
