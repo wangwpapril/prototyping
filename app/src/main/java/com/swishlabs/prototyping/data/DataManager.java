@@ -110,7 +110,7 @@ public class DataManager {
         this.receivedRequestOffset = receivedRequestOffset;
     }
 
-    public boolean isReceivedRequestMoreData() {
+    public boolean getReceivedRequestMoreData() {
         return receivedRequestMoreData;
     }
 
@@ -134,7 +134,7 @@ public class DataManager {
         this.sentRequestOffset = sentRequestOffset;
     }
 
-    public boolean isSentRequestMoreData() {
+    public boolean getSentRequestMoreData() {
         return sentRequestMoreData;
     }
 

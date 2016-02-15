@@ -1,0 +1,19 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    tools:context="com.swishlabs.prototyping.fragment.ReceivedRequestFragment">
+
+    <com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshRecyclerView
+        android:id="@+id/received_request_card_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:divider="#19000000"
+        android:dividerHeight="4dp"
+        ptr:ptrMode="both"
+        android:footerDividersEnabled="true"
+        android:headerDividersEnabled="true"/>
+
+</RelativeLayout>
