@@ -1,15 +1,19 @@
 package com.swishlabs.prototyping.fragment;
 
 
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.adapter.ConnectionsRecyclerAdapter;
@@ -43,6 +47,8 @@ public class ConnectionsFragment extends BaseFragment {
     private PullToRefreshRecyclerView mPullToRefreshRV;
     private ConnectionsRecyclerAdapter mAdapter;
     private List<Profile> mListProfile;
+    private SearchView mSearchView;
+    SearchView.SearchAutoComplete searchText;
 
     ConnectionsManager connectionsManager;
 
@@ -101,6 +107,7 @@ public class ConnectionsFragment extends BaseFragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_connections, container, false);
+        initSearchView(view);
 
         mAdapter = new ConnectionsRecyclerAdapter(getContext());
         mAdapter.setOnItemClickListener(new ConnectionsRecyclerAdapter.OnRecyclerViewItemClickListener() {
@@ -112,8 +119,8 @@ public class ConnectionsFragment extends BaseFragment {
             }
         });
 
-        final int spanCount = 1;
-        final RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
+//        final int spanCount = 1;
+//        final RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
 //        final FixedGridLayoutManager layoutManager = new FixedGridLayoutManager();
         //      layoutManager.setTotalColumnCount(2);
 //        layoutManager.offsetChildrenHorizontal(30);
@@ -128,11 +135,19 @@ public class ConnectionsFragment extends BaseFragment {
         mRecyclerView = mPullToRefreshRV.getRefreshableView();
         mRecyclerView.setHasFixedSize(true);
         //       mRecyclerView.setClipToPadding(true);
-        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setFocusableInTouchMode(false);
         mRecyclerView.setFocusable(false);
         mRecyclerView.setClickable(true);
+        mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                outRect.top = 10;
+                outRect.bottom = 10;
+            }
+        });
 //        mRecyclerView.setScrollContainer(false);
 //        mRecyclerView.addItemDecoration(new SpacesItemDecoration(40));
 
@@ -200,6 +215,37 @@ public class ConnectionsFragment extends BaseFragment {
         mPullToRefreshRV.onRefreshComplete();
 
         return view;
+    }
+
+    private void initSearchView(View view) {
+        mSearchView = (SearchView) view.findViewById(R.id.connection_search);
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.clearFocus();
+
+        View searchPlateView = mSearchView.findViewById(getResources().getIdentifier("android:id/search_plate",null,null));
+        if (searchPlateView != null)
+            searchPlateView.setBackgroundColor(Color.TRANSPARENT);
+
+        // icon
+        ImageView searchIcon = (ImageView) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
+        searchIcon.setImageResource(android.R.drawable.ic_search_category_default);
+        searchIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        // clear button
+        ImageView searchClose = (ImageView) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        searchClose.setImageResource(R.drawable.close);
+
+        searchText = (SearchView.SearchAutoComplete) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchText.setTextColor(getResources().getColor(R.color.black));
+        searchText.setHintTextColor(getResources().getColor(R.color.gray));
+        searchText.setHint("Search");
+        searchText.setTextSize(23f);
+
     }
 
 }

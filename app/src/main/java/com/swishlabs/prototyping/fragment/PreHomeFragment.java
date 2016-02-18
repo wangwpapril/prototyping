@@ -1,36 +1,28 @@
 package com.swishlabs.prototyping.fragment;
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.reflect.TypeToken;
 import com.swishlabs.prototyping.R;
-import com.swishlabs.prototyping.activity.BaseFragmentActivity;
 import com.swishlabs.prototyping.activity.MainActivity;
 import com.swishlabs.prototyping.adapter.PreHomeRecyclerAdapter;
 import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshBase;
 import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshRecyclerView;
 import com.swishlabs.prototyping.data.DataManager;
 import com.swishlabs.prototyping.entity.Profile;
-import com.swishlabs.prototyping.entity.ProfileAround;
 import com.swishlabs.prototyping.entity.ProfilesAroundManager;
 import com.swishlabs.prototyping.helper.SimpleItemTouchHelperCallback;
-import com.swishlabs.prototyping.net.IResponse;
-import com.swishlabs.prototyping.services.GPSTracker;
-import com.swishlabs.prototyping.util.GsonUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +53,8 @@ public class PreHomeFragment extends BaseFragment {
     private PreHomeRecyclerAdapter mAdapter;
     private List<Profile> mListProfile;
     private ProfilesAroundManager profilesAroundManager;
+    private SearchView mSearchView;
+    SearchView.SearchAutoComplete searchText;
 
     /**
      * Use this factory method to create a new instance of
@@ -112,6 +106,8 @@ public class PreHomeFragment extends BaseFragment {
         super.onCreateView(inflater,container,savedInstanceState);
 
         View view = inflater.inflate(R.layout.fragment_pre_home, container, false);
+        initSearchView(view);
+
         mAdapter = new PreHomeRecyclerAdapter(getContext());
         mAdapter.setOnItemClickListener(new PreHomeRecyclerAdapter.OnRecyclerViewItemClickListener() {
             @Override
@@ -248,83 +244,36 @@ public class PreHomeFragment extends BaseFragment {
 
     }
 
-    private void getProfiles(String id, int offset) {
+     private void initSearchView(View view) {
+         mSearchView = (SearchView) view.findViewById(R.id.prehome_search);
+         mSearchView.setIconifiedByDefault(false);
+         mSearchView.clearFocus();
 
-        GPSTracker gpsTracker = ((BaseFragmentActivity) getActivity()).getGpsTracker();
-        LatLng mCurrLocation;
+         View searchPlateView = mSearchView.findViewById(getResources().getIdentifier("android:id/search_plate",null,null));
+         if (searchPlateView != null)
+             searchPlateView.setBackgroundColor(Color.TRANSPARENT);
 
-        if(gpsTracker.canGetLocation()) {
+         // icon
+         ImageView searchIcon = (ImageView) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
+         searchIcon.setImageResource(android.R.drawable.ic_search_category_default);
+         searchIcon.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
 
-            mCurrLocation = new LatLng(gpsTracker.getLatitude(),gpsTracker.getLongitude());
+             }
+         });
 
-        }else {
-//            gpsTracker.showSettingsAlert();
-            mCurrLocation = new LatLng(0.0, 0.0);
-        }
+         // clear button
+         ImageView searchClose = (ImageView) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+         searchClose.setImageResource(R.drawable.close);
 
-       mWebApi.getProfiles(id, 5.0, mCurrLocation.longitude,mCurrLocation.latitude, offset, new IResponse<List<ProfileAround>>() {
+         searchText = (SearchView.SearchAutoComplete) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+         searchText.setTextColor(getResources().getColor(R.color.black));
+         searchText.setHintTextColor(getResources().getColor(R.color.gray));
+         searchText.setHint("Search");
+         searchText.setTextSize(23f);
 
-            @Override
-            public void onSucceed(List<ProfileAround> result) {
-                if(result != null && !result.isEmpty()){
-                    for (ProfileAround profileId :result) {
-                        mWebApi.getProfile(String.valueOf(profileId.getSessionId()), new IResponse<Profile>() {
-                            @Override
-                            public void onSucceed(Profile result) {
-
-                                mListProfile.add(result);
-                                ((PreHomeRecyclerAdapter)mRecyclerView.getAdapter()).setData(mListProfile);
-                                mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
-                            }
-
-                            @Override
-                            public void onFailed(String code, String errMsg) {
-
-                            }
-
-                            @Override
-                            public Profile asObject(String rspStr) throws JSONException {
-                                try {
-                                    JSONObject json = new JSONObject(rspStr);
-
-                                    Profile profile = GsonUtil.jsonToObject(Profile.class, rspStr);
-
-                                    return profile;
-                                } catch (JSONException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                }
-
-                                return null;
-                            }
-                        });
-                    }
-                }
-
-                mPullToRefreshRV.onRefreshComplete();
-
-            }
-
-            @Override
-            public void onFailed(String code, String errMsg) {
-                mPullToRefreshRV.onRefreshComplete();
-
-            }
-
-            @Override
-            public List<ProfileAround> asObject(String rspStr) throws JSONException {
-
-                if (!TextUtils.isEmpty(rspStr)) {
-                    TypeToken<List<ProfileAround>> type = new TypeToken<List<ProfileAround>>() {
-                    };
-                    return GsonUtil.jsonToList(type.getType(), rspStr);
-                }
-                return new ArrayList<ProfileAround>();
-
-            }
-        });
-    }
-
+     }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
 

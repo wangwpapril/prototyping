@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
@@ -25,6 +26,7 @@ import com.swishlabs.prototyping.fragment.RequestsFragment;
 import com.swishlabs.prototyping.fragment.SettingFragment;
 import com.swishlabs.prototyping.fragment.SwipeFragment;
 import com.swishlabs.prototyping.services.RequestCheckService;
+import com.swishlabs.prototyping.util.ToastUtil;
 
 public class MainActivity extends BaseFragmentActivity {
 
@@ -43,6 +45,7 @@ public class MainActivity extends BaseFragmentActivity {
     private PendingIntent pendingIntent;
 
     private MainActivity instance;
+    private long exitTime;
 
 //    private List<Profile> profileList;
 //    private int profileOffset;
@@ -263,5 +266,16 @@ public class MainActivity extends BaseFragmentActivity {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(this.pendingIntent);
     }
+
+    @Override
+    public void onBackPressed() {
+        if ((SystemClock.elapsedRealtime() - exitTime) > 2000) {
+            ToastUtil.showToast(this, "Press one more time to exit the app!");
+            exitTime = SystemClock.elapsedRealtime();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 
 }

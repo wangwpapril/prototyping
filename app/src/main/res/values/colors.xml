@@ -7,7 +7,7 @@
     <color name="page_background">#F3F3F3</color>
     <color name="notify_background">#6f7071</color>
     <color name="tradeopportunity_background">#ef6830</color>
-
+    <color name="dark_blue">#00008b</color>
 
     <color name="reglog_edittext_bg">#ffffff</color>
     <color name="reglog_edittext_text">#808386</color>

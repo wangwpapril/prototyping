@@ -24,16 +24,16 @@
 	        android:layout_centerHorizontal="true"
 	        android:src="@drawable/grabop_logo" />
 	
-	    <RelativeLayout
-	        android:id="@+id/messageImageLayout"
-	        android:layout_width="50dp"
-	        android:layout_height="50dp"
-	        android:layout_alignParentRight="true"
-	        android:layout_centerVertical="true"
-	        android:layout_marginRight="10dp"
-	        android:background="@drawable/ic_notification" >
-	        
-        </RelativeLayout>
+	    <!--<RelativeLayout-->
+	        <!--android:id="@+id/messageImageLayout"-->
+	        <!--android:layout_width="50dp"-->
+	        <!--android:layout_height="50dp"-->
+	        <!--android:layout_alignParentRight="true"-->
+	        <!--android:layout_centerVertical="true"-->
+	        <!--android:layout_marginRight="10dp"-->
+	        <!--android:background="@drawable/ic_notification" >-->
+	        <!-- -->
+        <!--</RelativeLayout>-->
 	    
     </RelativeLayout>
     

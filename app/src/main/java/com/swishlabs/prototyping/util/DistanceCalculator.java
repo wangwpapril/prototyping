@@ -63,13 +63,17 @@ public class DistanceCalculator {
     }
 	
 	public static double distFromInKilometers(LatLng otherProfileLocation) {
+		if (otherProfileLocation == null ||(otherProfileLocation.latitude == 0 && otherProfileLocation.longitude == 0) ) {
+			return 0;
+		}
+
 		if (UserProfilePrefs.getInstance().getMyLocation() != null) {
 			lat1 = UserProfilePrefs.getInstance().getMyLocation().getLatitude();
 			lng1 = UserProfilePrefs.getInstance().getMyLocation().getLongitude();
 		}else {
 			return 0;
 		}
-		
+
 		lat2 = otherProfileLocation.latitude;
 		lng2 = otherProfileLocation.longitude;
 		

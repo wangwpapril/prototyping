@@ -1,18 +1,32 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:ptr="http://schemas.android.com/apk/res-auto"
     tools:context="com.swishlabs.prototyping.fragment.PreHomeFragment">
 
+    <android.support.v7.widget.SearchView
+        android:id="@+id/prehome_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/rounded_border_white"
+        android:layout_marginTop="15dp"
+        >
+
+    </android.support.v7.widget.SearchView>
+
     <com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshRecyclerView
         android:id="@+id/pre_home_card_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/prehome_search"
+        android:layout_marginTop="10dp"
         android:divider="#19000000"
         android:dividerHeight="4dp"
         ptr:ptrMode="both"
         android:footerDividersEnabled="true"
         android:headerDividersEnabled="true"/>
 
-</LinearLayout>
+</RelativeLayout>

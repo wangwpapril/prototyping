@@ -12,21 +12,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:text="Connections"
-        android:textColor="@color/blue"
-        android:textSize="22sp"
+        android:textColor="@color/dark_blue"
+        android:textSize="25sp"
         />
 
-    <SearchView
+    <android.support.v7.widget.SearchView
         android:id="@+id/connection_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/connection_title"
+        android:background="@drawable/rounded_border_white"
         android:layout_marginTop="10dp"
         >
 
-    </SearchView>
+    </android.support.v7.widget.SearchView>
 
     <com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshRecyclerView
         android:id="@+id/connection_card_list"
