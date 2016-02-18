@@ -13,19 +13,19 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/bottom_buttons"
         android:layout_marginBottom="10dp"
-        android:padding="40dp"
-        swipedeck:card_spacing="20dp"
+        android:padding="20dp"
+        swipedeck:card_spacing="5dp"
         swipedeck:max_visible="3"
         swipedeck:render_above="true"
         swipedeck:rotation_degrees="15"
-        swipedeck:opacity_end="0.2"/>
+        swipedeck:opacity_end="0.8"/>
 
     <LinearLayout
         android:id="@+id/bottom_buttons"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:paddingLeft="25dp"
@@ -35,25 +35,27 @@
         <Button
             android:id="@+id/pass_button"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
             android:gravity="center_vertical|center_horizontal"
             android:layout_alignParentLeft="true"
             android:layout_weight="1"
             android:text="Pass"
+            android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:background="@drawable/rounded_border_blue"/>
 
         <Button
             android:id="@+id/reject_button"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
             android:gravity="center_vertical|center_horizontal"
             android:layout_marginLeft="30dp"
             android:layout_alignParentRight="true"
             android:layout_weight="1"
             android:text="Reject"
-            android:textSize="30sp"
+            android:textAllCaps="false"
+            android:textSize="25sp"
             android:textColor="@color/white"
             android:background="@drawable/rounded_border_blue"/>
 

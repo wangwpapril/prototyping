@@ -222,7 +222,7 @@ public class CardStackFragment extends BaseFragment {
 //                LayoutInflater inflater = getLayoutInflater(context);
                 // normally use a viewholder
                 holder = new ViewHolder();
-                convertView = inflater.inflate(R.layout.profileview_layout, parent, false);
+                convertView = inflater.inflate(R.layout.profile_card_front_layout, parent, false);
 
                 holder.user_name = (TextView) convertView.findViewById(R.id.profile_user_name);
                 holder.title = (TextView) convertView.findViewById(R.id.profile_title);

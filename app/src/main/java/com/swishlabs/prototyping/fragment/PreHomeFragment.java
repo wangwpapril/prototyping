@@ -271,7 +271,7 @@ public class PreHomeFragment extends BaseFragment {
          searchText.setTextColor(getResources().getColor(R.color.black));
          searchText.setHintTextColor(getResources().getColor(R.color.gray));
          searchText.setHint("Search");
-         searchText.setTextSize(23f);
+         searchText.setTextSize(18f);
 
      }
 

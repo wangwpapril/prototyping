@@ -1,6 +1,7 @@
 package com.swishlabs.prototyping.fragment;
 
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.swishlabs.prototyping.R;
-import com.swishlabs.prototyping.adapter.RequestsRecyclerAdapter;
+import com.swishlabs.prototyping.adapter.PreHomeRecyclerAdapter;
 import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshBase;
 import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshRecyclerView;
 import com.swishlabs.prototyping.data.DataManager;
@@ -37,7 +38,7 @@ public class ReceivedRequestFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private ItemTouchHelper mItemTouchHelper;
     private PullToRefreshRecyclerView mPullToRefreshRV;
-    private RequestsRecyclerAdapter mAdapter;
+    private PreHomeRecyclerAdapter mAdapter;
     private List<Profile> mListProfile;
 
     private BaseDataManager dataManager;
@@ -68,8 +69,10 @@ public class ReceivedRequestFragment extends Fragment {
                 @Override
                 public void onDataLoaded(List data) {
                     mListProfile.addAll(data);
-                    ((RequestsRecyclerAdapter) mRecyclerView.getAdapter()).setData(mListProfile);
-                    mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
+//                    ((RequestsRecyclerAdapter) mRecyclerView.getAdapter()).setData(mListProfile);
+//                    mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
+                    mAdapter.setData(mListProfile);
+                    mAdapter.notifyDataSetChanged();
                     mPullToRefreshRV.onRefreshComplete();
 
                 }
@@ -79,8 +82,10 @@ public class ReceivedRequestFragment extends Fragment {
                 @Override
                 public void onDataLoaded(List data) {
                     mListProfile.addAll(data);
-                    ((RequestsRecyclerAdapter) mRecyclerView.getAdapter()).setData(mListProfile);
-                    mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
+//                    ((RequestsRecyclerAdapter) mRecyclerView.getAdapter()).setData(mListProfile);
+//                    mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
+                    mAdapter.setData(mListProfile);
+                    mAdapter.notifyDataSetChanged();
                     mPullToRefreshRV.onRefreshComplete();
 
                 }
@@ -96,16 +101,23 @@ public class ReceivedRequestFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_received_request, container, false);
 
-        mAdapter = new RequestsRecyclerAdapter(getContext());
-        mAdapter.setOnItemClickListener(new RequestsRecyclerAdapter.OnRecyclerViewItemClickListener() {
+//        mAdapter = new RequestsRecyclerAdapter(getContext());
+        mAdapter = new PreHomeRecyclerAdapter(getContext());
+//        mAdapter.setOnItemClickListener(new RequestsRecyclerAdapter.OnRecyclerViewItemClickListener() {
+//            @Override
+//            public void OnItemClick(View view, int position) {
+//
+////                ((CardStackFragment)((MainActivity) getActivity()).mCardStackFragment).setData(mListProfile);
+////                ((MainActivity) getActivity()).switchFragment(((MainActivity) getActivity()).mCardStackFragment);
+//            }
+//        });
+
+        mAdapter.setOnItemClickListener(new PreHomeRecyclerAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void OnItemClick(View view, int position) {
 
-//                ((CardStackFragment)((MainActivity) getActivity()).mCardStackFragment).setData(mListProfile);
-//                ((MainActivity) getActivity()).switchFragment(((MainActivity) getActivity()).mCardStackFragment);
             }
         });
-
         final int spanCount = 3;
         final RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
 //        final FixedGridLayoutManager layoutManager = new FixedGridLayoutManager();
@@ -127,6 +139,16 @@ public class ReceivedRequestFragment extends Fragment {
         mRecyclerView.setFocusableInTouchMode(false);
         mRecyclerView.setFocusable(false);
         mRecyclerView.setClickable(true);
+        mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                outRect.top = 10;
+                outRect.bottom = 10;
+                outRect.left = 10;
+                outRect.right = 10;
+            }
+        });
 //        mRecyclerView.setScrollContainer(false);
 //        mRecyclerView.addItemDecoration(new SpacesItemDecoration(40));
 
@@ -210,8 +232,10 @@ public class ReceivedRequestFragment extends Fragment {
             dataManager.setNoMoreData(DataManager.getInstance().getSentRequestMoreData());
 
         }
-        ((RequestsRecyclerAdapter)mRecyclerView.getAdapter()).setData(mListProfile);
-        mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
+//        ((PreHomeRecyclerAdapter)mRecyclerView.getAdapter()).setData(mListProfile);
+//        mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
+        mAdapter.setData(mListProfile);
+        mAdapter.notifyDataSetChanged();
         mPullToRefreshRV.onRefreshComplete();
 
         return view;

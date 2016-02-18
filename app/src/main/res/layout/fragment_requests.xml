@@ -11,19 +11,19 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Request"
+        android:text="Requests"
         android:textSize="22sp"
-        android:textColor="@color/black"
+        android:textColor="@color/dark_blue"
         />
 
     <FrameLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="35dp"
         android:layout_below="@+id/request_title"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         >
 
         <android.support.design.widget.TabLayout
@@ -32,10 +32,10 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             app:tabGravity="fill"
-            app:tabIndicatorColor="#5be5ad"
+            app:tabIndicatorColor="@color/orange"
             app:tabIndicatorHeight="4dp"
-            app:tabSelectedTextColor="#5be5ad"
-            app:tabTextColor="@color/black"
+            app:tabSelectedTextColor="@color/orange"
+            app:tabTextColor="@color/blue"
             app:tabMode="fixed" />
 
     </FrameLayout>
