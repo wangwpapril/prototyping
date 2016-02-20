@@ -5,15 +5,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.customViews.cardstack.SwipeDeck;
 import com.swishlabs.prototyping.entity.Profile;
+import com.swishlabs.prototyping.util.FlipCard;
 
 import java.util.List;
 
@@ -217,30 +217,35 @@ public class CardStackFragment extends BaseFragment {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             ViewHolder holder = null;
-//            View v = convertView;
             if (convertView == null) {
 //                LayoutInflater inflater = getLayoutInflater(context);
                 // normally use a viewholder
                 holder = new ViewHolder();
                 convertView = inflater.inflate(R.layout.profile_card_front_layout, parent, false);
+//                View backview = inflater.inflate(R.layout.profile_card_back_layout, parent,false);
 
                 holder.user_name = (TextView) convertView.findViewById(R.id.profile_user_name);
                 holder.title = (TextView) convertView.findViewById(R.id.profile_title);
+                holder.front_view = (RelativeLayout) convertView.findViewById(R.id.profile_card_front);
+                holder.back_view = (RelativeLayout) convertView.findViewById(R.id.profile_card_back);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            //((TextView) v.findViewById(R.id.textView2)).setText(data.get(position));
 
             holder.user_name.setText(mListProfile.get(position).getUserName());
             holder.title.setText(mListProfile.get(position).getOccupation());
+//            holder.front_view.setVisibility(View.GONE);
+//            holder.back_view.setVisibility(View.GONE);
             convertView.setTag(holder);
+            final ViewHolder finalHolder = holder;
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ViewPropertyAnimator.animate(v).rotationY(90)
-                            .setDuration(300).setListener(null)
-                            .setInterpolator(new AccelerateInterpolator());
-
+//                    ViewPropertyAnimator.animate(v).rotationY(90)
+//                            .setDuration(300).setListener(null)
+//                            .setInterpolator(new AccelerateInterpolator());
+//
+                    FlipCard.flipCard(finalHolder.front_view, finalHolder.back_view);
 
                 }
             });
@@ -250,6 +255,8 @@ public class CardStackFragment extends BaseFragment {
         private class ViewHolder {
             public TextView user_name;
             public TextView title;
+            public RelativeLayout front_view;
+            public RelativeLayout back_view;
         }
 
     }
