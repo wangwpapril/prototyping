@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    >
+    <RelativeLayout
+        android:id="@+id/background_id"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:alpha="0.6"
+        >
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/close"
+        />
+
+     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+         android:layout_margin="40dp"
+        android:id="@+id/profile_card_back"
+         android:layout_gravity="center"
+        >
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profileCardBack"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="2dp"
+            card_view:cardBackgroundColor="@color/white"
+            card_view:cardCornerRadius="15dp"
+            card_view:cardElevation="2dp"
+            android:gravity="center_horizontal"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                >
+
+                <android.support.v7.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_back_head_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:elevation="2dp"
+                    card_view:cardBackgroundColor="@android:color/darker_gray"
+                    card_view:cardCornerRadius="15dp"
+                    card_view:cardElevation="2dp"
+                    android:gravity="center_horizontal"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/profile_back_head"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+
+                        >
+
+                        <ImageView
+                            android:id="@+id/profile_back_avatar"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_toRightOf="@+id/profile_back_avatar"
+                            android:layout_marginLeft="15dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/connection_username"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="22sp"
+                                android:textColor="@color/dark_blue"
+                                android:text="Karl Clift"
+                                />
+
+                            <TextView
+                                android:id="@+id/connection_occupation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:textColor="@color/dark_blue"
+                                android:text="Recruiter"
+                                />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <LinearLayout
+                    android:id="@+id/profile_middle1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profile_back_head_card"
+                    android:padding="10dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    >
+
+                    <ImageView
+                        android:id="@+id/profile_email_icon"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/email_icon"/>
+
+                    <TextView
+                        android:id="@+id/profile_email_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="JenifferL@yahoo.com"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/profile_middle1"
+                    android:background="@color/black"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/profile_bottom1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/divider"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/profile_back_skills_lable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Skills"
+                        android:textSize="20sp"
+                        android:textColor="@color/blue"
+                        />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/profile_card_front"
+        android:layout_margin="30dp"
+        android:layout_gravity="center"
+        >
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profileCard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="2dp"
+            card_view:cardBackgroundColor="@color/white"
+            card_view:cardCornerRadius="15dp"
+            card_view:cardElevation="2dp"
+            android:gravity="center_horizontal"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                >
+
+                <FrameLayout
+                    android:id="@+id/profile_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="165dp"
+                    android:paddingTop="0dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:layout_weight="3.2"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/avatar_and_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:layout_marginBottom="5dp"
+                        android:layout_centerHorizontal="true"
+                        >
+
+                        <ImageView
+                            android:id="@+id/profile_avatar_image"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/photo"/>
+
+                        <TextView
+                            android:id="@+id/profile_address"
+                            android:layout_centerHorizontal="true"
+                            android:layout_below="@+id/profile_avatar_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Toronto, On"
+                            android:textSize="14sp"
+                            android:textColor="@color/dark_blue"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/location_and_distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        >
+
+                        <ImageView
+                            android:id="@+id/profile_location_icon"
+                            android:layout_width="17dp"
+                            android:layout_height="34dp"
+                            android:src="@drawable/icon_location"
+                            android:layout_centerHorizontal="true"/>
+
+                        <TextView
+                            android:id="@+id/profile_distance"
+                            android:layout_below="@+id/profile_location_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/dark_blue"
+                            android:text="20 km"
+                            android:textSize="15sp"/>
+
+                    </RelativeLayout>
+
+                </FrameLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/profile_middle"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_below="@+id/profile_top"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:background="@android:color/darker_gray"
+                    >
+
+                    <TextView
+                        android:id="@+id/profile_user_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="Michelle Lee"
+                        android:textSize="20sp"
+                        android:textColor="@color/dark_blue"/>
+
+                    <TextView
+                        android:id="@+id/profile_title"
+                        android:layout_below="@id/profile_user_name"
+                        android:gravity="center_horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="16sp"
+                        android:text="Freelance Event Marketer"/>
+
+                    <TextView
+                        android:id="@+id/profile_company"
+                        android:layout_below="@id/profile_title"
+                        android:gravity="center_horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="14sp"
+                        android:text="Freelance Event Marketer"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/profile_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profile_middle"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/profile_posts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp">
+
+                        <TextView
+                            android:id="@+id/profile_post"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="22dp"
+                            android:text="I am one of those people who, when told I have 120 characters to make a statement, use all 120 of them"
+                            android:textColor="@color/gray"
+                            android:textSize="14sp"
+                            />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@id/profile_post"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_marginRight="25dp"
+                            android:background="@color/black"
+                            />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/profile_skills"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_posts"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:id="@+id/profile_skill_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center_vertical"
+                            android:text="Top Skills"
+                            android:textSize="24sp"
+                            android:textColor="@color/dark_blue"/>
+
+                        <RelativeLayout
+                            android:id="@+id/profile_skill_items"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_toRightOf="@+id/profile_skill_title"
+                            android:layout_marginLeft="10dp"
+                            >
+
+                            <TextView
+                                android:id="@+id/profile_offer1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="22dp"
+                                android:text="HTML"
+                                android:textColor="@color/dark_blue"
+                                android:textSize="18sp"
+                                />
+
+                            <TextView
+                                android:id="@+id/profile_offer2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/profile_offer1"
+                                android:layout_marginLeft="22dp"
+                                android:text="CSS"
+                                android:textColor="@color/dark_blue"
+                                android:textSize="18sp"
+                                />
+
+                            <TextView
+                                android:id="@+id/profile_offer3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/profile_offer2"
+                                android:layout_marginLeft="22dp"
+                                android:text="Adobe Photoshop"
+                                android:textColor="@color/dark_blue"
+                                android:textSize="18sp"
+                                />
+
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+             </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

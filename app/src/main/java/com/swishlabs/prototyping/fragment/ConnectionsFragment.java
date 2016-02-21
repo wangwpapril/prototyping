@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.swishlabs.prototyping.R;
+import com.swishlabs.prototyping.activity.MainActivity;
 import com.swishlabs.prototyping.adapter.ConnectionsRecyclerAdapter;
 import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshBase;
 import com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshRecyclerView;
@@ -114,18 +117,17 @@ public class ConnectionsFragment extends BaseFragment {
             @Override
             public void OnItemClick(View view, int position) {
 
+                ProfileConnectionFragment fragment = new ProfileConnectionFragment();
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.add(R.id.container, fragment, fragment.getClass().getSimpleName());
+                ft.addToBackStack(((MainActivity)getActivity()).getCurrentFragment().getTag());
+                ft.commit();
+
 //                ((CardStackFragment)((MainActivity) getActivity()).mCardStackFragment).setData(mListProfile);
 //                ((MainActivity) getActivity()).switchFragment(((MainActivity) getActivity()).mCardStackFragment);
             }
         });
-
-//        final int spanCount = 1;
-//        final RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
-//        final FixedGridLayoutManager layoutManager = new FixedGridLayoutManager();
-        //      layoutManager.setTotalColumnCount(2);
-//        layoutManager.offsetChildrenHorizontal(30);
-        //      layoutManager.offsetChildrenVertical(30);
-
 
 
         mPullToRefreshRV = (PullToRefreshRecyclerView) view.findViewById(R.id.connection_card_list);
