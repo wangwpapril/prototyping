@@ -1,15 +1,19 @@
 package com.swishlabs.prototyping.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.swishlabs.prototyping.R;
+import com.swishlabs.prototyping.entity.Profile;
+import com.swishlabs.prototyping.util.CircleTransform;
 import com.swishlabs.prototyping.util.FlipCard;
 
 /**
@@ -27,11 +31,22 @@ public class ProfileConnectionFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Profile mProfile;
+//    private String mParam2;
 
     private RelativeLayout front_view;
     private RelativeLayout back_view;
+
+    private ImageView profile_avatar_front;
+    private ImageView profile_avatar_back;
+    private TextView profile_name_front;
+    private TextView profile_name_back;
+    private TextView profile_title_front;
+    private TextView profile_title_back;
+    private TextView profile_location;
+    private TextView profile_distance;
+    private TextView profile_post;
+    private TextView profile_email;
 
     private OnFragmentInteractionListener mListener;
 
@@ -48,11 +63,11 @@ public class ProfileConnectionFragment extends Fragment {
      * @return A new instance of fragment ProfileConnectionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProfileConnectionFragment newInstance(String param1, String param2) {
+    public static ProfileConnectionFragment newInstance(Profile param1) {
         ProfileConnectionFragment fragment = new ProfileConnectionFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putSerializable(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,8 +76,8 @@ public class ProfileConnectionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mProfile = (Profile)getArguments().getSerializable(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -71,22 +86,60 @@ public class ProfileConnectionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_card_connection_layout, container, false);
 
-        view.setOnClickListener(new View.OnClickListener() {
+        RelativeLayout profile_card = (RelativeLayout) view.findViewById(R.id.connection_card);
+        ((View)profile_card).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FlipCard.flipCard(front_view, back_view);
+
             }
         });
+
+        ImageView close = (ImageView) view.findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed();
+             }
+        });
+
         front_view = (RelativeLayout) view.findViewById(R.id.profile_card_front);
         back_view = (RelativeLayout) view.findViewById(R.id.profile_card_back);
+
+        profile_avatar_front = (ImageView) view.findViewById(R.id.profile_avatar_image);
+        Picasso.with(getActivity()).load(mProfile.getAvatarUrl()).transform(new CircleTransform())
+                .fit().into(profile_avatar_front);
+        profile_avatar_back = (ImageView) view.findViewById(R.id.profile_back_avatar);
+        Picasso.with(getActivity()).load(mProfile.getAvatarUrl()).transform(new CircleTransform())
+                .fit().into(profile_avatar_back);
+
+        profile_location = (TextView) view.findViewById(R.id.profile_address);
+//        profile_location.setText((mProfile.getCity() == null)? "" : mProfile.getCity());
+
+        profile_name_front = (TextView) view.findViewById(R.id.profile_user_name);
+        profile_name_back = (TextView) view.findViewById(R.id.connection_username);
+
+        String userName = mProfile.getDisplayName() == null? "":mProfile.getDisplayName();
+        profile_name_front.setText(userName);
+        profile_name_back.setText(userName);
+
+        profile_title_front = (TextView) view.findViewById(R.id.profile_title);
+        profile_title_back = (TextView) view.findViewById(R.id.connection_occupation);
+
+        String userTitle = mProfile.getOccupation() == null? "":mProfile.getOccupation();
+        profile_title_front.setText(userTitle);
+        profile_title_back.setText(userTitle);
+
+        profile_email = (TextView) view.findViewById(R.id.profile_email_address);
+        profile_email.setText(mProfile.getEmail() == null? "":mProfile.getEmail());
 
         return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed() {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction();
         }
     }
 
@@ -107,6 +160,9 @@ public class ProfileConnectionFragment extends Fragment {
         mListener = null;
     }
 
+    public void addListener(OnFragmentInteractionListener listener) {
+        mListener = listener;
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -119,6 +175,6 @@ public class ProfileConnectionFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction();
     }
 }
