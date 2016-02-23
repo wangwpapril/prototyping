@@ -115,28 +115,34 @@ public class ConnectionsFragment extends BaseFragment {
         mAdapter = new ConnectionsRecyclerAdapter(getContext());
         mAdapter.setOnItemClickListener(new ConnectionsRecyclerAdapter.OnRecyclerViewItemClickListener() {
             @Override
-            public void OnItemClick(View view, int position) {
+            public void OnItemClick(int position) {
 
-                profileConnectionFragment = ProfileConnectionFragment.newInstance(mListProfile.get(position));
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.add(R.id.container, profileConnectionFragment, profileConnectionFragment.getClass().getSimpleName());
-                ft.addToBackStack(((MainActivity) getActivity()).getCurrentFragment().getTag());
-                ft.commit();
-
-                profileConnectionFragment.addListener(new ProfileConnectionFragment.OnFragmentInteractionListener() {
-                    @Override
-                    public void onFragmentInteraction() {
+                switch (position) {
+                    case ConnectionsRecyclerAdapter.PROFILE_ICON_CLICK:
+                        profileConnectionFragment = ProfileConnectionFragment.newInstance(mListProfile.get(position));
                         FragmentManager fm = getActivity().getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
-                        ft.remove(profileConnectionFragment);
+                        ft.add(R.id.container, profileConnectionFragment, profileConnectionFragment.getClass().getSimpleName());
+                        ft.addToBackStack(((MainActivity) getActivity()).getCurrentFragment().getTag());
+                        ft.commit();
+
+                        profileConnectionFragment.addListener(new ProfileConnectionFragment.OnFragmentInteractionListener() {
+                            @Override
+                            public void onFragmentInteraction() {
+                                FragmentManager fm = getActivity().getSupportFragmentManager();
+                                FragmentTransaction ft = fm.beginTransaction();
+                                ft.remove(profileConnectionFragment);
 //                        ft.add(R.id.container, fragment, fragment.getClass().getSimpleName());
 //                        ft.addToBackStack(null);
-                        ft.commit();
-                        fm.popBackStack();
+                                ft.commit();
+                                fm.popBackStack();
 
-                    }
-                });
+                            }
+                        });
+                        break;
+                    case ConnectionsRecyclerAdapter.PHONE_ICON_CLICK:
+                        break;
+                }
 //                ((CardStackFragment)((MainActivity) getActivity()).mCardStackFragment).setData(mListProfile);
 //                ((MainActivity) getActivity()).switchFragment(((MainActivity) getActivity()).mCardStackFragment);
             }

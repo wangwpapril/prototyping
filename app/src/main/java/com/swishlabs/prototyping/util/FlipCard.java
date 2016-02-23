@@ -45,4 +45,36 @@ public class FlipCard {
 
 
     }
+
+    public static void flipCardVertical(View front_view, View back_view) {
+        Interpolator accelerator = new AccelerateInterpolator();
+        Interpolator decelerator = new DecelerateInterpolator();
+        final View visibleList,invisibleList;
+        final ObjectAnimator visToInvis, invisToVis;
+        if (front_view.getVisibility() == View.GONE) {
+            visibleList = back_view;
+            invisibleList = front_view;
+            visToInvis = ObjectAnimator.ofFloat(visibleList, "rotationX", 0f, 90f);
+            invisToVis = ObjectAnimator.ofFloat(invisibleList, "rotationX", -90f, 0f);
+        } else {
+            invisibleList = back_view;
+            visibleList = front_view;
+            visToInvis = ObjectAnimator.ofFloat(visibleList, "rotationX", 0f, -90f);
+            invisToVis = ObjectAnimator.ofFloat(invisibleList, "rotationX", 90f, 0f);
+        }
+        visToInvis.setDuration(300);
+        invisToVis.setDuration(300);
+        visToInvis.setInterpolator(accelerator);
+        invisToVis.setInterpolator(decelerator);
+        visToInvis.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator anim) {
+                visibleList.setVisibility(View.GONE);
+                invisToVis.start();
+                invisibleList.setVisibility(View.VISIBLE);
+            }
+        });
+        visToInvis.start();
+
+    }
 }

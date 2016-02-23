@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -14,6 +15,7 @@ import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.helper.ItemTouchHelperAdapter;
 import com.swishlabs.prototyping.helper.ItemTouchHelperViewHolder;
 import com.swishlabs.prototyping.util.CircleTransform;
+import com.swishlabs.prototyping.util.FlipCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,10 @@ import java.util.List;
  */
 public class ConnectionsRecyclerAdapter extends RecyclerView.Adapter<ConnectionsRecyclerAdapter.ItemViewHolder>
         implements ItemTouchHelperAdapter{
+    public static final int PHONE_ICON_CLICK = 1;
+    public static final int EMAIL_ICON_CLICK = 2;
+    public static final int OPP_ICON_CLICK = 3;
+    public static final int PROFILE_ICON_CLICK = 4;
 
     protected List<Profile> mListProfile;
     protected Context mContext;
@@ -53,6 +59,7 @@ public class ConnectionsRecyclerAdapter extends RecyclerView.Adapter<Connections
 
         holder.profileNameV.setText( mListProfile.get(position).getUserName());
         holder.profileOccuV.setText( mListProfile.get(position).getOccupation());
+        holder.profileNameV2.setText(mListProfile.get(position).getUserName());
 //        holder.profileComp.setText( mListProfile.get(position).);
         if(mListProfile.get(position).getAvatarUrl() != null)
             Picasso.with(mContext).load(mListProfile.get(position).getAvatarUrl()).transform(new CircleTransform())
@@ -83,7 +90,7 @@ public class ConnectionsRecyclerAdapter extends RecyclerView.Adapter<Connections
     }
 
     public static interface OnRecyclerViewItemClickListener {
-        void OnItemClick(View view, int position);
+        void OnItemClick(int position);
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder, View.OnClickListener {
@@ -92,6 +99,11 @@ public class ConnectionsRecyclerAdapter extends RecyclerView.Adapter<Connections
         private TextView profileNameV;
         private TextView profileOccuV;
         private TextView profileComp;
+        private RelativeLayout first_card;
+        private RelativeLayout second_card;
+        private TextView profileNameV2;
+        private ImageView profileIcon;
+
         protected OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
         public ItemViewHolder(View itemView, OnRecyclerViewItemClickListener listener) {
@@ -101,7 +113,28 @@ public class ConnectionsRecyclerAdapter extends RecyclerView.Adapter<Connections
             profileNameV = (TextView) itemView.findViewById(R.id.connection_username);
             profileOccuV = (TextView) itemView.findViewById(R.id.connection_occupation);
             profileComp = (TextView) itemView.findViewById(R.id.connection_company);
-            itemView.setOnClickListener(this);
+
+            first_card = (RelativeLayout) itemView.findViewById(R.id.connection_card_first);
+            second_card = (RelativeLayout) itemView.findViewById(R.id.connection_card_second);
+            profileNameV2 = (TextView) itemView.findViewById(R.id.connetion_card_username2);
+
+            profileIcon = (ImageView) itemView.findViewById(R.id.profile_icon);
+            profileIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mOnItemClickListener != null) {
+                        mOnItemClickListener.OnItemClick(PROFILE_ICON_CLICK);
+                    }
+                }
+            });
+//            itemView.setOnClickListener(this);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FlipCard.flipCardVertical(first_card, second_card);
+                }
+            });
 
         }
 
@@ -119,9 +152,9 @@ public class ConnectionsRecyclerAdapter extends RecyclerView.Adapter<Connections
 
         @Override
         public void onClick(View v) {
-            if(mOnItemClickListener != null) {
-                mOnItemClickListener.OnItemClick(v, getPosition());
-            }
+//            if(mOnItemClickListener != null) {
+//                mOnItemClickListener.OnItemClick(v, getPosition());
+//            }
 
         }
     }
