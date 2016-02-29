@@ -13,7 +13,12 @@ import android.widget.TextView;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.customViews.cardstack.SwipeDeck;
 import com.swishlabs.prototyping.entity.Profile;
+import com.swishlabs.prototyping.net.IResponse;
+import com.swishlabs.prototyping.util.Enums;
 import com.swishlabs.prototyping.util.FlipCard;
+import com.swishlabs.prototyping.util.SharedPreferenceUtil;
+
+import org.json.JSONException;
 
 import java.util.List;
 
@@ -92,6 +97,7 @@ public class CardStackFragment extends BaseFragment {
             @Override
             public void cardSwipedLeft(int position) {
 
+                sendRequest(mListProfile.get(position));
             }
 
             @Override
@@ -143,6 +149,27 @@ public class CardStackFragment extends BaseFragment {
 //        });
 
         return view;
+    }
+
+    private void sendRequest(Profile profile) {
+        String sessionId = SharedPreferenceUtil.getString(Enums.PreferenceKeys.sessionId.toString(), "153");
+
+        mWebApi.sendConnectionRequest(sessionId, Integer.toString(profile.getSessionId()), new IResponse<Object>() {
+            @Override
+            public void onSucceed(Object result) {
+
+            }
+
+            @Override
+            public void onFailed(String code, String errMsg) {
+
+            }
+
+            @Override
+            public Object asObject(String rspStr) throws JSONException {
+                return null;
+            }
+        });
     }
 
     public void setData(List<Profile> data)

@@ -114,7 +114,7 @@ public class ActivityMain extends Activity{
 	}
 	
 	private void quit(){
-		mApp.exit();
 		finish();
+		mApp.exit();
 	}
 }

@@ -115,11 +115,11 @@ public class ConnectionsFragment extends BaseFragment {
         mAdapter = new ConnectionsRecyclerAdapter(getContext());
         mAdapter.setOnItemClickListener(new ConnectionsRecyclerAdapter.OnRecyclerViewItemClickListener() {
             @Override
-            public void OnItemClick(int position) {
+            public void OnItemClick(int index, int position) {
 
                 switch (position) {
                     case ConnectionsRecyclerAdapter.PROFILE_ICON_CLICK:
-                        profileConnectionFragment = ProfileConnectionFragment.newInstance(mListProfile.get(position));
+                        profileConnectionFragment = ProfileConnectionFragment.newInstance(mListProfile.get(index));
                         FragmentManager fm = getActivity().getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
                         ft.add(R.id.container, profileConnectionFragment, profileConnectionFragment.getClass().getSimpleName());

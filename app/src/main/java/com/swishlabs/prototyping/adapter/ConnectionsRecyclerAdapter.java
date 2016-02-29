@@ -57,6 +57,7 @@ public class ConnectionsRecyclerAdapter extends RecyclerView.Adapter<Connections
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
 
+        holder.index = position;
         holder.profileNameV.setText( mListProfile.get(position).getUserName());
         holder.profileOccuV.setText( mListProfile.get(position).getOccupation());
         holder.profileNameV2.setText(mListProfile.get(position).getUserName());
@@ -90,11 +91,12 @@ public class ConnectionsRecyclerAdapter extends RecyclerView.Adapter<Connections
     }
 
     public static interface OnRecyclerViewItemClickListener {
-        void OnItemClick(int position);
+        void OnItemClick(int index, int icon);
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder, View.OnClickListener {
 
+        private int index;
         private ImageView profileImageV;
         private TextView profileNameV;
         private TextView profileOccuV;
@@ -116,14 +118,14 @@ public class ConnectionsRecyclerAdapter extends RecyclerView.Adapter<Connections
 
             first_card = (RelativeLayout) itemView.findViewById(R.id.connection_card_first);
             second_card = (RelativeLayout) itemView.findViewById(R.id.connection_card_second);
-            profileNameV2 = (TextView) itemView.findViewById(R.id.connetion_card_username2);
+            profileNameV2 = (TextView) itemView.findViewById(R.id.connection_card_username2);
 
             profileIcon = (ImageView) itemView.findViewById(R.id.profile_icon);
             profileIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(mOnItemClickListener != null) {
-                        mOnItemClickListener.OnItemClick(PROFILE_ICON_CLICK);
+                        mOnItemClickListener.OnItemClick(index, PROFILE_ICON_CLICK);
                     }
                 }
             });

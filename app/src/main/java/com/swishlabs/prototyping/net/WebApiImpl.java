@@ -205,6 +205,21 @@ class WebApiImpl extends WebApi {
 		}
 	}
 
+	private <T> void put(String url, Map<String, String> header,
+						 Map<String, String> params, IResponse<T> listener) {
+		HttpRequest request = new HttpRequest(url);
+		request.setMultiPartParams(params);
+		request.setRequestMethod(HttpRequest.METHOD_PUT);
+		request.setHeaderField(header);
+		request.setHttpCallBack(new AdapterCallBack<T>(request, listener));
+
+		if (isTestModel) {
+			mHttpEngine.doRequest(request);
+		} else {
+			mHttpEngine.addRequest(request);
+		}
+	}
+
 	private <T> void post(String url, Map<String, String> header, String body,
 			IResponse<T> listener) {
 		HttpRequest request = new HttpRequest(url);
@@ -374,6 +389,14 @@ class WebApiImpl extends WebApi {
 	@Override
 	public <T> void getTradeOpp(String id, String userid, IResponse<T> listener) {
 		get(Contract.FuncUrls.PROFILE_URL + id + "/tradeopps/" + userid + "?format=json", buildHeader(), null, listener);
+	}
+
+	@Override
+	public <T> void sendConnectionRequest(String senderId, String ReceiverId, IResponse<T> listener) {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("accept", "1");
+
+		put(Contract.FuncUrls.PROFILE_URL + senderId + "/connections/" + ReceiverId, buildHeader(), params, listener);
 	}
 
 

@@ -91,7 +91,8 @@ public class PreHomeFragment extends BaseFragment {
             @Override
             public void onDataLoaded(List data) {
                 mListProfile.addAll(data);
-                ((PreHomeRecyclerAdapter)mRecyclerView.getAdapter()).setData(mListProfile);
+                DataManager.getInstance().setProfileAroundList(mListProfile);
+                ((PreHomeRecyclerAdapter) mRecyclerView.getAdapter()).setData(mListProfile);
                 mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
                 mPullToRefreshRV.onRefreshComplete();
             }
@@ -116,7 +117,15 @@ public class PreHomeFragment extends BaseFragment {
 //                ((SwipeFragment)((MainActivity) getActivity()).mSwipeFragment).setProfileList(mListProfile);
 //                ((MainActivity) getActivity()).switchFragment(((MainActivity) getActivity()).mSwipeFragment);
 
-                ((CardStackFragment)((MainActivity) getActivity()).mCardStackFragment).setData(mListProfile);
+                Profile profile = mListProfile.get(position);
+                ArrayList<Profile> list = new ArrayList<Profile>();
+                for (Profile profile1:mListProfile) {
+                    list.add(profile1);
+                }
+
+                list.remove(profile);
+                list.add(0, profile);
+                ((CardStackFragment)((MainActivity) getActivity()).mCardStackFragment).setData(list);
                 ((MainActivity) getActivity()).switchFragment(((MainActivity) getActivity()).mCardStackFragment);
             }
         });
@@ -188,12 +197,10 @@ public class PreHomeFragment extends BaseFragment {
 
                 }else if(state == PullToRefreshBase.State.MANUAL_REFRESHING) {
                     mListProfile.clear();
-//                    getProfiles("153", 0);
                     profilesAroundManager.initialize();
                     profilesAroundManager.loadData();
                 }else if(state == PullToRefreshBase.State.REFRESHING && direction == PullToRefreshBase.Mode.PULL_FROM_START) {
                     mListProfile.clear();
-//                    getProfiles("153", 0);
                     profilesAroundManager.initialize();
                     profilesAroundManager.loadData();
                 }else if(state == PullToRefreshBase.State.RESET && direction == PullToRefreshBase.Mode.PULL_FROM_START) {

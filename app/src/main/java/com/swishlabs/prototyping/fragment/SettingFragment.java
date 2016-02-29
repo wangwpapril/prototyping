@@ -116,13 +116,13 @@ public class SettingFragment extends BaseFragment {
         });
         //put all the settings here
 
-        mBackButt = (Button)view.findViewById(R.id.back_button);
-        mBackButt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                showCloseDialog();
-            }
-        });
+//        mBackButt = (Button)view.findViewById(R.id.back_button);
+//        mBackButt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                showCloseDialog();
+//            }
+//        });
         mSeekDistance = (SeekBar)view.findViewById(R.id.distanceSlider);
         mDistance = SharedPreferenceUtil.getInt(Enums.PreferenceKeys.distance.toString(), 5);
         mSeekDistance.setProgress(mDistance);
