@@ -103,6 +103,7 @@ public class ConnectionsRecyclerAdapter extends RecyclerView.Adapter<Connections
         private TextView profileComp;
         private RelativeLayout first_card;
         private RelativeLayout second_card;
+        private RelativeLayout third_card;
         private TextView profileNameV2;
         private ImageView profileIcon;
 
@@ -118,6 +119,10 @@ public class ConnectionsRecyclerAdapter extends RecyclerView.Adapter<Connections
 
             first_card = (RelativeLayout) itemView.findViewById(R.id.connection_card_first);
             second_card = (RelativeLayout) itemView.findViewById(R.id.connection_card_second);
+            second_card.setVisibility(View.GONE);
+            third_card = (RelativeLayout) itemView.findViewById(R.id.connection_card_third);
+            third_card.setVisibility(View.GONE);
+
             profileNameV2 = (TextView) itemView.findViewById(R.id.connection_card_username2);
 
             profileIcon = (ImageView) itemView.findViewById(R.id.profile_icon);
@@ -134,7 +139,13 @@ public class ConnectionsRecyclerAdapter extends RecyclerView.Adapter<Connections
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FlipCard.flipCardVertical(first_card, second_card);
+                    if (first_card.getVisibility() == View.VISIBLE) {
+                        FlipCard.flipCardVertical(first_card, second_card);
+                    }else if (second_card.getVisibility() == View.VISIBLE) {
+                        FlipCard.flipCardVertical(second_card, third_card);
+                    }else if (third_card.getVisibility() == View.VISIBLE) {
+                        FlipCard.flipCardVertical(third_card, first_card);
+                    }
                 }
             });
 
