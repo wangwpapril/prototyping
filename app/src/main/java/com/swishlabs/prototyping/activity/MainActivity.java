@@ -96,7 +96,7 @@ public class MainActivity extends BaseFragmentActivity {
 
         mPreHomeFragment = PreHomeFragment.newInstance(null, null);
         mSwipeFragment = SwipeFragment.newInstance(null,null);
-        mMyProfileFragment = MyProfileFragment.newInstance(null,null);
+        mMyProfileFragment = new MyProfileFragment();
         mCardStackFragment = CardStackFragment.newInstance(null,null);
         mSettingFragment = SettingFragment.newInstance(null,null);
         mConnectionsFragment = ConnectionsFragment.newInstance(null, null);

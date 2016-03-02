@@ -27,84 +27,40 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class MyProfileFragment extends BaseFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    private SwipeDismissList mSwipeList;
-    private static RelativeLayout mProfileFrameLayout;
-    private RelativeLayout.LayoutParams params;
-    private ImageView mDeclineImage;
-    private ImageView mAcceptImage;
-
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SwipeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MyProfileFragment newInstance(String param1, String param2) {
-        MyProfileFragment fragment = new MyProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    private TabLayout tabLayout;
     public MyProfileFragment() {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_myprofile, container, false);
- //       NavigationView navigationView = (NavigationView)view.findViewById(R.id.nav_view);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        tabLayout = (TabLayout) view.findViewById(R.id.tabContainer);
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
 
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-        tabLayout.setTabTextColors(R.color.black,R.color.orange);
         tabLayout.setupWithViewPager(viewPager);
 
         return view;
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        Adapter adapter = new Adapter(getFragmentManager());
-        adapter.addFragment(new PreHomeFragment(), "Trades");
-        adapter.addFragment(new PreHomeFragment(), "Services");
+        Adapter adapter = new Adapter(getChildFragmentManager());
+        adapter.addFragment(MyProfileDetailsFragment.newInstance("",""), "Details");
+        adapter.addFragment(ReceivedRequestFragment.newInstance("Offers"), "Offers");
+        adapter.addFragment(ReceivedRequestFragment.newInstance("Needs"), "Needs");
         viewPager.setAdapter(adapter);
-
     }
 
-    static class Adapter extends FragmentPagerAdapter {
+    class Adapter extends FragmentPagerAdapter {
         private final List<android.support.v4.app.Fragment> mFragments = new ArrayList<>();
         private final List<String> mFragmentTitles = new ArrayList<>();
 
@@ -131,6 +87,11 @@ public class MyProfileFragment extends BaseFragment {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitles.get(position);
         }
+
+//        private Drawable getIcon(int position) {
+//            return getResources().getDrawable(icons[position]);
+//        }
+
     }
 
 }

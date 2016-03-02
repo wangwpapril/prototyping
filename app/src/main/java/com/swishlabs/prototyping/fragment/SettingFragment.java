@@ -47,7 +47,8 @@ public class SettingFragment extends BaseFragment {
     private TextView mSeekDistanceText;
     private int _progress;
     private int oldProgress;
-    private boolean checked = false;
+    private boolean notiChecked = false;
+    private boolean unitChecked = false;
     private ImageView mDrawerImage;
     private Button mBackButt;
     private TextView mTitile;
@@ -99,39 +100,29 @@ public class SettingFragment extends BaseFragment {
 
 
         mSwitchNotification = (ToggleButton)view.findViewById(R.id.showNotification_switch);
-//		mSwitchNotification.setChecked(GrabopApplication.SharedPreference.getBoolean(GrabOpSharedPreference.SHOW_NOTIFICATION, false));
-//        checked = GrabopApplication.SharedPreference.getBoolean(GrabOpSharedPreference.SHOW_NOTIFICATION,false);
-        checked = SharedPreferenceUtil.getBoolean(Enums.PreferenceKeys.showNotification.toString(), false);
-        if(checked)
+        if (SharedPreferenceUtil.getBoolean(Enums.PreferenceKeys.showNotification.toString(), false)) {
             mSwitchNotification.setToggleOn();
-        else
+        }else {
             mSwitchNotification.setToggleOff();
+        }
 
         mSwitchNotification.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
-                checked = on;
+                notiChecked = on;
 
             }
         });
-        //put all the settings here
 
-//        mBackButt = (Button)view.findViewById(R.id.back_button);
-//        mBackButt.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                showCloseDialog();
-//            }
-//        });
-        mSeekDistance = (SeekBar)view.findViewById(R.id.distanceSlider);
+         mSeekDistance = (SeekBar)view.findViewById(R.id.distanceSlider);
         mDistance = SharedPreferenceUtil.getInt(Enums.PreferenceKeys.distance.toString(), 5);
         mSeekDistance.setProgress(mDistance);
         oldProgress = mSeekDistance.getProgress();
         _progress = mSeekDistance.getProgress();
         mSeekDistance.setMax(100);
 
-        mSeekDistanceText = (TextView)view.findViewById(R.id.distanceAmountText);
-        mSeekDistanceText.setText(mDistance + "");
+//        mSeekDistanceText = (TextView)view.findViewById(R.id.distanceAmountText);
+//        mSeekDistanceText.setText(mDistance + "");
 //        mSeekDistanceText.setTypeface(TypefaceManager.GetInstance(this.getAssets()).getTypeFace(FontsTypeface.HelveticaNeue_Light));
 
         mSeekDistance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -152,7 +143,7 @@ public class SettingFragment extends BaseFragment {
                     _progress = progress;
                     oldProgress = _progress;
                     seekBar.setProgress(progress);
-                    mSeekDistanceText.setText(progress + "");
+//                    mSeekDistanceText.setText(progress + "");
                 } else
                     seekBar.setProgress(oldProgress);
             }
@@ -233,7 +224,7 @@ public class SettingFragment extends BaseFragment {
 
     private void saveAllSettings()
     {
-        SharedPreferenceUtil.setBoolean(Enums.PreferenceKeys.showNotification.toString(), checked);
+        SharedPreferenceUtil.setBoolean(Enums.PreferenceKeys.showNotification.toString(), notiChecked);
         SharedPreferenceUtil.setInt(Enums.PreferenceKeys.distance.toString(), _progress);
 
 //        // go back to previous activity
