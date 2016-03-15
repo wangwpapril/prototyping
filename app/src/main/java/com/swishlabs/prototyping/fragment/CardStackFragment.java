@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -244,6 +245,8 @@ public class CardStackFragment extends BaseFragment {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             ViewHolder holder = null;
+            Profile profile = mListProfile.get(position);
+
             if (convertView == null) {
 //                LayoutInflater inflater = getLayoutInflater(context);
                 // normally use a viewholder
@@ -253,14 +256,35 @@ public class CardStackFragment extends BaseFragment {
 
                 holder.user_name = (TextView) convertView.findViewById(R.id.profile_user_name);
                 holder.title = (TextView) convertView.findViewById(R.id.profile_title);
+                holder.company = (TextView) convertView.findViewById(R.id.profile_company);
+                holder.front_avatar = (ImageView) convertView.findViewById(R.id.profile_avatar_image);
+                holder.back_avatar = (ImageView) convertView.findViewById(R.id.profile_back_avatar);
+                holder.distance = (TextView) convertView.findViewById(R.id.profile_distance);
+                holder.post = (TextView) convertView.findViewById(R.id.profile_post);
+                holder.opportunity = (TextView) convertView.findViewById(R.id.opportunity_number);
+                holder.address = (TextView) convertView.findViewById(R.id.profile_address);
+                holder.offer1 = (TextView) convertView.findViewById(R.id.profile_offer1);
+                holder.offer2 = (TextView) convertView.findViewById(R.id.profile_offer2);
+                holder.offer3 = (TextView) convertView.findViewById(R.id.profile_offer3);
+
                 holder.front_view = (RelativeLayout) convertView.findViewById(R.id.profile_card_front);
                 holder.back_view = (RelativeLayout) convertView.findViewById(R.id.profile_card_back);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.user_name.setText(mListProfile.get(position).getUserName());
-            holder.title.setText(mListProfile.get(position).getOccupation());
+            if (profile.getUserName() != null)
+                holder.user_name.setText(profile.getUserName());
+
+            if (profile.getOccupation() != null)
+                holder.title.setText(profile.getOccupation());
+
+            if (profile.getCompany() != null)
+                holder.company.setText(profile.getCompany());
+
+            if (profile.getPost() != null)
+                holder.post.setText(profile.getPost());
+
 //            holder.front_view.setVisibility(View.GONE);
 //            holder.back_view.setVisibility(View.GONE);
             convertView.setTag(holder);
@@ -282,6 +306,17 @@ public class CardStackFragment extends BaseFragment {
         private class ViewHolder {
             public TextView user_name;
             public TextView title;
+            public TextView company;
+            public ImageView front_avatar;
+            public ImageView back_avatar;
+            public TextView post;
+            public TextView distance;
+            public TextView opportunity;
+            public TextView address;
+            public TextView offer1;
+            public TextView offer2;
+            public TextView offer3;
+
             public RelativeLayout front_view;
             public RelativeLayout back_view;
         }

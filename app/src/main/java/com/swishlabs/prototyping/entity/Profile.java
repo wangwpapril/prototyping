@@ -53,6 +53,10 @@ public class Profile implements Serializable {
     private String occupation;
 
     @Expose
+    @SerializedName("company")
+    private String company;
+
+    @Expose
     @SerializedName("phone")
     private String phone;
 
@@ -215,6 +219,14 @@ public class Profile implements Serializable {
 
     public void setCity(int city) {
         this.city = city;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     public static class Builder {

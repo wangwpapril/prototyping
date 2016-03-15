@@ -23,9 +23,33 @@
                 android:src="@drawable/photo"/>
 
             <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="40dp"
+                >
+
+                <ImageView
+                    android:id="@+id/camera_icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/camera_icon"
+                    />
+
+                <ImageView
+                    android:id="@+id/folder_icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_below="@+id/camera_icon"
+                    android:src="@drawable/folder_icon"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/profile_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_below="@+id/profile_avatar"
                 >
 
@@ -36,7 +60,7 @@
 
                     <TextView
                         android:id="@+id/first_name_label"
-                        android:layout_width="wrap_content"
+                        android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="First name:"
@@ -71,7 +95,7 @@
 
                     <TextView
                         android:id="@+id/last_name_label"
-                        android:layout_width="wrap_content"
+                        android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="Last name:"
@@ -154,7 +178,7 @@
 
                 <TextView
                     android:id="@+id/email_label"
-                    android:layout_width="wrap_content"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="Email:"
@@ -189,7 +213,7 @@
 
                 <TextView
                     android:id="@+id/phone_label"
-                    android:layout_width="wrap_content"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="Phone:"
@@ -224,7 +248,7 @@
 
                 <TextView
                     android:id="@+id/job_title_label"
-                    android:layout_width="wrap_content"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="Job Title:"

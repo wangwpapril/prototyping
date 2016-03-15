@@ -23,6 +23,9 @@ public class MyProfileDetailsFragment extends BaseFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private static final int SELECT_IMAGE = 1;
+    private static final int CAMERA_PHOTO = 2;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -64,7 +67,24 @@ public class MyProfileDetailsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_profile_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_profile_details, container, false);
+        view.findViewById(R.id.camera_icon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (buttonPressedListener != null)
+                    buttonPressedListener.onButtonPressed(CAMERA_PHOTO);
+            }
+        });
+
+        view.findViewById(R.id.folder_icon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (buttonPressedListener != null)
+                    buttonPressedListener.onButtonPressed(SELECT_IMAGE);
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

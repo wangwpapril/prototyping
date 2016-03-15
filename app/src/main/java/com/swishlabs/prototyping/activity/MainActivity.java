@@ -21,6 +21,7 @@ import com.swishlabs.prototyping.entity.UserProfilePrefs;
 import com.swishlabs.prototyping.fragment.BaseFragment;
 import com.swishlabs.prototyping.fragment.CardStackFragment;
 import com.swishlabs.prototyping.fragment.ConnectionsFragment;
+import com.swishlabs.prototyping.fragment.MyProfileDetailsFragment;
 import com.swishlabs.prototyping.fragment.MyProfileFragment;
 import com.swishlabs.prototyping.fragment.PreHomeFragment;
 import com.swishlabs.prototyping.fragment.ProfileConnectionFragment;
@@ -30,7 +31,7 @@ import com.swishlabs.prototyping.fragment.SwipeFragment;
 import com.swishlabs.prototyping.services.RequestCheckService;
 import com.swishlabs.prototyping.util.ToastUtil;
 
-public class MainActivity extends BaseFragmentActivity {
+public class MainActivity extends BaseFragmentActivity implements MyProfileDetailsFragment.onButtonPressedListener {
 
 
     private BaseFragment mPreHomeFragment;
@@ -287,5 +288,10 @@ public class MainActivity extends BaseFragmentActivity {
 
     public BaseFragment getCurrentFragment() {
         return mCurrFragment;
+    }
+
+    @Override
+    public void onButtonPressed(int button) {
+
     }
 }

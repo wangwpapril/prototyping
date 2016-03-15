@@ -27,6 +27,8 @@ public class BaseFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private OnFragmentInteractionListener mListener;
 
+    protected onButtonPressedListener buttonPressedListener;
+
     private MyApplication mApp;
     protected WebApi mWebApi;
     protected Activity mActivity;
@@ -77,11 +79,11 @@ public class BaseFragment extends Fragment {
     }
 */
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+//    public void onButtonPressed(Uri uri) {
+//        if (mListener != null) {
+//            mListener.onFragmentInteraction(uri);
+//        }
+//    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -91,6 +93,10 @@ public class BaseFragment extends Fragment {
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
+        }
+
+        if (activity instanceof onButtonPressedListener) {
+            buttonPressedListener = (onButtonPressedListener) activity;
         }
     }
 
@@ -114,5 +120,10 @@ public class BaseFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
+    public interface onButtonPressedListener {
+        public void onButtonPressed(int button);
+    }
+
 
 }
