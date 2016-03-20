@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import com.swishlabs.prototyping.entity.UserProfilePrefs;
 import com.swishlabs.prototyping.fragment.BaseFragment;
 import com.swishlabs.prototyping.fragment.CardStackFragment;
 import com.swishlabs.prototyping.fragment.ConnectionsFragment;
+import com.swishlabs.prototyping.fragment.MessageFragment;
 import com.swishlabs.prototyping.fragment.MyProfileDetailsFragment;
 import com.swishlabs.prototyping.fragment.MyProfileFragment;
 import com.swishlabs.prototyping.fragment.PreHomeFragment;
@@ -42,6 +44,7 @@ public class MainActivity extends BaseFragmentActivity implements MyProfileDetai
     private BaseFragment mSettingFragment;
     private BaseFragment mConnectionsFragment;
     private BaseFragment mRequestsFragment;
+    private BaseFragment mMessageFragment;
     private ImageView mDrawerImage;
     private MyApplication mApp;
 
@@ -102,6 +105,7 @@ public class MainActivity extends BaseFragmentActivity implements MyProfileDetai
         mSettingFragment = SettingFragment.newInstance(null,null);
         mConnectionsFragment = ConnectionsFragment.newInstance(null, null);
         mRequestsFragment = new RequestsFragment();
+        mMessageFragment = new MessageFragment();
 
         switchFragment(mPreHomeFragment);
 
@@ -139,6 +143,10 @@ public class MainActivity extends BaseFragmentActivity implements MyProfileDetai
                         switchFragment(mSettingFragment);
 /*                        Intent defaultSettingIntent = new Intent(getBaseContext(), ActivityDefaultSetting.class);
                         startActivityForResult(defaultSettingIntent, DEFAULT_SETTING);*/
+                    }
+
+                    if (position == MESSAGES) {
+                        switchFragment(mMessageFragment);
                     }
 
                     if (position == CONNECTIONS) {
@@ -293,5 +301,69 @@ public class MainActivity extends BaseFragmentActivity implements MyProfileDetai
     @Override
     public void onButtonPressed(int button) {
 
+        switch (button) {
+            case MyProfileDetailsFragment.CAMERA_PHOTO:
+                break;
+            case MyProfileDetailsFragment.SELECT_IMAGE:
+                openImageGallery();
+                break;
+        }
+
     }
+
+    private void openCamera()
+    {
+//        Intent cameraIntent = new Intent(this, MyCamera.class);
+//
+//        cameraIntent.putExtra("USERNAME", ResourceManager.UserProfile.userName.toString());
+//
+//        startActivityForResult(cameraIntent, CAMERA_PHOTO);
+    }
+
+    private void openImageGallery()
+    {
+        Intent imageI = new Intent();
+        imageI.setType("image/*");
+        imageI.setAction(Intent.ACTION_PICK);
+        startActivityForResult(Intent.createChooser(imageI, "Select image.."), MyProfileDetailsFragment.SELECT_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK)
+        {
+            if (requestCode == MyProfileDetailsFragment.SELECT_IMAGE)
+            {
+//                try
+//                {
+                    Uri selectedImageUri = data.getData();
+
+//                    File dir = new File(ResourceManager.UserProfile.pictureDir);
+//                    if (!dir.isDirectory())
+//                        dir.mkdirs();
+//
+//                    InputStream inStream = getContentResolver().openInputStream(selectedImageUri);
+//                    Bitmap tmpbitmap = BitmapFactory.decodeStream(inStream);
+//
+//                    ImageSave imageSaving = new ImageSave(this, ResourceManager.UserProfile.userName.toLowerCase().replace(" ", "").trim(), tmpbitmap);
+//
+////					ResourceManager.UserProfile.pictureFilename = imageSaving.getFileName();
+//
+//                    upLoadImage(ResourceManager.UserProfile.pictureDir+imageSaving.getFileName());
+
+//                }
+//                catch(FileNotFoundException e){ e.printStackTrace(); }
+            }
+
+        }
+
+//        if (requestCode == CAMERA_PHOTO && resultCode == RESULT_OK && data != null)
+//        {
+//            String photoPath = data.getStringExtra("DISPLAY_IMAGE");
+//
+//            upLoadImage(photoPath);
+//        }
+
+    }
+
 }

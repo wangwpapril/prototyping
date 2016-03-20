@@ -23,8 +23,8 @@ public class MyProfileDetailsFragment extends BaseFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private static final int SELECT_IMAGE = 1;
-    private static final int CAMERA_PHOTO = 2;
+    public static final int SELECT_IMAGE = 1;
+    public static final int CAMERA_PHOTO = 2;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
