@@ -87,6 +87,7 @@ public class Enums {
         currencyCode("currency code"),
         virtualWalletPdf("virtual wallet pdf"),
         showNotification("show notification"),
+		showUnit("show unit"),
 		userAvatar("user avatar"),
 		userId("user id") ;
 	

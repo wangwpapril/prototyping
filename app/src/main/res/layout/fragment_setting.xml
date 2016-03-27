@@ -62,6 +62,7 @@
                 >
 
                 <TextView
+                    android:id="@+id/text_on"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="On"
@@ -77,6 +78,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/text_off"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Off"
@@ -139,6 +141,7 @@
                 >
 
                 <TextView
+                    android:id="@+id/text_km"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Km"
@@ -154,6 +157,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/text_mi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mi"
@@ -183,6 +187,7 @@
             android:gravity="center_horizontal|center_vertical"
             android:layout_weight="1"
             android:text="Done"
+            android:capitalize="none"
             android:textSize="25sp"
             android:textColor="@color/white"
             android:background="@drawable/rounded_border_blue"/>
@@ -195,6 +200,7 @@
             android:gravity="center_horizontal|center_vertical"
             android:layout_weight="1"
             android:text="Cancel"
+            android:capitalize="none"
             android:textColor="@color/white"
             android:textSize="25sp"
             android:background="@drawable/rounded_border_blue"/>

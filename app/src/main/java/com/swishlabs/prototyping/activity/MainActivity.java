@@ -37,7 +37,7 @@ public class MainActivity extends BaseFragmentActivity implements MyProfileDetai
 
 
     private BaseFragment mPreHomeFragment;
-    private BaseFragment mCurrFragment;
+    public BaseFragment mCurrFragment;
     public BaseFragment mSwipeFragment;
     private BaseFragment mMyProfileFragment;
     public BaseFragment mCardStackFragment;
@@ -211,8 +211,29 @@ public class MainActivity extends BaseFragmentActivity implements MyProfileDetai
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.container, fragment, fragment.getClass().getSimpleName());
+        if (fragment instanceof SettingFragment) {
+            ft.addToBackStack(mCurrFragment.getTag());
+        }
         ft.commit();
         mCurrFragment = fragment;
+    }
+
+    public void removeCurrFragment() {
+        if (mCurrFragment == null)
+            return;
+
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.remove(mCurrFragment).commit();
+        mCurrFragment = (BaseFragment) fm.findFragmentByTag(fm.getBackStackEntryAt(fm.getBackStackEntryCount() -1).getName());
+        fm.popBackStack();
+//        mCurrFragment = fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+//            @Override
+//            public void onBackStackChanged() {
+//                fm.
+//            }
+//        });
+
     }
 
 //    public List<Profile> getProfileList() {
@@ -303,6 +324,7 @@ public class MainActivity extends BaseFragmentActivity implements MyProfileDetai
 
         switch (button) {
             case MyProfileDetailsFragment.CAMERA_PHOTO:
+                openCamera();
                 break;
             case MyProfileDetailsFragment.SELECT_IMAGE:
                 openImageGallery();

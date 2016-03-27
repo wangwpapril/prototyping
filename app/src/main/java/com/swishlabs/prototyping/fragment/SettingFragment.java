@@ -16,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.swishlabs.prototyping.R;
+import com.swishlabs.prototyping.activity.MainActivity;
 import com.swishlabs.prototyping.customViews.ToggleButton;
 import com.swishlabs.prototyping.util.Enums;
 import com.swishlabs.prototyping.util.SharedPreferenceUtil;
@@ -41,10 +42,16 @@ public class SettingFragment extends BaseFragment {
     private OnFragmentInteractionListener mListener;
 
     private ToggleButton mSwitchNotification;
+    private ToggleButton mSwitchUnit;
     private TextView mButtonSave;
     private TextView mButtonCancel;
     private SeekBar mSeekDistance;
     private TextView mSeekDistanceText;
+    private TextView mTextOn;
+    private TextView mTextOff;
+    private TextView mTextKm;
+    private TextView mTextMi;
+
     private int _progress;
     private int oldProgress;
     private boolean notiChecked = false;
@@ -98,12 +105,20 @@ public class SettingFragment extends BaseFragment {
 //        ((TextView)findViewById(R.id.switchText)).setTypeface(TypefaceManager.GetInstance(this.getAssets()).getTypeFace(FontsTypeface.HelveticaNeue_Light));
 //        ((TextView)findViewById(R.id.distanceText)).setTypeface(TypefaceManager.GetInstance(this.getAssets()).getTypeFace(FontsTypeface.HelveticaNeue_Light));
 
+        mTextOn = (TextView) view.findViewById(R.id.text_on);
+        mTextOff = (TextView) view.findViewById(R.id.text_off);
+        mTextKm = (TextView) view.findViewById(R.id.text_km);
+        mTextMi = (TextView) view.findViewById(R.id.text_mi);
 
         mSwitchNotification = (ToggleButton)view.findViewById(R.id.showNotification_switch);
         if (SharedPreferenceUtil.getBoolean(Enums.PreferenceKeys.showNotification.toString(), false)) {
             mSwitchNotification.setToggleOn();
+            mTextOn.setTextColor(getActivity().getResources().getColor(R.color.dark_blue));
+            mTextOff.setTextColor(getActivity().getResources().getColor(R.color.gray));
         }else {
             mSwitchNotification.setToggleOff();
+            mTextOn.setTextColor(getActivity().getResources().getColor(R.color.gray));
+            mTextOff.setTextColor(getActivity().getResources().getColor(R.color.dark_blue));
         }
 
         mSwitchNotification.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
@@ -111,19 +126,27 @@ public class SettingFragment extends BaseFragment {
             public void onToggle(boolean on) {
                 notiChecked = on;
 
+                if (on) {
+                    mTextOn.setTextColor(getActivity().getResources().getColor(R.color.dark_blue));
+                    mTextOff.setTextColor(getActivity().getResources().getColor(R.color.gray));
+
+                }else {
+                    mTextOn.setTextColor(getActivity().getResources().getColor(R.color.gray));
+                    mTextOff.setTextColor(getActivity().getResources().getColor(R.color.dark_blue));
+
+                }
             }
         });
 
-         mSeekDistance = (SeekBar)view.findViewById(R.id.distanceSlider);
+        mSeekDistance = (SeekBar)view.findViewById(R.id.distanceSlider);
         mDistance = SharedPreferenceUtil.getInt(Enums.PreferenceKeys.distance.toString(), 5);
         mSeekDistance.setProgress(mDistance);
         oldProgress = mSeekDistance.getProgress();
         _progress = mSeekDistance.getProgress();
         mSeekDistance.setMax(100);
 
-//        mSeekDistanceText = (TextView)view.findViewById(R.id.distanceAmountText);
-//        mSeekDistanceText.setText(mDistance + "");
-//        mSeekDistanceText.setTypeface(TypefaceManager.GetInstance(this.getAssets()).getTypeFace(FontsTypeface.HelveticaNeue_Light));
+        mSeekDistanceText = (TextView)view.findViewById(R.id.unitText);
+        mSeekDistanceText.setText(mDistance + "Km");
 
         mSeekDistance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -143,20 +166,48 @@ public class SettingFragment extends BaseFragment {
                     _progress = progress;
                     oldProgress = _progress;
                     seekBar.setProgress(progress);
-//                    mSeekDistanceText.setText(progress + "");
+                    mSeekDistanceText.setText(progress + "Km");
                 } else
                     seekBar.setProgress(oldProgress);
             }
         });
 
 
-        //buttons
+        mSwitchUnit = (ToggleButton) view.findViewById(R.id.unit_switch);
+        if (SharedPreferenceUtil.getBoolean(Enums.PreferenceKeys.showUnit.toString(), false)) {
+            mSwitchUnit.setToggleOn();
+            mTextKm.setTextColor(getActivity().getResources().getColor(R.color.dark_blue));
+            mTextMi.setTextColor(getActivity().getResources().getColor(R.color.gray));
+        }else {
+            mSwitchUnit.setToggleOff();
+            mTextKm.setTextColor(getActivity().getResources().getColor(R.color.gray));
+            mTextMi.setTextColor(getActivity().getResources().getColor(R.color.dark_blue));
+        }
+
+        mSwitchUnit.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+            @Override
+            public void onToggle(boolean on) {
+                unitChecked = on;
+
+                if (on) {
+                    mTextKm.setTextColor(getActivity().getResources().getColor(R.color.dark_blue));
+                    mTextMi.setTextColor(getActivity().getResources().getColor(R.color.gray));
+
+                }else {
+                    mTextKm.setTextColor(getActivity().getResources().getColor(R.color.gray));
+                    mTextMi.setTextColor(getActivity().getResources().getColor(R.color.dark_blue));
+
+                }
+            }
+        });
+            //buttons
         mButtonSave = (TextView)view.findViewById(R.id.save_button_defaultsetting);
         mButtonSave.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 saveAllSettings();
+                ((MainActivity) getActivity()).removeCurrFragment();
             }
         });
 //        mButtonSave.setTypeface(TypefaceManager.GetInstance(this.getAssets()).getTypeFace(FontsTypeface.HelveticaNeue_Light));
@@ -208,6 +259,9 @@ public class SettingFragment extends BaseFragment {
 //                Intent backHomeActivity = new Intent();
 //                setResult(RESULT_CANCELED, backHomeActivity);
 //                finish();
+//                getActivity().getSupportFragmentManager().beginTransaction().remove(((MainActivity) getActivity()).mCurrFragment).commit();
+//                getActivity().getSupportFragmentManager().popBackStack();
+                ((MainActivity) getActivity()).removeCurrFragment();
             }
         });
 
@@ -225,6 +279,8 @@ public class SettingFragment extends BaseFragment {
     private void saveAllSettings()
     {
         SharedPreferenceUtil.setBoolean(Enums.PreferenceKeys.showNotification.toString(), notiChecked);
+        SharedPreferenceUtil.setBoolean(Enums.PreferenceKeys.showUnit.toString(), unitChecked);
+
         SharedPreferenceUtil.setInt(Enums.PreferenceKeys.distance.toString(), _progress);
 
 //        // go back to previous activity
