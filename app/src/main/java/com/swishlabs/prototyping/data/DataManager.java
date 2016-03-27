@@ -22,6 +22,7 @@ public class DataManager {
     private List<Profile> sentRequestList;
     private int sentRequestOffset;
     private boolean sentRequestMoreData;
+    private Profile myProfile;
 
     public static DataManager getInstance() {
         if (instance == null) {
@@ -140,5 +141,13 @@ public class DataManager {
 
     public void setSentRequestMoreData(boolean sentRequestMoreData) {
         this.sentRequestMoreData = sentRequestMoreData;
+    }
+
+    public Profile getMyProfile() {
+        return myProfile;
+    }
+
+    public void setMyProfile(Profile myProfile) {
+        this.myProfile = myProfile;
     }
 }

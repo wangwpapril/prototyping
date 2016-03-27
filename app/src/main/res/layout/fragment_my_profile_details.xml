@@ -162,6 +162,7 @@
                 android:layout_below="@id/personal_statement"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rounded_border_white"
+                android:gravity="start|top"
                 android:ems="120"
                 android:lines="6"
                 android:textColor="@color/black"
@@ -257,7 +258,7 @@
                     android:fontFamily="sans-serif"
                     />
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/job_title_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

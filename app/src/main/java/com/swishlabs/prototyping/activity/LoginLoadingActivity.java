@@ -44,6 +44,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
     private ConnectionsManager connectionsManager;
     private ReceivedRequestManager receivedRequestManager;
     private SentRequestManager sentRequestManager;
+    private DataManager dataManager;
 
     protected WebApi mWebApi;
 
@@ -53,6 +54,8 @@ public class LoginLoadingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_loading);
 
         mWebApi = WebApi.getInstance(this);
+
+        dataManager = DataManager.getInstance();
 
         imageLogin = (ImageView)findViewById(R.id.loginImage);
         profileImage = (ImageView)findViewById(R.id.profileImage);
@@ -75,9 +78,9 @@ public class LoginLoadingActivity extends AppCompatActivity {
             @Override
             public void onDataLoaded(List data) {
                 mListProfile.addAll(data);
-                DataManager.getInstance().setProfileAroundList(mListProfile);
-                DataManager.getInstance().setProfileAroundOffset(profilesAroundManager.getOffset());
-                DataManager.getInstance().setProfileAroundMoreData(profilesAroundManager.getMoreData());
+                dataManager.setProfileAroundList(mListProfile);
+                dataManager.setProfileAroundOffset(profilesAroundManager.getOffset());
+                dataManager.setProfileAroundMoreData(profilesAroundManager.getMoreData());
 //                ((PreHomeRecyclerAdapter)mRecyclerView.getAdapter()).setData(mListProfile);
 //                mPullToRefreshRV.getRefreshableView().getAdapter().notifyDataSetChanged();
 //                mPullToRefreshRV.onRefreshComplete();
@@ -93,9 +96,9 @@ public class LoginLoadingActivity extends AppCompatActivity {
             @Override
             public void onDataLoaded(List data) {
                 mAnimLogo.nextTask(5);
-                DataManager.getInstance().setConnectionList(data);
-                DataManager.getInstance().setConnectionOffset(getOffset());
-                DataManager.getInstance().setConnectionMoreData(getMoreData());
+                dataManager.setConnectionList(data);
+                dataManager.setConnectionOffset(getOffset());
+                dataManager.setConnectionMoreData(getMoreData());
 
                 receivedRequestManager.initialize();
                 receivedRequestManager.loadData();
@@ -107,9 +110,9 @@ public class LoginLoadingActivity extends AppCompatActivity {
             @Override
             public void onDataLoaded(List data) {
                 mAnimLogo.nextTask(5);
-                DataManager.getInstance().setReceivedRequestList(data);
-                DataManager.getInstance().setReceivedRequestOffset(getOffset());
-                DataManager.getInstance().setReceivedRequestMoreData(getMoreData());
+                dataManager.setReceivedRequestList(data);
+                dataManager.setReceivedRequestOffset(getOffset());
+                dataManager.setReceivedRequestMoreData(getMoreData());
 
                 sentRequestManager.initialize();
                 sentRequestManager.loadData();
@@ -120,9 +123,9 @@ public class LoginLoadingActivity extends AppCompatActivity {
         sentRequestManager = new SentRequestManager(this) {
             @Override
             public void onDataLoaded(List data) {
-                DataManager.getInstance().setSentRequestList(data);
-                DataManager.getInstance().setSentRequestOffset(getOffset());
-                DataManager.getInstance().setSentRequestMoreData(getMoreData());
+                dataManager.setSentRequestList(data);
+                dataManager.setSentRequestOffset(getOffset());
+                dataManager.setSentRequestMoreData(getMoreData());
                 mAnimLogo.lastTask();
                 textStatus.setText("Data Retrieving Successfully");
 
@@ -149,9 +152,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
                 SharedPreferenceUtil.setBoolean(Enums.PreferenceKeys.loginStatus.toString(), true);
 
                 getProfile(sessionId);
-//                getConnections(sessionId);
-//                getService(sessionId);
-//
+
                 mAnimLogo.nextTask(4);
 
                 textStatus.setText("Login Successful..\nRetrieving your profile from server.. please wait");
@@ -208,6 +209,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
             public void onSucceed(Profile result) {
 
                 UserProfilePrefs.getInstance().setLoggedInUser(result);
+                dataManager.setMyProfile(result);
 
                 mAnimLogo.nextTask(10
                 );

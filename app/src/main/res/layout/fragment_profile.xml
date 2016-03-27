@@ -48,7 +48,7 @@
         <Button
             android:id="@+id/butRestore"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/rounded_border_blue"
+            android:background="@drawable/button_blue_enabled"
             android:text="Restore"
             android:textSize="23sp"
             android:textColor="@color/white"

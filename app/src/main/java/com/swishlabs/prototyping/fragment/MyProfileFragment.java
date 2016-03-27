@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -29,6 +30,8 @@ import java.util.List;
 public class MyProfileFragment extends BaseFragment {
 
     private TabLayout tabLayout;
+    private Button btnRestore;
+
     public MyProfileFragment() {
         // Required empty public constructor
     }
@@ -48,6 +51,9 @@ public class MyProfileFragment extends BaseFragment {
         }
 
         tabLayout.setupWithViewPager(viewPager);
+
+        btnRestore = (Button) view.findViewById(R.id.butRestore);
+        btnRestore.setEnabled(false);
 
         return view;
     }
