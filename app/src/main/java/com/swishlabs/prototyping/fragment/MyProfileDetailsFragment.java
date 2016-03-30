@@ -3,8 +3,11 @@ package com.swishlabs.prototyping.fragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +17,15 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.swishlabs.prototyping.R;
+import com.swishlabs.prototyping.adapter.CustomLinearLayoutManager;
+import com.swishlabs.prototyping.adapter.SkillSetAdapter;
 import com.swishlabs.prototyping.data.DataManager;
 import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.util.CircleTransform;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +63,9 @@ public class MyProfileDetailsFragment extends BaseFragment {
 
     private ImageView ivAvatar;
 
+    private List<String> skillsetList;
+    private RecyclerView recyclerView;
+    private SkillSetAdapter skillSetAdapter;
 
     public MyProfileDetailsFragment() {
         // Required empty public constructor
@@ -86,6 +98,9 @@ public class MyProfileDetailsFragment extends BaseFragment {
         }
 
         myProfile = DataManager.getInstance().getMyProfile();
+        if (myProfile.getSkillSet() != null) {
+            skillsetList = new ArrayList<>(Arrays.asList(myProfile.getSkillSet().split(",")));
+        }
     }
 
     @Override
@@ -163,6 +178,35 @@ public class MyProfileDetailsFragment extends BaseFragment {
                     .fit().into(ivAvatar);
         }
 
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView = (RecyclerView) view.findViewById(R.id.skillset_list);
+        final CustomLinearLayoutManager layoutManager = new CustomLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setLayoutManager(layoutManager);
+        skillSetAdapter = new SkillSetAdapter();
+        recyclerView.setAdapter(skillSetAdapter);
+
+        recyclerView.setNestedScrollingEnabled(false); // Disables scrolling for RecyclerView, CustomLinearLayoutManager used instead of MyLinearLayoutManager
+        // recyclerView.setHasFixedSize(false);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisibleItemPos = layoutManager.findLastVisibleItemPosition();
+                Log.i("getChildCount", String.valueOf(visibleItemCount));
+                Log.i("getItemCount", String.valueOf(totalItemCount));
+                Log.i("lastVisibleItemPos", String.valueOf(lastVisibleItemPos));
+                if ((visibleItemCount + lastVisibleItemPos) >= totalItemCount) {
+                    Log.i("LOG", "Last Item Reached!");
+                }
+            }
+        });
+
         return view;
     }
 
@@ -172,5 +216,35 @@ public class MyProfileDetailsFragment extends BaseFragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
+//    public class SkillSetAdapter extends RecyclerView.Adapter<SkillSetAdapter.MyViewHolder> {
+//
+//        public SkillSetAdapter() {
+//
+//        }
+//
+//        @Override
+//        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.skillset_item_layout, parent, false);
+//            return new MyViewHolder(view);
+//        }
+//
+//        @Override
+//        public void onBindViewHolder(SkillSetAdapter.MyViewHolder holder, int position) {
+//
+//        }
+//
+//        @Override
+//        public int getItemCount() {
+//            return 6;
+//        }
+//
+//        public class MyViewHolder extends RecyclerView.ViewHolder {
+//            public MyViewHolder(View itemView) {
+//                super(itemView);
+//            }
+//        }
+//    }
+
 
 }

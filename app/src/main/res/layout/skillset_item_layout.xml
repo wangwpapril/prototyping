@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    >
+
+    <ImageView
+        android:id="@+id/skillset_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_delete"
+        android:layout_centerVertical="true"
+        />
+
+    <EditText
+        android:id="@+id/skillset_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/skillset_icon"
+        android:background="@drawable/rounded_border_white"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif"
+        />
+
+</RelativeLayout>

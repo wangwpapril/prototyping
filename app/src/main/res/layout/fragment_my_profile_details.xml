@@ -2,11 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.swishlabs.prototyping.fragment.MyProfileDetailsFragment">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -340,6 +344,8 @@
                 android:layout_alignTop="@+id/radio_group"
                 android:background="@drawable/rounded_border_white"
                 android:text="test"
+                android:gravity="center_vertical"
+                android:padding="5dp"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:fontFamily="sans-serif"
@@ -357,7 +363,20 @@
                 android:fontFamily="sans-serif"
                 />
 
-        </RelativeLayout>
-    </ScrollView>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/skillset_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/skills_label"
+                android:background="@android:color/transparent"
+                android:layout_marginBottom="10dp"
+                >
 
- </RelativeLayout>
+            </android.support.v7.widget.RecyclerView>
+
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+</RelativeLayout>
