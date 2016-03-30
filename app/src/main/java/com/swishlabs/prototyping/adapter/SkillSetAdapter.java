@@ -46,12 +46,27 @@ public class SkillSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         if (holder instanceof MyViewHolder) {
             ((MyViewHolder)holder).etSkill.setText(dataList.get(position));
+            ((MyViewHolder)holder).ivIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dataList.remove(position);
+                    notifyDataSetChanged();
+                }
+            });
         }else {
 
+            ((AddViewHolder)holder).ivAddIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dataList.add(dataList.size(), ((AddViewHolder) holder).etSkill.getText().toString());
+                    ((AddViewHolder) holder).etSkill.setText("");
+                    notifyDataSetChanged();
+                }
+            });
         }
     }
 
@@ -88,8 +103,13 @@ public class SkillSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class AddViewHolder extends RecyclerView.ViewHolder {
 
+        private ImageView ivAddIcon;
+        private EditText etSkill;
+
         public AddViewHolder(View itemView) {
             super(itemView);
+            ivAddIcon = (ImageView) itemView.findViewById(R.id.skillset_icon);
+            etSkill = (EditText) itemView.findViewById(R.id.skillset_input);
         }
     }
 }
