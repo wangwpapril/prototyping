@@ -129,11 +129,20 @@ public class LoginLoadingActivity extends AppCompatActivity {
                 mAnimLogo.lastTask();
                 textStatus.setText("Data Retrieving Successfully");
 
-                Intent intent = new Intent(LoginLoadingActivity.this, MainActivity.class);
-                intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();
+                boolean firstTime = SharedPreferenceUtil.getBoolean(Enums.PreferenceKeys.firsttime.toString(), true);
+                if (firstTime) {
+//                    SharedPreferenceUtil.setBoolean(Enums.PreferenceKeys.firsttime.toString(), false);
+                    Intent termIntent = new Intent(LoginLoadingActivity.this, TermsActivity.class);
+                    termIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(termIntent);
+                    finish();
 
+                }else {
+                    Intent intent = new Intent(LoginLoadingActivity.this, MainActivity.class);
+                    intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                }
             }
         };
     }

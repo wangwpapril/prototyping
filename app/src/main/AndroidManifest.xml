@@ -52,22 +52,22 @@
         <activity
             android:name=".activity.LoginActivity"
             android:label="Login"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SignupActivity"
             android:label="Signup"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LegalActivity"
             android:label="Legal"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SettingsActivity"
             android:label="Legal"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AssistanceActivity"
-            android:label="@string/title_activity_assistance"></activity>
+            android:label="@string/title_activity_assistance" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -79,27 +79,27 @@
         <activity
             android:name=".activity.LearnMoreActivity"
             android:label="@string/title_activity_learn_more"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".services.LocationService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
             android:name=".activity.BaseFragmentActivity"
-            android:label="@string/title_activity_base_fragment"></activity>
+            android:label="@string/title_activity_base_fragment" />
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_main"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ActivityMain"
             android:label="@string/title_activity_main"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MainHomeActivity"
-            android:label="@string/title_activity_main_home"></activity>
+            android:label="@string/title_activity_main_home" />
 
         <service
             android:name=".services.GPSTracker"
@@ -108,13 +108,14 @@
         <service
             android:name=".services.RequestCheckService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="451a0e6eef92a40b6aa745a02d0707b38c107ff1" />
 
-        <activity android:name=".activity.LoginLoadingActivity"></activity>
+        <activity android:name=".activity.LoginLoadingActivity" />
+        <activity android:name=".activity.TermsActivity"></activity>
     </application>
 
 </manifest>

@@ -72,7 +72,7 @@ public class Enums {
 
 	
 	public enum PreferenceKeys{
-		currentUser("current user"),
+		firsttime("first time"),
 		sessionId("session id"),
         distance("distance"),
 		netStatus("network status̬"),
