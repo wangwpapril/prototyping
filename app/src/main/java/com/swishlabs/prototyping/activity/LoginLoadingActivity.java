@@ -131,7 +131,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
 
                 boolean firstTime = SharedPreferenceUtil.getBoolean(Enums.PreferenceKeys.firsttime.toString(), true);
                 if (firstTime) {
-//                    SharedPreferenceUtil.setBoolean(Enums.PreferenceKeys.firsttime.toString(), false);
+                    SharedPreferenceUtil.setBoolean(Enums.PreferenceKeys.firsttime.toString(), false);
                     Intent termIntent = new Intent(LoginLoadingActivity.this, TermsActivity.class);
                     termIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(termIntent);

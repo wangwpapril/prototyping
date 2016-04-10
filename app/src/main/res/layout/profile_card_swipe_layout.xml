@@ -185,6 +185,60 @@
                         android:textColor="@color/blue"
                         />
 
+                    <LinearLayout
+                        android:id="@+id/needs_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_back_need_lable"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        >
+
+                        <TextView
+                            android:id="@+id/needs_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/need_icon"
+                            android:layout_marginLeft="5dp"
+                            android:text="Needs"
+                            android:textSize="20sp"
+                            android:textColor="@color/blue"
+                            />
+
+                        <TextView
+                            android:id="@+id/needs_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/need_icon"
+                            android:layout_marginLeft="5dp"
+                            android:text="Needs"
+                            android:textSize="20sp"
+                            android:textColor="@color/blue"
+                            />
+
+                        <TextView
+                            android:id="@+id/needs_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/need_icon"
+                            android:layout_marginLeft="5dp"
+                            android:text="Needs"
+                            android:textSize="20sp"
+                            android:textColor="@color/blue"
+                            />
+
+                        <TextView
+                            android:id="@+id/needs_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/need_icon"
+                            android:layout_marginLeft="5dp"
+                            android:text="Needs"
+                            android:textSize="20sp"
+                            android:textColor="@color/blue"
+                            />
+                    </LinearLayout>
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -195,6 +249,7 @@
                     android:layout_marginTop="10dp"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
+                    android:visibility="gone"
                     >
 
                     <ImageView

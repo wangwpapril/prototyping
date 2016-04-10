@@ -19,6 +19,7 @@ public class TermsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_terms);
         btnDone = (Button) findViewById(R.id.done_button);
         btnDone.setEnabled(false);
@@ -38,6 +39,7 @@ public class TermsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 btnDone.setEnabled(true);
+                btnAccept.setVisibility(View.GONE);
             }
         });
 

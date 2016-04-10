@@ -1,26 +1,40 @@
 package com.swishlabs.prototyping.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.LayoutTransition;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.Interpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.customViews.cardstack.SwipeDeck;
+import com.swishlabs.prototyping.data.api.model.Image;
 import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.net.IResponse;
+import com.swishlabs.prototyping.util.ConvertUtil;
 import com.swishlabs.prototyping.util.Enums;
 import com.swishlabs.prototyping.util.FlipCard;
 import com.swishlabs.prototyping.util.SharedPreferenceUtil;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -36,6 +50,7 @@ public class CardStackFragment extends BaseFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "CardStack";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -46,6 +61,8 @@ public class CardStackFragment extends BaseFragment {
     private SwipeDeck cardStack;
 
     private List<Profile> mListProfile;
+
+    private boolean isShowNeeds;
 
     public CardStackFragment() {
         // Required empty public constructor
@@ -77,6 +94,7 @@ public class CardStackFragment extends BaseFragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        isShowNeeds = false;
 //        mListProfile = new ArrayList<>();
     }
 
@@ -246,6 +264,11 @@ public class CardStackFragment extends BaseFragment {
 
             ViewHolder holder = null;
             Profile profile = mListProfile.get(position);
+            List<String> skillList = new ArrayList<>();
+
+            if (profile.getSkillSet() != null) {
+                skillList = new ArrayList<>(Arrays.asList(profile.getSkillSet().split(",")));
+            }
 
             if (convertView == null) {
 //                LayoutInflater inflater = getLayoutInflater(context);
@@ -264,8 +287,107 @@ public class CardStackFragment extends BaseFragment {
                 holder.opportunity = (TextView) convertView.findViewById(R.id.opportunity_number);
                 holder.address = (TextView) convertView.findViewById(R.id.profile_address);
                 holder.offer1 = (TextView) convertView.findViewById(R.id.profile_offer1);
+
                 holder.offer2 = (TextView) convertView.findViewById(R.id.profile_offer2);
                 holder.offer3 = (TextView) convertView.findViewById(R.id.profile_offer3);
+                holder.needIcon = (ImageView) convertView.findViewById(R.id.need_icon);
+                final ViewHolder finalHolder1 = holder;
+                holder.needIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        final int stValue = ConvertUtil.dpToPx(20, getContext());
+
+                        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+                        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+                        finalHolder1.needsContainer.measure(w, h);
+                        final int heightNeeds = finalHolder1.needsContainer.getMeasuredHeight();
+                        Log.e(TAG, "heightNeeds = " + heightNeeds);
+
+                        if (!isShowNeeds) {
+                            finalHolder1.needsContainer.setVisibility(View.VISIBLE);
+                            LayoutTransition lt = new LayoutTransition();
+                            lt.enableTransitionType(LayoutTransition.CHANGE_APPEARING);
+                            finalHolder1.needsContainer.setLayoutTransition(lt);
+//                            finalHolder1.needsContainer.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGE_APPEARING);
+                            ValueAnimator valueAnimator = ValueAnimator.ofInt(0, heightNeeds);
+                            valueAnimator.setDuration(5000);
+                            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                @Override
+                                public void onAnimationUpdate(ValueAnimator animation) {
+                                    Integer value = (Integer) animation.getAnimatedValue();
+                                    finalHolder1.needsContainer.getLayoutParams().height = value.intValue();
+                                    finalHolder1.needsContainer.requestLayout();
+                                    finalHolder1.profileBottom1.requestLayout();
+
+                                }
+                            });
+
+                            valueAnimator.start();
+                            isShowNeeds = true;
+
+                            Interpolator accelerator = new AccelerateInterpolator();
+
+                            final RotateAnimation animation = new RotateAnimation(0, 90, Animation.RELATIVE_TO_SELF,
+                                    0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                            animation.setDuration(500);
+                            animation.setFillAfter(true);
+                            animation.setInterpolator(accelerator);
+
+                            v.startAnimation(animation);
+
+                        }else {
+                            ValueAnimator valueAnimator = ValueAnimator.ofInt(heightNeeds, 0);
+                            valueAnimator.setDuration(500);
+                            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                @Override
+                                public void onAnimationUpdate(ValueAnimator animation) {
+                                    Integer value = (Integer) animation.getAnimatedValue();
+                                    finalHolder1.needsContainer.getLayoutParams().height = value.intValue();
+                                    finalHolder1.needsContainer.requestLayout();
+                                    finalHolder1.profileBottom1.requestLayout();
+                                }
+                            });
+
+                            valueAnimator.start();
+
+                            isShowNeeds = false;
+
+                            Interpolator accelerator = new AccelerateInterpolator();
+
+                            final RotateAnimation animation = new RotateAnimation(90, 0, Animation.RELATIVE_TO_SELF,
+                                    0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                            animation.setDuration(500);
+                            animation.setFillAfter(true);
+                            animation.setInterpolator(accelerator);
+
+                            v.startAnimation(animation);
+
+                        }
+                    }
+                });
+                holder.need1 = (TextView) convertView.findViewById(R.id.needs_1);
+                holder.need2 = (TextView) convertView.findViewById(R.id.needs_2);
+                holder.need3 = (TextView) convertView.findViewById(R.id.needs_3);
+
+                holder.profileBottom1 = (RelativeLayout) convertView.findViewById(R.id.profile_bottom1);
+
+                holder.needLabel = (TextView) convertView.findViewById(R.id.profile_back_need_lable);
+                holder.needsContainer = (LinearLayout) convertView.findViewById(R.id.needs_container);
+
+//                int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+//                int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+//                holder.needsContainer.measure(w, h);
+//                final int heightNeeds = holder.needsContainer.getMeasuredHeight();
+//                Log.e(TAG, "heightNeeds = " + heightNeeds);
+//
+//                final ViewHolder finalHolder2 = holder;
+//                holder.needsContainer.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        int height = finalHolder2.needsContainer.getHeight();
+//                        Log.e(TAG, "height = " + height);
+//                    }
+//                });
 
                 holder.front_view = (RelativeLayout) convertView.findViewById(R.id.profile_card_front);
                 holder.back_view = (RelativeLayout) convertView.findViewById(R.id.profile_card_back);
@@ -316,6 +438,13 @@ public class CardStackFragment extends BaseFragment {
             public TextView offer1;
             public TextView offer2;
             public TextView offer3;
+            public RelativeLayout profileBottom1;
+            public ImageView needIcon;
+            public TextView needLabel;
+            public LinearLayout needsContainer;
+            public TextView need1;
+            public TextView need2;
+            public TextView need3;
 
             public RelativeLayout front_view;
             public RelativeLayout back_view;
