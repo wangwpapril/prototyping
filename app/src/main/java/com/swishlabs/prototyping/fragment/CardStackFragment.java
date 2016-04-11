@@ -317,7 +317,7 @@ public class CardStackFragment extends BaseFragment {
                                     Integer value = (Integer) animation.getAnimatedValue();
                                     finalHolder1.needsContainer.getLayoutParams().height = value.intValue();
                                     finalHolder1.needsContainer.requestLayout();
-                                    finalHolder1.profileBottom1.requestLayout();
+                                    finalHolder1.profileBottom1.invalidate();
 
                                 }
                             });
@@ -344,7 +344,7 @@ public class CardStackFragment extends BaseFragment {
                                     Integer value = (Integer) animation.getAnimatedValue();
                                     finalHolder1.needsContainer.getLayoutParams().height = value.intValue();
                                     finalHolder1.needsContainer.requestLayout();
-                                    finalHolder1.profileBottom1.requestLayout();
+                                    finalHolder1.profileBottom1.invalidate();
                                 }
                             });
 
