@@ -1,5 +1,6 @@
 package com.swishlabs.prototyping.fragment;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -215,6 +216,16 @@ public class MyProfileDetailsFragment extends BaseFragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    public void updateAvatar(final Bitmap bitmap) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ivAvatar.setImageBitmap(bitmap);
+            }
+        });
+
     }
 
 //    public class SkillSetAdapter extends RecyclerView.Adapter<SkillSetAdapter.MyViewHolder> {

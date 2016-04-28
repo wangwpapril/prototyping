@@ -1,12 +1,17 @@
 package com.swishlabs.prototyping.activity;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.SystemClock;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -30,11 +35,23 @@ import com.swishlabs.prototyping.fragment.ProfileConnectionFragment;
 import com.swishlabs.prototyping.fragment.RequestsFragment;
 import com.swishlabs.prototyping.fragment.SettingFragment;
 import com.swishlabs.prototyping.fragment.SwipeFragment;
+import com.swishlabs.prototyping.helper.CameraHelper;
 import com.swishlabs.prototyping.services.RequestCheckService;
+import com.swishlabs.prototyping.util.ContentUriUtils;
+import com.swishlabs.prototyping.util.PictureUtils;
 import com.swishlabs.prototyping.util.ToastUtil;
+
+import java.io.File;
 
 public class MainActivity extends BaseFragmentActivity implements MyProfileDetailsFragment.onButtonPressedListener {
 
+    protected final static int REQUEST_CODE_SELECT_PHOTO = 200;
+
+    protected final static int REQUEST_CODE_CAMERA_PHOTO = 201;
+
+    protected final static int REQUEST_CODE_CROP_IMAGE_SELECT = 202;
+
+    protected final static int REQUEST_CODE_CROP_IMAGE_CAMERA = 203;
 
     private BaseFragment mPreHomeFragment;
     public BaseFragment mCurrFragment;
@@ -52,6 +69,9 @@ public class MainActivity extends BaseFragmentActivity implements MyProfileDetai
 
     private MainActivity instance;
     private long exitTime;
+    private File mFileCamera;
+    private File mFileCrop;
+    private File  mFileSelect;
 
 //    private List<Profile> profileList;
 //    private int profileOffset;
@@ -78,6 +98,8 @@ public class MainActivity extends BaseFragmentActivity implements MyProfileDetai
 //        }
 
         instance = this;
+
+        mApp = MyApplication.getInstance();
 
         if (gpsTracker.canGetLocation()) {
             UserProfilePrefs.getInstance().setMyLocation(gpsTracker.getLocation());
@@ -187,24 +209,6 @@ public class MainActivity extends BaseFragmentActivity implements MyProfileDetai
             }
         });
 
-
-//        List<Profile> profile = mFinalDb.findAll(Profile.class);
-//        List<Profile> profileList = null;
-//        try {
-//            profileList = mFinalDb.findAll(Profile.class);
-//        } catch (DbException e) {
-//            e.printStackTrace();
-//        }
-//
-//        List<Service> services = null;
-//        try {
-//            services = mFinalDb.findAll(Service.class);
-//        } catch (DbException e) {
-//            e.printStackTrace();
-//        }
-
-//        List<Service> services = mFinalDb.findAll(Service.class);
-
     }
 
     public void switchFragment(BaseFragment fragment) {
@@ -235,22 +239,6 @@ public class MainActivity extends BaseFragmentActivity implements MyProfileDetai
 //        });
 
     }
-
-//    public List<Profile> getProfileList() {
-//        return profileList;
-//    }
-
-//    public int getProfileOffset() {
-//        return profileOffset;
-//    }
-//
-//    public boolean getNoMoreData() {
-//        return noMoreData;
-//    }
-//
-//    public boolean getInitialData() {
-//        return initialData;
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -340,52 +328,119 @@ public class MainActivity extends BaseFragmentActivity implements MyProfileDetai
 //        cameraIntent.putExtra("USERNAME", ResourceManager.UserProfile.userName.toString());
 //
 //        startActivityForResult(cameraIntent, CAMERA_PHOTO);
+
+        Intent intent_camera = new Intent("android.media.action.IMAGE_CAPTURE");
+
+        mFileCamera = CameraHelper.getOutputMediaFile(CameraHelper.MEDIA_TYPE_IMAGE);
+        intent_camera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mFileCamera));
+        startActivityForResult(intent_camera, REQUEST_CODE_CAMERA_PHOTO);
+
     }
 
     private void openImageGallery()
     {
-        Intent imageI = new Intent();
-        imageI.setType("image/*");
-        imageI.setAction(Intent.ACTION_PICK);
-        startActivityForResult(Intent.createChooser(imageI, "Select image.."), MyProfileDetailsFragment.SELECT_IMAGE);
+//        Intent imageI = new Intent();
+//        imageI.setType("image/*");
+//        imageI.setAction(Intent.ACTION_PICK);
+//        startActivityForResult(Intent.createChooser(imageI, "Select image.."), MyProfileDetailsFragment.SELECT_IMAGE);
+
+        Intent intent=new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        startActivityForResult(intent, REQUEST_CODE_SELECT_PHOTO);
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK)
-        {
-            if (requestCode == MyProfileDetailsFragment.SELECT_IMAGE)
-            {
-//                try
-//                {
-                    Uri selectedImageUri = data.getData();
-
-//                    File dir = new File(ResourceManager.UserProfile.pictureDir);
-//                    if (!dir.isDirectory())
-//                        dir.mkdirs();
-//
-//                    InputStream inStream = getContentResolver().openInputStream(selectedImageUri);
-//                    Bitmap tmpbitmap = BitmapFactory.decodeStream(inStream);
-//
-//                    ImageSave imageSaving = new ImageSave(this, ResourceManager.UserProfile.userName.toLowerCase().replace(" ", "").trim(), tmpbitmap);
-//
-////					ResourceManager.UserProfile.pictureFilename = imageSaving.getFileName();
-//
-//                    upLoadImage(ResourceManager.UserProfile.pictureDir+imageSaving.getFileName());
-
-//                }
-//                catch(FileNotFoundException e){ e.printStackTrace(); }
-            }
-
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK || REQUEST_CODE_CAMERA_PHOTO != requestCode && data == null) {
+            return;
         }
 
-//        if (requestCode == CAMERA_PHOTO && resultCode == RESULT_OK && data != null)
-//        {
-//            String photoPath = data.getStringExtra("DISPLAY_IMAGE");
-//
-//            upLoadImage(photoPath);
-//        }
+        switch (requestCode) {
+            case REQUEST_CODE_CAMERA_PHOTO:
+                String sdStatus = Environment.getExternalStorageState();
+                if (sdStatus.equals(Environment.MEDIA_MOUNTED)) {
+                    startActivityForResult(buildCropImageIntent(mFileCamera), REQUEST_CODE_CROP_IMAGE_CAMERA);
+                }
+                break;
+            case REQUEST_CODE_SELECT_PHOTO:
+                final Uri originalUri = data.getData();
+                String filePath = ContentUriUtils.getPath(this, originalUri);
+                mFileSelect = new File(filePath);
+                startActivityForResult(buildCropImageIntent(mFileSelect), REQUEST_CODE_CROP_IMAGE_SELECT);
+                break;
+            case REQUEST_CODE_CROP_IMAGE_SELECT:
+            case REQUEST_CODE_CROP_IMAGE_CAMERA:
+                String fileName = "";
+                Uri uri = data.getData();
+                if (uri != null) {
+                    fileName = ContentUriUtils.getPath(this, uri);
+                } else if (mFileCrop.exists()) {
+                    fileName = mFileCrop.getAbsolutePath();
+                } else {
+                    if (requestCode == REQUEST_CODE_CROP_IMAGE_CAMERA) {
+                        fileName = mFileCamera.getAbsolutePath();
+                    } else {
+                        fileName = mFileSelect.getAbsolutePath();
+                    }
+                }
+                final String finalPath = fileName;
+                MyApplication.getInstance().execute(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        handlePickedImage(finalPath);
+                    }
+                });
+
+                break;
+            default:
+                break;
+        }
 
     }
 
+    private Intent buildCropImageIntent(File file) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(Uri.fromFile(file), "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 96);
+        intent.putExtra("outputY", 96);
+        intent.putExtra("scale", true);
+        intent.putExtra("noFaceDetection", true);
+        intent.putExtra("return-data", true);
+        mFileCrop = CameraHelper.getOutputMediaFile(CameraHelper.MEDIA_TYPE_IMAGE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mFileCrop));
+        return intent;
+    }
+
+    private void handlePickedImage(String fileName) {
+        Bitmap myBitmap = PictureUtils.getSmallBitmap(fileName);
+        int angle = PictureUtils.getAngle(fileName);
+        if (angle != 0) {
+            Matrix m = new Matrix();
+            int width = myBitmap.getWidth();
+            int height = myBitmap.getHeight();
+            m.setRotate(angle); // 旋转angle度
+            myBitmap = Bitmap.createBitmap(myBitmap, 0, 0, width, height, m, true);// 从新生成图片
+        }
+        new File(fileName).delete();
+        final Bitmap roundBitmap = PictureUtils.toRoundBitmap(myBitmap);
+
+        if (mCurrFragment instanceof MyProfileFragment) {
+            ((MyProfileFragment) mCurrFragment).updateAvatar(roundBitmap);
+
+        }
+//        runOnUiThread(new Runnable() {
+//            public void run() {
+//                mImgViewAvatar.setImageBitmap(roundBitmap);
+//                mNewAvatar = roundBitmap;
+////                doSave();
+//            }
+//        });
+    }
 }

@@ -1,6 +1,7 @@
 package com.swishlabs.prototyping.fragment;
 
 import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -31,6 +32,8 @@ public class MyProfileFragment extends BaseFragment {
 
     private TabLayout tabLayout;
     private Button btnRestore;
+    private ViewPager viewPager;
+    private Adapter adapter;
 
     public MyProfileFragment() {
         // Required empty public constructor
@@ -45,7 +48,7 @@ public class MyProfileFragment extends BaseFragment {
 
         tabLayout = (TabLayout) view.findViewById(R.id.tabContainer);
 
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
@@ -59,7 +62,7 @@ public class MyProfileFragment extends BaseFragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        Adapter adapter = new Adapter(getChildFragmentManager());
+        adapter = new Adapter(getChildFragmentManager());
         adapter.addFragment(MyProfileDetailsFragment.newInstance("",""), "Details");
         adapter.addFragment(ReceivedRequestFragment.newInstance("Offers"), "Offers");
         adapter.addFragment(ReceivedRequestFragment.newInstance("Needs"), "Needs");
@@ -98,6 +101,13 @@ public class MyProfileFragment extends BaseFragment {
 //            return getResources().getDrawable(icons[position]);
 //        }
 
+    }
+
+    public void updateAvatar(Bitmap bitmap) {
+        android.support.v4.app.Fragment fragment = adapter.getItem(viewPager.getCurrentItem());
+        if (fragment instanceof MyProfileDetailsFragment) {
+            ((MyProfileDetailsFragment) fragment).updateAvatar(bitmap);
+        }
     }
 
 }
