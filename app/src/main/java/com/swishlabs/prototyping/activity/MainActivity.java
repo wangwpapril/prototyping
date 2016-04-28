@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.android.Utils;
 import com.swishlabs.prototyping.MyApplication;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.entity.UserProfilePrefs;
@@ -41,7 +43,13 @@ import com.swishlabs.prototyping.util.ContentUriUtils;
 import com.swishlabs.prototyping.util.PictureUtils;
 import com.swishlabs.prototyping.util.ToastUtil;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends BaseFragmentActivity implements MyProfileDetailsFragment.onButtonPressedListener {
 
@@ -387,13 +395,16 @@ public class MainActivity extends BaseFragmentActivity implements MyProfileDetai
                     }
                 }
                 final String finalPath = fileName;
-                MyApplication.getInstance().execute(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        handlePickedImage(finalPath);
-                    }
-                });
+                doSave(fileName);
+//
+//                MyApplication.getInstance().execute(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        handlePickedImage(finalPath);
+//                    }
+//                });
 
                 break;
             default:
@@ -431,10 +442,7 @@ public class MainActivity extends BaseFragmentActivity implements MyProfileDetai
         new File(fileName).delete();
         final Bitmap roundBitmap = PictureUtils.toRoundBitmap(myBitmap);
 
-        if (mCurrFragment instanceof MyProfileFragment) {
-            ((MyProfileFragment) mCurrFragment).updateAvatar(roundBitmap);
-
-        }
+//        doSave()
 //        runOnUiThread(new Runnable() {
 //            public void run() {
 //                mImgViewAvatar.setImageBitmap(roundBitmap);
@@ -442,5 +450,32 @@ public class MainActivity extends BaseFragmentActivity implements MyProfileDetai
 ////                doSave();
 //            }
 //        });
+    }
+
+    private void doSave(final String fileName) {
+        mApp.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Cloudinary cloudinary = new Cloudinary(Utils.cloudinaryUrlFromContext(getApplicationContext()));
+
+                    Map map = cloudinary.uploader().upload(fileName, null);
+
+                    if (map != null) {
+                        String url = map.get("url").toString();
+                        if (url != null) {
+                            if (mCurrFragment instanceof MyProfileFragment) {
+                                ((MyProfileFragment) mCurrFragment).updateAvatar(url);
+
+                            }
+                        }
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 }

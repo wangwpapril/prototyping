@@ -218,11 +218,12 @@ public class MyProfileDetailsFragment extends BaseFragment {
         }
     }
 
-    public void updateAvatar(final Bitmap bitmap) {
+    public void updateAvatar(final String url) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ivAvatar.setImageBitmap(bitmap);
+                Picasso.with(getActivity()).load(url).transform(new CircleTransform())
+                        .fit().into(ivAvatar);
             }
         });
 

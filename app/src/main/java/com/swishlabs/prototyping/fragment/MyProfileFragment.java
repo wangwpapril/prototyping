@@ -103,10 +103,10 @@ public class MyProfileFragment extends BaseFragment {
 
     }
 
-    public void updateAvatar(Bitmap bitmap) {
+    public void updateAvatar(String url) {
         android.support.v4.app.Fragment fragment = adapter.getItem(viewPager.getCurrentItem());
         if (fragment instanceof MyProfileDetailsFragment) {
-            ((MyProfileDetailsFragment) fragment).updateAvatar(bitmap);
+            ((MyProfileDetailsFragment) fragment).updateAvatar(url);
         }
     }
 

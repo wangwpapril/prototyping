@@ -113,6 +113,9 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="451a0e6eef92a40b6aa745a02d0707b38c107ff1" />
+        <meta-data
+            android:name="CLOUDINARY_URL"
+            android:value="cloudinary://398692559928291:qwUBEGCTefYpsCXkrc_n8JVfWW8@al3kosvh"/>
 
         <activity android:name=".activity.LoginLoadingActivity" />
         <activity android:name=".activity.TermsActivity"></activity>
