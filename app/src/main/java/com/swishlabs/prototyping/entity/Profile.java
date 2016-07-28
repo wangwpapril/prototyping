@@ -82,7 +82,7 @@ public class Profile implements Serializable {
 
     @Expose
     @SerializedName("city")
-    private int city;
+    private String city;
 
     private int oppNum;
 
@@ -213,11 +213,11 @@ public class Profile implements Serializable {
         this.post = post;
     }
 
-    public int getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(int city) {
+    public void setCity(String city) {
         this.city = city;
     }
 

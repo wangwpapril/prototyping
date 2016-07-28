@@ -28,10 +28,10 @@ public class Contract {
 		
 	static {
 		if (BuildConfig.DEBUG) {
-			BASE_URL = "http://grabopwsdev.azurewebsites.net/";
+			BASE_URL = "http://grabopwstest.us-west-2.elasticbeanstalk.com/";
 
 		} else {
-			BASE_URL = "http://grabopwsdev.azurewebsites.net/";
+			BASE_URL = "http://grabopwstest.us-west-2.elasticbeanstalk.com/";
 		}
 	}
 

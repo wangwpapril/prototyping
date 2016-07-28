@@ -270,7 +270,7 @@ public class CardStackFragment extends BaseFragment {
                 skillList = new ArrayList<>(Arrays.asList(profile.getSkillSet().split(",")));
             }
 
-            if (convertView == null) {
+            if (true) {
 //                LayoutInflater inflater = getLayoutInflater(context);
                 // normally use a viewholder
                 holder = new ViewHolder();
@@ -317,8 +317,6 @@ public class CardStackFragment extends BaseFragment {
                                     Integer value = (Integer) animation.getAnimatedValue();
                                     finalHolder1.needsContainer.getLayoutParams().height = value.intValue();
                                     finalHolder1.needsContainer.requestLayout();
-                                    finalHolder1.profileBottom1.invalidate();
-
                                 }
                             });
 

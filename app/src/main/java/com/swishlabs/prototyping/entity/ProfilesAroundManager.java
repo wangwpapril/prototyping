@@ -156,6 +156,7 @@ public abstract class ProfilesAroundManager extends BaseDataManager
             public void onFailed(String code, String errMsg) {
 
                 loadingCount.decrementAndGet();
+                onDataLoaded(mListProfile);
             }
 
             @Override

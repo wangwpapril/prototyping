@@ -172,6 +172,9 @@ public class MyProfileDetailsFragment extends BaseFragment {
         etTitle = (EditText) view.findViewById(R.id.job_title_input);
 //        if (myProfile.get)
         etCompany = (EditText) view.findViewById(R.id.company_input);
+        if (myProfile.getCompany() != null) {
+            etCompany.setText(myProfile.getCompany());
+        }
 
         ivAvatar = (ImageView) view.findViewById(R.id.profile_avatar);
         if (myProfile.getAvatarUrl() != null) {

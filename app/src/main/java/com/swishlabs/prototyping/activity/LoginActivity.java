@@ -64,7 +64,9 @@ public class LoginActivity extends BaseActivity {
 		super.initTitleView();
         loginBtn = (Button) findViewById(R.id.butSignIn);
         emailTextField = (EditText) findViewById(R.id.signinEmailEditText);
+        emailTextField.setText("mio");
         passwordTextField = (EditText) findViewById(R.id.signinPasswordEditText);
+        passwordTextField.setText("mio,mio");
 
 //		signUp = (TextView) findViewById(R.id.sign_up);
 //        signUp.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
