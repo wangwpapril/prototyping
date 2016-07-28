@@ -55,8 +55,8 @@ public class MyProfileFragment extends BaseFragment {
 
         tabLayout.setupWithViewPager(viewPager);
 
-        btnRestore = (Button) view.findViewById(R.id.butRestore);
-        btnRestore.setEnabled(false);
+//        btnRestore = (Button) view.findViewById(R.id.butRestore);
+//        btnRestore.setEnabled(false);
 
         return view;
     }
@@ -64,7 +64,7 @@ public class MyProfileFragment extends BaseFragment {
     private void setupViewPager(ViewPager viewPager) {
         adapter = new Adapter(getChildFragmentManager());
         adapter.addFragment(MyProfileDetailsFragment.newInstance("",""), "Details");
-        adapter.addFragment(ReceivedRequestFragment.newInstance("Offers"), "Offers");
+        adapter.addFragment(MyOffersFragment.newInstance("", ""), "Offers");
         adapter.addFragment(ReceivedRequestFragment.newInstance("Needs"), "Needs");
         viewPager.setAdapter(adapter);
     }

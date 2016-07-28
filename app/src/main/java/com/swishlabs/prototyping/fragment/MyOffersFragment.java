@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.swishlabs.prototyping.R;
 
@@ -30,6 +32,9 @@ public class MyOffersFragment extends BaseFragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private Button btnAdd;
+    private RelativeLayout mIndicationContainer;
 
     public MyOffersFragment() {
         // Required empty public constructor
@@ -66,7 +71,19 @@ public class MyOffersFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_offers, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_offers, container, false);
+
+        mIndicationContainer = (RelativeLayout) view.findViewById(R.id.offer_indication_container);
+
+        btnAdd = (Button) view.findViewById(R.id.btn_add_offer);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mIndicationContainer.setVisibility(View.GONE);
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

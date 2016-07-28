@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 import com.swishlabs.prototyping.R;
 import com.swishlabs.prototyping.adapter.CustomLinearLayoutManager;
 import com.swishlabs.prototyping.adapter.SkillSetAdapter;
+import com.swishlabs.prototyping.customViews.ClearEditText;
 import com.swishlabs.prototyping.data.DataManager;
 import com.swishlabs.prototyping.entity.Profile;
 import com.swishlabs.prototyping.util.CircleTransform;
@@ -53,7 +54,7 @@ public class MyProfileDetailsFragment extends BaseFragment {
 
     private Profile myProfile;
 
-    private EditText etFirstName;
+    private ClearEditText etFirstName;
     private EditText etLastName;
     private EditText etPost;
     private EditText etEmail;
@@ -125,9 +126,10 @@ public class MyProfileDetailsFragment extends BaseFragment {
             }
         });
 
-        etFirstName = (EditText) view.findViewById(R.id.first_name_input);
+        etFirstName = (ClearEditText) view.findViewById(R.id.first_name_input);
         if (myProfile.getFirstName() != null) {
             etFirstName.setText(myProfile.getFirstName());
+            etFirstName.setSelection(myProfile.getFirstName().length());
         }
         etLastName = (EditText) view.findViewById(R.id.last_name_input);
         if (myProfile.getLastName() != null) {
