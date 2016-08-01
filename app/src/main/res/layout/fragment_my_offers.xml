@@ -2,87 +2,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
     tools:context="com.swishlabs.prototyping.fragment.MyOffersFragment">
 
     <RelativeLayout
-        android:id="@+id/offer_indication_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_above="@+id/button_container"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:background="@color/white"
         >
 
-        <TextView
-            android:id="@+id/offer_indication"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:text="Add service offers to indicate services that you are prepared to perform"
-            android:textColor="@color/dark_blue"
-            android:textSize="18sp"
-            android:fontFamily="sans-serif"
-            />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/offer_post_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_above="@+id/button_container"
-        android:layout_marginBottom="10dp"
-        >
-
-        <TextView
-            android:id="@+id/offer_post_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="Post Your Offering"
-            android:textColor="@color/dark_blue"
-            android:textSize="18sp"
-            android:fontFamily="sans-serif"
-            />
-
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/scroll_id"
+        <com.swishlabs.prototyping.customViews.pullrefresh.PullToRefreshRecyclerView
+            android:id="@+id/offer_card_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/offer_post_label"
-            android:fillViewport="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:divider="#19000000"
+            android:dividerHeight="4dp"
+            ptr:ptrMode="both"
+            android:footerDividersEnabled="true"
+            android:headerDividersEnabled="true"
+            />
 
-        </android.support.v4.widget.NestedScrollView>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/button_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"
-        >
-
-        <Button
-            android:id="@+id/btn_add_offer"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/button_blue_enabled"
-            android:text="Add an Offer"
-            android:textSize="23sp"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
-            android:layout_height="50dp"/>
     </RelativeLayout>
 
 </RelativeLayout>

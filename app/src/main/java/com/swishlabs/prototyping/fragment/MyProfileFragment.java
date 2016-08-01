@@ -64,7 +64,7 @@ public class MyProfileFragment extends BaseFragment {
     private void setupViewPager(ViewPager viewPager) {
         adapter = new Adapter(getChildFragmentManager());
         adapter.addFragment(MyProfileDetailsFragment.newInstance("",""), "Details");
-        adapter.addFragment(MyOffersFragment.newInstance("", ""), "Offers");
+        adapter.addFragment(MyServiceFragment.newInstance("", ""), "Offers");
         adapter.addFragment(ReceivedRequestFragment.newInstance("Needs"), "Needs");
         viewPager.setAdapter(adapter);
     }

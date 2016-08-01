@@ -1,0 +1,21 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.swishlabs.prototyping.fragment.EmptyOfferFragment">
+
+    <TextView
+        android:id="@+id/offer_indication"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:text="Add service offers to indicate services that you are prepared to perform"
+        android:textColor="@color/dark_blue"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif"
+        />
+
+</FrameLayout>

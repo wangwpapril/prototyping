@@ -33,6 +33,7 @@ import com.swishlabs.prototyping.fragment.MessageFragment;
 import com.swishlabs.prototyping.fragment.MyOffersFragment;
 import com.swishlabs.prototyping.fragment.MyProfileDetailsFragment;
 import com.swishlabs.prototyping.fragment.MyProfileFragment;
+import com.swishlabs.prototyping.fragment.MyServiceFragment;
 import com.swishlabs.prototyping.fragment.PreHomeFragment;
 import com.swishlabs.prototyping.fragment.ProfileConnectionFragment;
 import com.swishlabs.prototyping.fragment.RequestsFragment;
@@ -53,7 +54,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends BaseFragmentActivity implements MyProfileDetailsFragment.onButtonPressedListener,
-        MyOffersFragment.OnFragmentInteractionListener{
+        MyOffersFragment.OnFragmentInteractionListener,
+        MyServiceFragment.OnFragmentInteractionListener{
 
     protected final static int REQUEST_CODE_SELECT_PHOTO = 200;
 
