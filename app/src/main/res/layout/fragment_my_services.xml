@@ -32,6 +32,32 @@
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
             android:layout_height="50dp"/>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_toLeftOf="@+id/btn_cancel"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/button_blue_enabled"
+            android:text="Save"
+            android:textSize="23sp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_height="50dp"/>
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/button_blue_enabled"
+            android:text="Cancel"
+            android:textSize="23sp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_height="50dp"/>
+
     </RelativeLayout>
 
 

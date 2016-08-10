@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.swishlabs.prototyping.R;
 
@@ -34,6 +35,12 @@ public class MyServiceFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private Fragment mCurrFragment;
+    private MyOffersFragment myOffersFragment;
+    private ServiceEditFragment serviceEditFragment;
+
+    private Button addOfferBtn;
+    private Button saveBtn;
+    private Button cancelBtn;
 
     public MyServiceFragment() {
         // Required empty public constructor
@@ -72,8 +79,37 @@ public class MyServiceFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_services, container, false);
 
-        MyOffersFragment myOffersFragment = MyOffersFragment.newInstance("", "");
+        myOffersFragment = MyOffersFragment.newInstance("", "");
         switchFragment(myOffersFragment);
+
+        saveBtn = (Button) view.findViewById(R.id.btn_save);
+        saveBtn.setVisibility(View.GONE);
+
+        cancelBtn = (Button) view.findViewById(R.id.btn_cancel);
+        cancelBtn.setVisibility(View.GONE);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myOffersFragment = MyOffersFragment.newInstance("", "");
+                switchFragment(myOffersFragment);
+                addOfferBtn.setVisibility(View.VISIBLE);
+                saveBtn.setVisibility(View.GONE);
+                cancelBtn.setVisibility(View.GONE);
+
+            }
+        });
+
+        addOfferBtn = (Button) view.findViewById(R.id.btn_add_offer);
+        addOfferBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceEditFragment = new ServiceEditFragment();
+                switchFragment(serviceEditFragment);
+                addOfferBtn.setVisibility(View.GONE);
+                saveBtn.setVisibility(View.VISIBLE);
+                cancelBtn.setVisibility(View.VISIBLE);
+            }
+        });
 
         return view;
     }
@@ -88,8 +124,6 @@ public class MyServiceFragment extends Fragment {
         ft.commit();
         mCurrFragment = fragment;
     }
-
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

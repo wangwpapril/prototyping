@@ -37,6 +37,7 @@ import com.swishlabs.prototyping.fragment.MyServiceFragment;
 import com.swishlabs.prototyping.fragment.PreHomeFragment;
 import com.swishlabs.prototyping.fragment.ProfileConnectionFragment;
 import com.swishlabs.prototyping.fragment.RequestsFragment;
+import com.swishlabs.prototyping.fragment.ServiceEditFragment;
 import com.swishlabs.prototyping.fragment.SettingFragment;
 import com.swishlabs.prototyping.fragment.SwipeFragment;
 import com.swishlabs.prototyping.helper.CameraHelper;
@@ -55,7 +56,8 @@ import java.util.Map;
 
 public class MainActivity extends BaseFragmentActivity implements MyProfileDetailsFragment.onButtonPressedListener,
         MyOffersFragment.OnFragmentInteractionListener,
-        MyServiceFragment.OnFragmentInteractionListener{
+        MyServiceFragment.OnFragmentInteractionListener,
+        ServiceEditFragment.OnFragmentInteractionListener{
 
     protected final static int REQUEST_CODE_SELECT_PHOTO = 200;
 
